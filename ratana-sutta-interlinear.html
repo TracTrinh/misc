@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratanasuttaṁ — Interlinear</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --card: #fffdf8;
+    --border: #d8cbb5;
+    --c1: #8b4f00;
+    --c2: #0f6648;
+    --text: #1e1608;
+    --muted: #7a6550;
+    --slash-a: #b09070;
+    --slash-b: #cc4444;
+    --refrain: #e8f4f0;
+    --refrain-border: #a8d4c4;
+    --gloss: #5a4a38;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    padding: 2rem 1rem 5rem;
+  }
+  header { text-align: center; margin-bottom: 1.8rem; }
+  header h1 {
+    font-family: 'Noto Serif', serif;
+    color: var(--c1);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  header p { color: var(--muted); font-size: 0.76rem; }
+  .legend {
+    display: flex; gap: 1.4rem; justify-content: center;
+    margin-bottom: 1.6rem; font-size: 0.76rem; color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .dot { width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:4px; vertical-align:middle; }
+  .dot-a { background: var(--c1); }
+  .dot-b { background: var(--c2); }
+  .section-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 2rem auto 0.7rem;
+    max-width: 820px;
+  }
+  .block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.5rem;
+    margin: 0 auto 0.85rem;
+    max-width: 820px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .block.refrain {
+    background: var(--refrain);
+    border-color: var(--refrain-border);
+  }
+  .verse-num {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .iline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.2em;
+    margin-bottom: 0.15rem;
+    align-items: flex-start;
+  }
+  .iline + .iline { margin-top: 0.55rem; }
+  .token {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+  }
+  .pali-w {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .gloss {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--gloss);
+    line-height: 1.3;
+    margin-top: 2px;
+    font-style: italic;
+  }
+  .a .pali-w { color: var(--c1); }
+  .b .pali-w { color: var(--c2); }
+  .sa {
+    color: var(--slash-a);
+    font-weight: 400;
+    font-size: 0.82em;
+    margin: 0 1px;
+    user-select: none;
+  }
+  .sb {
+    color: var(--slash-b);
+    font-weight: 400;
+    font-size: 0.82em;
+    margin: 0 1px;
+    user-select: none;
+  }
+  .note {
+    margin-top: 0.7rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px dashed var(--border);
+    padding-top: 0.45rem;
+    line-height: 1.85;
+    font-weight: 400;
+  }
+
+  @media print {
+    @page { size: A4; margin: 1.8cm 1.5cm 1.8cm 1.5cm; }
+    body { padding: 0; background: white !important;
+           -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    header p, .legend { display: none; }
+    header { margin-bottom: 1rem; }
+    .section-label { margin: 0.8rem auto 0.4rem; font-size: 0.6rem; break-after: avoid; }
+    .section-label + .block { break-before: avoid; }
+    .block { break-inside: avoid; box-shadow: none; border: 1px solid #ccc;
+             border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; }
+    .block.refrain { break-inside: avoid; padding: 0.45rem 1rem; margin-bottom: 0.5rem; }
+    .pali-w { font-size: 0.92rem; }
+    .gloss { font-size: 0.6rem; }
+    .verse-num { font-size: 0.58rem; }
+    .note { font-size: 0.62rem; line-height: 1.6; }
+    .a .pali-w { color: #8b4f00 !important; }
+    .b .pali-w { color: #0f6648 !important; }
+    .sa { color: #b09070 !important; }
+    .sb { color: #cc4444 !important; }
+    .gloss { color: #5a4a38 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ratanasuttaṁ</h1>
+  <p>Interlinear — Nghĩa từng từ · Version 2</p>
+</header>
+
+<div class="legend">
+  <span><span class="dot dot-a"></span>Cụm lẻ</span>
+  <span><span class="dot dot-b"></span>Cụm chẵn</span>
+  <span style="color:#b09070">/ = tách từ ghép (Pali)</span>
+  <span style="color:#cc4444">/ = tách cho dễ đọc</span>
+</div>
+
+<!-- ═══ 01. NIDĀNA ═══ -->
+<div class="section-label">01 — Nidāna · Lời Dẫn Nhập</div>
+<div class="block">
+  <div class="verse-num">01</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Paṇidhānato</span><span class="gloss">kể từ lời nguyện</span></span>
+    <span class="token b"><span class="pali-w">paṭṭhāya</span><span class="gloss">bắt đầu</span></span>
+    <span class="token a"><span class="pali-w">Tathāgatassa</span><span class="gloss">của Như Lai</span></span>
+    <span class="token b"><span class="pali-w">dasa</span><span class="gloss">mười</span></span>
+    <span class="token a"><span class="pali-w">pāramiyo</span><span class="gloss">ba-la-mật</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">dasa</span><span class="gloss">mười</span></span>
+    <span class="token a"><span class="pali-w">upa<span class="sa">/</span>pāramiyo</span><span class="gloss">cận ba-la-mật</span></span>
+    <span class="token b"><span class="pali-w">dasa</span><span class="gloss">mười</span></span>
+    <span class="token a"><span class="pali-w">paramat<span class="sa">/</span>tha<span class="sa">/</span>pāramiyoti</span><span class="gloss">tối thượng ba-la-mật</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">samatiṁsa</span><span class="gloss">ba mươi</span></span>
+    <span class="token a"><span class="pali-w">pāramiyo</span><span class="gloss">ba-la-mật</span></span>
+    <span class="token b"><span class="pali-w">pañca</span><span class="gloss">năm</span></span>
+    <span class="token a"><span class="pali-w">mahā<span class="sa">/</span>pariccāge</span><span class="gloss">đại thí xả</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">lokattha<span class="sa">/</span>cariyaṁ</span><span class="gloss">hành vì thế gian</span></span>
+    <span class="token a"><span class="pali-w">ñātattha<span class="sa">/</span>cariyaṁ</span><span class="gloss">hành vì thân tộc</span></span>
+    <span class="token b"><span class="pali-w">Buddhattha<span class="sa">/</span>cariyanti</span><span class="gloss">hành vì Phật quả</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">tisso</span><span class="gloss">ba</span></span>
+    <span class="token b"><span class="pali-w">cariyāyo</span><span class="gloss">hạnh</span></span>
+    <span class="token a"><span class="pali-w">pacchima<span class="sa">/</span>bhave</span><span class="gloss">kiếp cuối</span></span>
+    <span class="token b"><span class="pali-w">gabbha<span class="sa">/</span>vokkantiṁ</span><span class="gloss">thác thai</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">jātiṁ</span><span class="gloss">sinh ra</span></span>
+    <span class="token b"><span class="pali-w">abhi<span class="sa">/</span>nikkhama<span class="sb">/</span>naṁ</span><span class="gloss">xuất gia</span></span>
+    <span class="token a"><span class="pali-w">padhāna<span class="sa">/</span>cariyaṁ</span><span class="gloss">hạnh tinh tấn</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Bodhi<span class="sa">/</span>pallaṅke</span><span class="gloss">tại Bồ đề tràng</span></span>
+    <span class="token a"><span class="pali-w">Māra<span class="sa">/</span>vijayaṁ</span><span class="gloss">chiến thắng Ma vương</span></span>
+    <span class="token b"><span class="pali-w">sabbaññutañ</span><span class="gloss">Nhất thiết trí</span></span><span class="token a"><span class="pali-w">ñāṇap<span class="sa">/</span>paṭive<span class="sb">/</span>dhaṁ</span><span class="gloss">thấu triệt trí</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Dhamma<span class="sa">/</span>cakkap</span><span class="gloss">Pháp luân</span></span><span class="token a"><span class="pali-w">pavatta<span class="sb">/</span>naṁ</span><span class="gloss">chuyển vận</span></span>
+    <span class="token b"><span class="pali-w">nava</span><span class="gloss">chín</span></span>
+    <span class="token a"><span class="pali-w">lokut<span class="sb">/</span>tara<span class="sa">/</span>dhammeti</span><span class="gloss">siêu thế pháp</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">sabbepi'me</span><span class="gloss">tất cả này</span></span>
+    <span class="token a"><span class="pali-w">Buddha<span class="sa">/</span>guṇe</span><span class="gloss">ân đức Phật</span></span>
+    <span class="token b"><span class="pali-w">āvajjetvā</span><span class="gloss">sau khi quán tưởng</span></span>
+    <span class="token a"><span class="pali-w">Vesāliyā</span><span class="gloss">tại Vesāli</span></span>
+    <span class="token b"><span class="pali-w">tīsu</span><span class="gloss">trong ba</span></span>
+    <span class="token a"><span class="pali-w">pākāran<span class="sa">/</span>taresu</span><span class="gloss">vòng thành</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">tiyāma<span class="sa">/</span>rattiṁ</span><span class="gloss">ba canh đêm</span></span>
+    <span class="token a"><span class="pali-w">parittaṁ</span><span class="gloss">hộ kinh</span></span>
+    <span class="token b"><span class="pali-w">karonto</span><span class="gloss">đang tụng</span></span>
+    <span class="token a"><span class="pali-w">āyasmā</span><span class="gloss">Đại đức</span></span>
+    <span class="token b"><span class="pali-w">Ānanda<span class="sa">/</span>tthero</span><span class="gloss">Trưởng lão Ānanda</span></span>
+    <span class="token a"><span class="pali-w">viya</span><span class="gloss">giống như</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">kāruñña</span><span class="gloss">bi mẫn</span></span><span class="token a"><span class="pali-w">cittaṁ</span><span class="gloss">tâm</span></span>
+    <span class="token b"><span class="pali-w">upaṭṭha<span class="sa">/</span>petvā</span><span class="gloss">sau khi thiết lập</span></span>
+  </div>
+  <div class="note">Kể từ lời phát nguyện của Như Lai: mười ba-la-mật, mười cận ba-la-mật, mười tối thượng ba-la-mật — tổng cộng ba mươi ba-la-mật; năm đại thí xả; ba hạnh: hành vì thế gian, hành vì thân tộc, hành vì Phật quả; thác thai ở kiếp cuối, sinh ra, xuất gia, hạnh tinh tấn; chiến thắng Ma vương tại Bồ đề tràng; thấu triệt trí Nhất thiết trí; chuyển Pháp luân; chín siêu thế pháp — sau khi quán tưởng tất cả ân đức Phật, tại Vesāli trong ba vòng thành, tụng hộ kinh suốt ba canh đêm như Trưởng lão Ānanda, với tâm bi mẫn được thiết lập.</div>
+</div>
+
+<!-- ═══ 02. KOṬĪSATA ═══ -->
+<div class="section-label">02 — Lời Thỉnh Chư Thiên</div>
+<div class="block">
+  <div class="verse-num">02</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Koṭī<span class="sa">/</span>sata<span class="sa">/</span>sahassesu</span><span class="gloss">trong trăm ngàn triệu</span></span>
+    <span class="token b"><span class="pali-w">cakkavā<span class="sa">/</span>ḷesu</span><span class="gloss">cõi thế giới</span></span>
+    <span class="token a"><span class="pali-w">devatā</span><span class="gloss">chư thiên</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Yassā'naṁ</span><span class="gloss">lời thỉnh cầu của ai</span></span>
+    <span class="token a"><span class="pali-w">paṭig<span class="sa">/</span>gaṇhanti</span><span class="gloss">tiếp nhận</span></span>
+    <span class="token b"><span class="pali-w">yañca</span><span class="gloss">và điều đó</span></span>
+    <span class="token a"><span class="pali-w">Vesāliyā</span><span class="gloss">tại Vesāli</span></span>
+    <span class="token b"><span class="pali-w">pure</span><span class="gloss">thành</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">rogā<span class="sa">/</span>manussa<span class="sa">/</span>dubbhikkha<span class="sb">/</span>sambhūtaṁ</span><span class="gloss">phát sinh từ dịch bệnh, phi nhân, nạn đói</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">tividhaṁ</span><span class="gloss">ba loại</span></span>
+    <span class="token a"><span class="pali-w">bhayaṁ</span><span class="gloss">tai họa</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">khippa'manta<span class="sb">/</span>radhāpesi</span><span class="gloss">đã tiêu trừ nhanh chóng</span></span>
+    <span class="token a"><span class="pali-w">parittaṁ</span><span class="gloss">hộ kinh</span></span>
+    <span class="token b"><span class="pali-w">taṁ</span><span class="gloss">đó</span></span>
+    <span class="token a"><span class="pali-w">bhaṇāma</span><span class="gloss">chúng ta hãy tụng</span></span>
+    <span class="token b"><span class="pali-w">he</span><span class="gloss">này</span></span>
+  </div>
+  <div class="note">Chư thiên trong hàng trăm ngàn triệu cõi thế giới tiếp nhận lời thỉnh cầu — ba loại tai họa phát sinh từ dịch bệnh, phi nhân và nạn đói tại Vesāli đã được tiêu trừ nhanh chóng. Chúng ta hãy tụng hộ kinh ấy.</div>
+</div>
+
+<!-- ═══ 03–04. LỜI MỜI ═══ -->
+<div class="section-label">03–04 — Lời Mời Chư Thiên</div>
+<div class="block">
+  <div class="verse-num">03</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yānīdha</span><span class="gloss">những gì ở đây</span></span>
+    <span class="token b"><span class="pali-w">bhūtāni</span><span class="gloss">chúng sinh</span></span>
+    <span class="token a"><span class="pali-w">samāgatāni</span><span class="gloss">đã tụ hội</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Bhummāni</span><span class="gloss">thuộc địa giới</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">yāni</span><span class="gloss">những gì</span></span>
+    <span class="token a"><span class="pali-w">va</span><span class="gloss">hoặc</span></span>
+    <span class="token b"><span class="pali-w">anta<span class="sa">/</span>likkhe</span><span class="gloss">trên không trung</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">sabbeva</span><span class="gloss">tất cả</span></span>
+    <span class="token b"><span class="pali-w">bhūtā</span><span class="gloss">chúng sinh</span></span>
+    <span class="token a"><span class="pali-w">sumanā</span><span class="gloss">hoan hỷ</span></span>
+    <span class="token b"><span class="pali-w">bhavantu</span><span class="gloss">mong được</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">athopi</span><span class="gloss">hơn nữa</span></span>
+    <span class="token b"><span class="pali-w">sakkacca</span><span class="gloss">chú tâm</span></span>
+    <span class="token a"><span class="pali-w">suṇantu</span><span class="gloss">hãy lắng nghe</span></span>
+    <span class="token b"><span class="pali-w">bhāsitaṁ</span><span class="gloss">lời này</span></span>
+  </div>
+  <div class="note">Những chúng sinh nào đã tụ hội ở đây, dù thuộc địa giới hay không trung, mong tất cả đều hoan hỷ, và hãy chú tâm lắng nghe lời này.</div>
+</div>
+
+<div class="block">
+  <div class="verse-num">04</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Tasmā</span><span class="gloss">vì vậy</span></span>
+    <span class="token b"><span class="pali-w">hi</span><span class="gloss">thật vậy</span></span>
+    <span class="token a"><span class="pali-w">bhūtā</span><span class="gloss">chúng sinh</span></span>
+    <span class="token b"><span class="pali-w">nisāmetha</span><span class="gloss">hãy lắng nghe</span></span>
+    <span class="token a"><span class="pali-w">sabbe</span><span class="gloss">tất cả</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">mettaṁ</span><span class="gloss">lòng từ</span></span>
+    <span class="token a"><span class="pali-w">karotha</span><span class="gloss">hãy rải</span></span>
+    <span class="token b"><span class="pali-w">mānusiyā</span><span class="gloss">đối với loài người</span></span>
+    <span class="token a"><span class="pali-w">pajāya</span><span class="gloss">dân chúng</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">divā</span><span class="gloss">ban ngày</span></span>
+    <span class="token a"><span class="pali-w">ca</span><span class="gloss">và</span></span>
+    <span class="token b"><span class="pali-w">ratto</span><span class="gloss">ban đêm</span></span>
+    <span class="token a"><span class="pali-w">ca</span><span class="gloss">và</span></span>
+    <span class="token b"><span class="pali-w">haranti</span><span class="gloss">dâng cúng</span></span>
+    <span class="token a"><span class="pali-w">ye</span><span class="gloss">những ai</span></span>
+    <span class="token b"><span class="pali-w">baliṁ</span><span class="gloss">lễ vật</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">tasmā</span><span class="gloss">vì vậy</span></span>
+    <span class="token b"><span class="pali-w">hi</span><span class="gloss">thật vậy</span></span>
+    <span class="token a"><span class="pali-w">ne</span><span class="gloss">họ</span></span>
+    <span class="token b"><span class="pali-w">rakkhatha</span><span class="gloss">hãy hộ trì</span></span>
+    <span class="token a"><span class="pali-w">appa<span class="sa">/</span>mattā</span><span class="gloss">không phóng dật</span></span>
+  </div>
+  <div class="note">Vì vậy, hỡi các chúng sinh, hãy cùng lắng nghe, hãy rải lòng từ đến loài người. Ngày và đêm họ dâng lễ vật cúng dường, vì vậy hãy hộ trì họ không phóng dật.</div>
+</div>
+
+<!-- ═══ 05. PHẬT BẢO ═══ -->
+<div class="section-label">05–07 — Phật Bảo · Pháp Bảo</div>
+<div class="block">
+  <div class="verse-num">05</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yaṁ</span><span class="gloss">bất kỳ</span></span>
+    <span class="token b"><span class="pali-w">kiñci</span><span class="gloss">điều gì</span></span>
+    <span class="token a"><span class="pali-w">vittaṁ</span><span class="gloss">tài sản</span></span>
+    <span class="token b"><span class="pali-w">idha</span><span class="gloss">ở đây</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">huraṁ</span><span class="gloss">ở cõi khác</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">saggesu</span><span class="gloss">trong cõi trời</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">yaṁ</span><span class="gloss">bất kỳ</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">na</span><span class="gloss">không</span></span>
+    <span class="token b"><span class="pali-w">no</span><span class="gloss">nào</span></span>
+    <span class="token a"><span class="pali-w">samaṁ</span><span class="gloss">sánh bằng</span></span>
+    <span class="token b"><span class="pali-w">atthi</span><span class="gloss">có</span></span>
+    <span class="token a"><span class="pali-w">Tathāga<span class="sa">/</span>tena</span><span class="gloss">với Như Lai</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token a"><span class="pali-w">Buddhe</span><span class="gloss">trong Phật</span></span>
+    <span class="token b"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token a"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Bất kỳ tài sản nào ở đây hay ở cõi khác, bất kỳ châu báu nào trong các cõi trời, không có gì sánh bằng Như Lai. Đây là châu báu cao quý trong Đức Phật.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 06. PHÁP BẢO ═══ -->
+<div class="block">
+  <div class="verse-num">06</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Khayaṁ</span><span class="gloss">đoạn diệt</span></span>
+    <span class="token b"><span class="pali-w">virāgaṁ</span><span class="gloss">ly tham</span></span>
+    <span class="token a"><span class="pali-w">amataṁ</span><span class="gloss">bất tử</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">ya<span class="sb">/</span>dajjha<span class="sb">/</span>gā</span><span class="gloss">đã chứng đạt</span></span>
+    <span class="token b"><span class="pali-w">Sakya<span class="sa">/</span>munī</span><span class="gloss">Sakyamuni</span></span>
+    <span class="token a"><span class="pali-w">samāhito</span><span class="gloss">trong thiền định</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">na</span><span class="gloss">không</span></span>
+    <span class="token a"><span class="pali-w">tena</span><span class="gloss">với</span></span>
+    <span class="token b"><span class="pali-w">dhammena</span><span class="gloss">Pháp đó</span></span>
+    <span class="token a"><span class="pali-w">samatthi</span><span class="gloss">sánh bằng</span></span>
+    <span class="token b"><span class="pali-w">kiñci</span><span class="gloss">bất kỳ điều gì</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Dhamme</span><span class="gloss">trong Pháp</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Sự đoạn diệt, ly tham, bất tử cao quý mà Sakyamuni đã chứng đạt trong thiền định — không có gì có thể sánh với Pháp ấy. Đây là châu báu cao quý trong Pháp Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 07 ═══ -->
+<div class="block">
+  <div class="verse-num">07</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yaṁ</span><span class="gloss">điều mà</span></span>
+    <span class="token b"><span class="pali-w">Buddha<span class="sa">/</span>seṭṭho</span><span class="gloss">đức Phật tối thượng</span></span>
+    <span class="token a"><span class="pali-w">pari<span class="sb">/</span>vaṇṇa<span class="sb">/</span>yī</span><span class="gloss">ca ngợi</span></span>
+    <span class="token b"><span class="pali-w">suciṁ</span><span class="gloss">thanh tịnh</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">samādhi<span class="sa">/</span>mānantari<span class="sa">/</span>kañña<span class="sa">/</span>māhu</span><span class="gloss">định vô gián</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Samādhinā</span><span class="gloss">với định đó</span></span>
+    <span class="token a"><span class="pali-w">tena</span><span class="gloss">ấy</span></span>
+    <span class="token b"><span class="pali-w">samo</span><span class="gloss">sánh bằng</span></span>
+    <span class="token a"><span class="pali-w">na</span><span class="gloss">không</span></span>
+    <span class="token b"><span class="pali-w">vijjati</span><span class="gloss">có</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Dhamme</span><span class="gloss">trong Pháp</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Định thanh tịnh mà đức Phật Tối Thượng ca ngợi, được gọi là định vô gián — không có định nào có thể sánh với định ấy. Đây là châu báu cao quý trong Pháp Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 08–14. TĂNG BẢO ═══ -->
+<div class="section-label">08–14 — Tăng Bảo</div>
+<div class="block">
+  <div class="verse-num">08</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Ye</span><span class="gloss">những vị</span></span>
+    <span class="token b"><span class="pali-w">puggalā</span><span class="gloss">bậc chân nhân</span></span>
+    <span class="token a"><span class="pali-w">aṭṭha</span><span class="gloss">tám</span></span>
+    <span class="token b"><span class="pali-w">sataṁ</span><span class="gloss">được người trí</span></span>
+    <span class="token a"><span class="pali-w">pasatthā</span><span class="gloss">tán thán</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">cattāri</span><span class="gloss">bốn</span></span>
+    <span class="token a"><span class="pali-w">etāni</span><span class="gloss">đôi này</span></span>
+    <span class="token b"><span class="pali-w">yugāni</span><span class="gloss">đôi</span></span>
+    <span class="token a"><span class="pali-w">honti</span><span class="gloss">tạo thành</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">te</span><span class="gloss">các vị ấy</span></span>
+    <span class="token a"><span class="pali-w">dakkhiṇeyyā</span><span class="gloss">đáng cúng dường</span></span>
+    <span class="token b"><span class="pali-w">Sugatassa</span><span class="gloss">của Thiện Thệ</span></span>
+    <span class="token a"><span class="pali-w">sāvakā</span><span class="gloss">đệ tử</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">etesu</span><span class="gloss">đến các vị ấy</span></span>
+    <span class="token a"><span class="pali-w">dinnāni</span><span class="gloss">vật cúng dường</span></span>
+    <span class="token b"><span class="pali-w">mahap<span class="sa">/</span>phalāni</span><span class="gloss">có quả lớn</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Tám bậc chân nhân được người trí tán thán, bốn đôi tạo thành — các đệ tử của Thiện Thệ đáng cúng dường; vật cúng dường đến các vị ấy có quả lớn. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">09</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Ye</span><span class="gloss">những vị</span></span>
+    <span class="token b"><span class="pali-w">suppayuttā</span><span class="gloss">chuyên tâm tu tập</span></span>
+    <span class="token a"><span class="pali-w">manasā</span><span class="gloss">với tâm</span></span>
+    <span class="token b"><span class="pali-w">daḷhena</span><span class="gloss">kiên định</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">nikkāmino</span><span class="gloss">ly dục</span></span>
+    <span class="token b"><span class="pali-w">Gotama<span class="sa">/</span>sāsanamhi</span><span class="gloss">trong giáo pháp Gotama</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">te</span><span class="gloss">các vị ấy</span></span>
+    <span class="token b"><span class="pali-w">patti<span class="sa">/</span>pattā</span><span class="gloss">đã đắc quả</span></span>
+    <span class="token a"><span class="pali-w">amataṁ</span><span class="gloss">bất tử</span></span>
+    <span class="token b"><span class="pali-w">vigayha</span><span class="gloss">thâm nhập</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">laddhā</span><span class="gloss">được thành tựu</span></span>
+    <span class="token b"><span class="pali-w">mudhā</span><span class="gloss">nhưng không</span></span>
+    <span class="token a"><span class="pali-w">nibbutiṁ</span><span class="gloss">Niết-bàn</span></span>
+    <span class="token b"><span class="pali-w">bhuñjamānā</span><span class="gloss">thọ hưởng</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Những vị chuyên tâm tu tập với ý chí kiên định, ly dục trong giáo pháp Gotama — đắc quả, thâm nhập bất tử, thọ hưởng Niết-bàn được thành tựu. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">10</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yathinda<span class="sa">/</span>khīlo</span><span class="gloss">như cột trụ Đế Thích</span></span>
+    <span class="token b"><span class="pali-w">paṭhavissito</span><span class="gloss">cắm sâu vào đất</span></span>
+    <span class="token a"><span class="pali-w">siyā</span><span class="gloss">được</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">catubbhi</span><span class="gloss">bốn</span></span>
+    <span class="token a"><span class="pali-w">vātehi</span><span class="gloss">chiều gió</span></span>
+    <span class="token b"><span class="pali-w">asam<span class="sb">/</span>pakampiyo</span><span class="gloss">không thể lay chuyển</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">tathūpa<span class="sb">/</span>maṁ</span><span class="gloss">như vậy</span></span>
+    <span class="token b"><span class="pali-w">sappuri<span class="sb">/</span>saṁ</span><span class="gloss">bậc chân nhân</span></span>
+    <span class="token a"><span class="pali-w">vadāmi</span><span class="gloss">ta nói</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">yo</span><span class="gloss">vị</span></span>
+    <span class="token a"><span class="pali-w">ariya<span class="sa">/</span>saccāni</span><span class="gloss">Tứ Thánh Đế</span></span>
+    <span class="token b"><span class="pali-w">avecca</span><span class="gloss">bằng trí tuệ</span></span>
+    <span class="token a"><span class="pali-w">passati</span><span class="gloss">thấy rõ</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token a"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token b"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token a"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Như cột trụ của Đế Thích cắm sâu vào đất, bốn chiều gió không thể lay chuyển — ta nói bậc chân nhân cũng như vậy: vị thấy rõ Tứ Thánh Đế bằng trí tuệ thể nhập. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">11</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Ye</span><span class="gloss">những vị</span></span>
+    <span class="token b"><span class="pali-w">ariya<span class="sa">/</span>saccāni</span><span class="gloss">Tứ Thánh Đế</span></span>
+    <span class="token a"><span class="pali-w">vibhāvayanti</span><span class="gloss">thấu rõ</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">gambhīra<span class="sa">/</span>paññena</span><span class="gloss">bởi bậc trí sâu xa</span></span>
+    <span class="token a"><span class="pali-w">sudesitāni</span><span class="gloss">được giảng dạy khéo léo</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">kiñcāpi</span><span class="gloss">dù rằng</span></span>
+    <span class="token a"><span class="pali-w">te</span><span class="gloss">các vị ấy</span></span>
+    <span class="token b"><span class="pali-w">honti</span><span class="gloss">có</span></span>
+    <span class="token a"><span class="pali-w">bhusaṁ</span><span class="gloss">nhiều</span></span>
+    <span class="token b"><span class="pali-w">pamattā</span><span class="gloss">phóng dật</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">na</span><span class="gloss">không</span></span>
+    <span class="token b"><span class="pali-w">te</span><span class="gloss">họ</span></span>
+    <span class="token a"><span class="pali-w">bhavaṁ</span><span class="gloss">tái sinh</span></span>
+    <span class="token b"><span class="pali-w">aṭṭhama'mādiyanti</span><span class="gloss">đến lần thứ tám</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Những vị thấu rõ Tứ Thánh Đế được giảng dạy khéo léo bởi bậc trí sâu xa — dù phóng dật đến đâu, họ cũng sẽ không tái sinh đến lần thứ tám. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">12</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Sahāvassa</span><span class="gloss">cùng với</span></span>
+    <span class="token b"><span class="pali-w">dassana<span class="sa">/</span>sampadāya</span><span class="gloss">sự thành tựu tri kiến</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">tayassu</span><span class="gloss">ba pháp này</span></span>
+    <span class="token b"><span class="pali-w">dhammā</span><span class="gloss">pháp</span></span>
+    <span class="token a"><span class="pali-w">jahitā</span><span class="gloss">được đoạn trừ</span></span>
+    <span class="token b"><span class="pali-w">bhavanti</span><span class="gloss">trở thành</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">sakkāya<span class="sa">/</span>diṭṭhi</span><span class="gloss">thân kiến</span></span>
+    <span class="token b"><span class="pali-w">vicikicchitañca</span><span class="gloss">và nghi</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">sīlabbataṁ</span><span class="gloss">giới cấm thủ</span></span>
+    <span class="token b"><span class="pali-w">vāpi</span><span class="gloss">hay bất cứ</span></span>
+    <span class="token a"><span class="pali-w">yadatthi</span><span class="gloss">điều gì có</span></span>
+    <span class="token b"><span class="pali-w">kiñci</span><span class="gloss">bất kỳ</span></span>
+  </div>
+  <div class="note">Khi vị ấy thành tựu tri kiến, ba pháp liền được đoạn trừ: thân kiến, nghi và giới cấm thủ.</div>
+</div>
+
+<div class="block">
+  <div class="verse-num">13</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Catūha<span class="sb">/</span>pāyehi</span><span class="gloss">khỏi bốn đường ác</span></span>
+    <span class="token b"><span class="pali-w">ca</span><span class="gloss">và</span></span>
+    <span class="token a"><span class="pali-w">vippamutto</span><span class="gloss">thoát khỏi hoàn toàn</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">chaccābhi<span class="sb">/</span>ṭhānāni</span><span class="gloss">sáu trọng tội</span></span>
+    <span class="token a"><span class="pali-w">abhabba</span><span class="gloss">không thể</span></span>
+    <span class="token b"><span class="pali-w">kātuṁ</span><span class="gloss">phạm</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Vị ấy thoát khỏi bốn đường ác và không thể phạm sáu trọng tội. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">14</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Kiñcāpi</span><span class="gloss">dù rằng</span></span>
+    <span class="token b"><span class="pali-w">so</span><span class="gloss">vị ấy</span></span>
+    <span class="token a"><span class="pali-w">kamma</span><span class="gloss">nghiệp</span></span>
+    <span class="token b"><span class="pali-w">karoti</span><span class="gloss">tạo</span></span>
+    <span class="token a"><span class="pali-w">pāpakaṁ</span><span class="gloss">ác</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">kāyena</span><span class="gloss">bằng thân</span></span>
+    <span class="token a"><span class="pali-w">vācā</span><span class="gloss">khẩu</span></span>
+    <span class="token b"><span class="pali-w">uda</span><span class="gloss">hoặc</span></span>
+    <span class="token a"><span class="pali-w">cetasā</span><span class="gloss">ý</span></span>
+    <span class="token b"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">abhabba</span><span class="gloss">không thể</span></span>
+    <span class="token b"><span class="pali-w">so</span><span class="gloss">vị ấy</span></span>
+    <span class="token a"><span class="pali-w">tassa</span><span class="gloss">điều đó</span></span>
+    <span class="token b"><span class="pali-w">paṭiccha<span class="sb">/</span>dāya</span><span class="gloss">che giấu</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">abhabbatā</span><span class="gloss">sự không thể che giấu</span></span>
+    <span class="token b"><span class="pali-w">diṭṭha<span class="sa">/</span>padassa</span><span class="gloss">của người thấy đạo</span></span>
+    <span class="token a"><span class="pali-w">vuttā</span><span class="gloss">được nói đến</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token a"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token b"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token a"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Dù vị ấy có tạo nghiệp ác bằng thân, khẩu hay ý — vị ấy không thể che giấu điều đó; sự không thể che giấu được nói đến đối với người đã thấy đạo. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 15–16. PHẬT BẢO tiếp ═══ -->
+<div class="section-label">15–16 — Phật Bảo (tiếp)</div>
+<div class="block">
+  <div class="verse-num">15</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Vanap<span class="sa">/</span>pagumbe</span><span class="gloss">cụm cây rừng</span></span>
+    <span class="token b"><span class="pali-w">yathā</span><span class="gloss">như</span></span>
+    <span class="token a"><span class="pali-w">phussitag<span class="sa">/</span>ge</span><span class="gloss">đua nhau trổ hoa ngọn</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">gimhāna<span class="sa">/</span>māse</span><span class="gloss">tháng mùa hè</span></span>
+    <span class="token a"><span class="pali-w">paṭhama<span class="sa">/</span>smiṁ</span><span class="gloss">vào buổi đầu</span></span>
+    <span class="token b"><span class="pali-w">gimhe</span><span class="gloss">mùa hạ</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">tathūpa<span class="sb">/</span>maṁ</span><span class="gloss">cũng như vậy</span></span>
+    <span class="token b"><span class="pali-w">Dhamma<span class="sa">/</span>varaṁ</span><span class="gloss">Pháp cao quý</span></span>
+    <span class="token a"><span class="pali-w">adesayi</span><span class="gloss">đã giảng dạy</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Nibbāna<span class="sa">/</span>gāmiṁ</span><span class="gloss">dẫn đến Niết-bàn</span></span>
+    <span class="token a"><span class="pali-w">paramaṁ</span><span class="gloss">tối thượng</span></span>
+    <span class="token b"><span class="pali-w">hitāya</span><span class="gloss">vì lợi ích</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token b"><span class="pali-w">Buddhe</span><span class="gloss">trong Phật</span></span>
+    <span class="token a"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token b"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Như những chùm cây rừng đua nhau trổ hoa ngọn vào buổi đầu mùa hạ, Ngài đã giảng dạy Pháp cao quý dẫn đến Niết-bàn vì lợi ích tối thượng. Đây là châu báu cao quý trong Đức Phật.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<div class="block">
+  <div class="verse-num">16</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Varo</span><span class="gloss">tối thượng</span></span>
+    <span class="token b"><span class="pali-w">varañ<span class="sa">/</span>ñū</span><span class="gloss">biết điều tối thượng</span></span>
+    <span class="token a"><span class="pali-w">varado</span><span class="gloss">ban điều tối thượng</span></span>
+    <span class="token b"><span class="pali-w">varā<span class="sa">/</span>haro</span><span class="gloss">đưa đến điều tối thượng</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">anuttaro</span><span class="gloss">vô thượng</span></span>
+    <span class="token b"><span class="pali-w">Dhamma<span class="sa">/</span>varaṁ</span><span class="gloss">Pháp cao quý</span></span>
+    <span class="token a"><span class="pali-w">adesayi</span><span class="gloss">đã giảng dạy</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token a"><span class="pali-w">Buddhe</span><span class="gloss">trong Phật</span></span>
+    <span class="token b"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token a"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Bậc Tối Thượng, biết điều tối thượng, ban điều tối thượng, đưa đến điều tối thượng — Đấng Vô Thượng đã giảng dạy Pháp cao quý. Đây là châu báu cao quý trong Đức Phật.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 17. TĂNG BẢO tiếp ═══ -->
+<div class="section-label">17 — Tăng Bảo (tiếp)</div>
+<div class="block">
+  <div class="verse-num">17</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Khīṇaṁ</span><span class="gloss">đã diệt</span></span>
+    <span class="token b"><span class="pali-w">purāṇaṁ</span><span class="gloss">nghiệp cũ</span></span>
+    <span class="token a"><span class="pali-w">nava</span><span class="gloss">mới</span></span>
+    <span class="token b"><span class="pali-w">natthi<span class="sa">/</span>sambhavaṁ</span><span class="gloss">không sanh khởi</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">viratta<span class="sa">/</span>cittā'yatike</span><span class="gloss">tâm ly tham tái sinh</span></span>
+    <span class="token b"><span class="pali-w">bhava<span class="sa">/</span>smiṁ</span><span class="gloss">trong hữu</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">te</span><span class="gloss">các vị ấy</span></span>
+    <span class="token b"><span class="pali-w">khīṇa<span class="sa">/</span>bījā</span><span class="gloss">hạt giống đã tàn</span></span>
+    <span class="token a"><span class="pali-w">avirūḷhi<span class="sa">/</span>chandā</span><span class="gloss">dục vọng không tăng trưởng</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">nibbanti</span><span class="gloss">tịch diệt</span></span>
+    <span class="token a"><span class="pali-w">dhīrā</span><span class="gloss">bậc trí</span></span>
+    <span class="token b"><span class="pali-w">yathāyaṁ</span><span class="gloss">như</span></span>
+    <span class="token a"><span class="pali-w">padīpo</span><span class="gloss">ngọn đèn này</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">Idampi</span><span class="gloss">đây cũng</span></span>
+    <span class="token a"><span class="pali-w">Saṁghe</span><span class="gloss">trong Tăng</span></span>
+    <span class="token b"><span class="pali-w">ratanaṁ</span><span class="gloss">châu báu</span></span>
+    <span class="token a"><span class="pali-w">paṇītaṁ</span><span class="gloss">cao quý</span></span>
+  </div>
+  <div class="note">Nghiệp cũ đã diệt, nghiệp mới không sanh khởi; tâm ly tham đối với sự tái sinh — hạt giống đã tàn, dục vọng không tăng trưởng; các bậc trí tịch diệt như ngọn đèn này. Đây là châu báu cao quý trong Tăng Bảo.</div>
+</div>
+<div class="block refrain">
+  <div class="iline">
+    <span class="token a"><span class="pali-w">etena</span><span class="gloss">do điều này</span></span>
+    <span class="token b"><span class="pali-w">saccena</span><span class="gloss">sự thật</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+</div>
+
+<!-- ═══ 18–20. LỄ BÁI TAM BẢO ═══ -->
+<div class="section-label">18–20 — Lễ Bái Tam Bảo</div>
+<div class="block">
+  <div class="verse-num">18</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yānīdha</span><span class="gloss">những gì ở đây</span></span>
+    <span class="token b"><span class="pali-w">bhūtāni</span><span class="gloss">chúng sinh</span></span>
+    <span class="token a"><span class="pali-w">samāgatāni</span><span class="gloss">đã tụ hội</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">bhummāni</span><span class="gloss">thuộc địa giới</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">yāni</span><span class="gloss">những gì</span></span>
+    <span class="token a"><span class="pali-w">va</span><span class="gloss">hoặc</span></span>
+    <span class="token b"><span class="pali-w">anta<span class="sa">/</span>likkhe</span><span class="gloss">trên không trung</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Tathāgataṁ</span><span class="gloss">Như Lai</span></span>
+    <span class="token b"><span class="pali-w">deva<span class="sa">/</span>manussa<span class="sa">/</span>pūjitaṁ</span><span class="gloss">được trời người cúng dường</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Buddhaṁ</span><span class="gloss">Đức Phật</span></span>
+    <span class="token b"><span class="pali-w">namassāma</span><span class="gloss">chúng con kính lễ</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+  <div class="note">Những chúng sinh đã tụ hội ở đây, dù địa giới hay không trung, chúng con kính lễ Đức Phật — Như Lai được trời người cúng dường — mong được an lành.</div>
+</div>
+
+<div class="block">
+  <div class="verse-num">19</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yānīdha</span><span class="gloss">những gì ở đây</span></span>
+    <span class="token b"><span class="pali-w">bhūtāni</span><span class="gloss">chúng sinh</span></span>
+    <span class="token a"><span class="pali-w">samāgatāni</span><span class="gloss">đã tụ hội</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">bhummāni</span><span class="gloss">thuộc địa giới</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">yāni</span><span class="gloss">những gì</span></span>
+    <span class="token a"><span class="pali-w">va</span><span class="gloss">hoặc</span></span>
+    <span class="token b"><span class="pali-w">anta<span class="sa">/</span>likkhe</span><span class="gloss">trên không trung</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Tathāgataṁ</span><span class="gloss">Như Lai</span></span>
+    <span class="token b"><span class="pali-w">deva<span class="sa">/</span>manussa<span class="sa">/</span>pūjitaṁ</span><span class="gloss">được trời người cúng dường</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Dhammaṁ</span><span class="gloss">Đức Pháp</span></span>
+    <span class="token b"><span class="pali-w">namassāma</span><span class="gloss">chúng con kính lễ</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+  <div class="note">Những chúng sinh đã tụ hội ở đây, dù địa giới hay không trung, chúng con kính lễ Đức Pháp — được trời người cúng dường — mong được an lành.</div>
+</div>
+
+<div class="block">
+  <div class="verse-num">20</div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Yānīdha</span><span class="gloss">những gì ở đây</span></span>
+    <span class="token b"><span class="pali-w">bhūtāni</span><span class="gloss">chúng sinh</span></span>
+    <span class="token a"><span class="pali-w">samāgatāni</span><span class="gloss">đã tụ hội</span></span>
+  </div>
+  <div class="iline">
+    <span class="token b"><span class="pali-w">bhummāni</span><span class="gloss">thuộc địa giới</span></span>
+    <span class="token a"><span class="pali-w">vā</span><span class="gloss">hay</span></span>
+    <span class="token b"><span class="pali-w">yāni</span><span class="gloss">những gì</span></span>
+    <span class="token a"><span class="pali-w">va</span><span class="gloss">hoặc</span></span>
+    <span class="token b"><span class="pali-w">anta<span class="sa">/</span>likkhe</span><span class="gloss">trên không trung</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Tathāgataṁ</span><span class="gloss">Như Lai</span></span>
+    <span class="token b"><span class="pali-w">deva<span class="sa">/</span>manussa<span class="sa">/</span>pūjitaṁ</span><span class="gloss">được trời người cúng dường</span></span>
+  </div>
+  <div class="iline">
+    <span class="token a"><span class="pali-w">Saṁghaṁ</span><span class="gloss">Đức Tăng</span></span>
+    <span class="token b"><span class="pali-w">namassāma</span><span class="gloss">chúng con kính lễ</span></span>
+    <span class="token a"><span class="pali-w">suvatthi</span><span class="gloss">an lành</span></span>
+    <span class="token b"><span class="pali-w">hotu</span><span class="gloss">mong được</span></span>
+  </div>
+  <div class="note">Những chúng sinh đã tụ hội ở đây, dù địa giới hay không trung, chúng con kính lễ Đức Tăng — được trời người cúng dường — mong được an lành.</div>
+</div>
+
+</body>
+</html>
