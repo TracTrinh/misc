@@ -8,1041 +8,579 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold:        #c9a84c;
-    --gold-light:  #e8d49a;
-    --gold-dark:   #8b6914;
-    --crimson:     #7a1e1e;
-    --crimson-lt:  #c04040;
-    --parchment:   #f5edd8;
-    --parchment-d: #ede0c0;
-    --ink:         #1e160a;
-    --ink-mid:     #3a2c18;
-    --ink-light:   #5c4a2a;
-    --border:      #b8962e;
-    --shadow:      rgba(30,22,10,.18);
+    --gold:#c9a84c; --gold-light:#e8d49a; --gold-dark:#8b6914;
+    --crimson:#7a1e1e; --parchment:#f5edd8; --parchment-d:#ede0c0;
+    --ink:#1e160a; --ink-mid:#3a2c18; --ink-light:#5c4a2a;
+    --shadow:rgba(30,22,10,.18);
   }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:17px}
+  body{background:#1a1208;color:var(--ink);font-family:'Noto Serif','Times New Roman',serif;line-height:1.85}
+  .page-frame{max-width:1080px;margin:0 auto;background:var(--parchment);box-shadow:0 0 80px rgba(0,0,0,.7)}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* HERO */
+  .hero{position:relative;width:100%;overflow:hidden;background:var(--ink)}
+  .hero img{width:100%;display:block;opacity:.92}
+  .hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:2.5rem 3rem 2rem;background:linear-gradient(transparent,rgba(15,8,2,.88) 55%)}
+  .hero-caption{font-family:'IM Fell English',serif;color:var(--gold-light);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;opacity:.8;margin-bottom:.4rem}
+  .hero-title{font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:300;line-height:1.25;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+  .hero-sub{font-family:'IM Fell English',serif;color:var(--gold);font-size:clamp(.75rem,1.8vw,1rem);font-style:italic;margin-top:.4rem;opacity:.9}
 
-  html { scroll-behavior: smooth; font-size: 17px; }
+  /* GOLD RULE */
+  .gold-rule{display:flex;align-items:center;gap:1rem;padding:.8rem 3rem;background:var(--gold-dark)}
+  .gold-rule span{flex:1;height:1px;background:var(--gold-light);opacity:.5}
+  .gold-rule em{font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;font-style:normal;white-space:nowrap}
 
-  body {
-    background: #1a1208;
-    color: var(--ink);
-    font-family: 'Noto Serif', 'Times New Roman', serif;
-    line-height: 1.85;
-    min-height: 100vh;
-  }
+  /* LAYOUT */
+  .layout{display:grid;grid-template-columns:220px 1fr;min-height:60vh}
 
-  /* ─── OUTER FRAME ─── */
-  .page-frame {
-    max-width: 1080px;
-    margin: 0 auto;
-    background: var(--parchment);
-    box-shadow: 0 0 80px rgba(0,0,0,.7), inset 0 0 60px rgba(201,168,76,.08);
-    position: relative;
-  }
+  /* SIDEBAR */
+  .sidebar{background:var(--ink);padding:2.5rem 1.2rem 4rem;position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--gold-dark) var(--ink)}
+  .sidebar::-webkit-scrollbar{width:4px}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:2px}
+  .toc-label{font-family:'IM Fell English',serif;color:var(--gold);font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid rgba(201,168,76,.25)}
+  .toc-item{display:block;text-decoration:none;color:rgba(232,212,154,.65);font-family:'Cormorant Garamond',serif;font-size:.82rem;line-height:1.4;padding:.35rem .5rem;margin-bottom:.1rem;border-left:2px solid transparent;transition:all .2s;border-radius:0 3px 3px 0}
+  .toc-item:hover,.toc-item.active{color:var(--gold-light);border-left-color:var(--gold);background:rgba(201,168,76,.08)}
+  .toc-sub{font-size:.75rem;padding-left:1.1rem;color:rgba(232,212,154,.45)}
+  .toc-sub:hover{color:rgba(232,212,154,.8)}
 
-  /* Corner ornament SVG via pseudo */
-  .page-frame::before, .page-frame::after {
-    content: '❧';
-    position: fixed;
-    font-size: 1.5rem;
-    color: var(--gold);
-    opacity: .35;
-    pointer-events: none;
-  }
-  .page-frame::before { top: 1.5rem; left: 1.5rem; }
-  .page-frame::after  { top: 1.5rem; right: 1.5rem; }
+  /* CONTENT */
+  .content{padding:3rem 3.5rem 5rem;background:var(--parchment)}
+  .section{margin-bottom:3.5rem;animation:fadeUp .5s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-  /* ─── HERO ─── */
-  .hero {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background: var(--ink);
-  }
-  .hero img {
-    width: 100%;
-    display: block;
-    opacity: .92;
-    filter: saturate(1.05) contrast(1.02);
-  }
-  .hero-overlay {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 2.5rem 3rem 2rem;
-    background: linear-gradient(transparent, rgba(15,8,2,.88) 55%);
-  }
-  .hero-caption {
-    font-family: 'IM Fell English', serif;
-    color: var(--gold-light);
-    font-size: .8rem;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    opacity: .8;
-    margin-bottom: .4rem;
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--gold-light);
-    font-size: clamp(1.6rem, 4vw, 2.8rem);
-    font-weight: 300;
-    line-height: 1.25;
-    text-shadow: 0 2px 20px rgba(0,0,0,.8);
-  }
-  .hero-subtitle {
-    font-family: 'IM Fell English', serif;
-    color: var(--gold);
-    font-size: clamp(.75rem, 1.8vw, 1rem);
-    font-style: italic;
-    margin-top: .4rem;
-    opacity: .9;
-  }
+  /* HEADINGS */
+  h2.section-title{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:500;color:var(--crimson);border-bottom:2px solid var(--gold);padding-bottom:.5rem;margin-bottom:1.4rem;display:flex;align-items:baseline;gap:.7rem}
+  h2.section-title .roman{font-family:'IM Fell English',serif;font-size:.85rem;color:var(--gold-dark);letter-spacing:.1em;font-style:italic}
+  h3.sub-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--ink-mid);margin:1.8rem 0 .7rem;padding-left:.8rem;border-left:3px solid var(--gold)}
+  h4.mini-title{font-family:'IM Fell English',serif;font-size:.95rem;font-weight:normal;color:var(--crimson);margin:1.4rem 0 .5rem;font-style:italic}
 
-  /* ─── GOLD DIVIDER ─── */
-  .gold-rule {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: .8rem 3rem;
-    background: var(--gold-dark);
-  }
-  .gold-rule span { flex: 1; height: 1px; background: var(--gold-light); opacity: .5; }
-  .gold-rule em { font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: .75rem; letter-spacing: .3em; text-transform: uppercase; font-style: normal; white-space: nowrap; }
+  p{margin-bottom:.9rem;color:var(--ink-mid)}
+  strong{color:var(--crimson);font-weight:600}
+  em{color:var(--ink-light);font-style:italic}
 
-  /* ─── LAYOUT ─── */
-  .layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    min-height: 60vh;
-  }
+  /* BLOCKQUOTE */
+  blockquote{margin:1.5rem 0;padding:1.2rem 1.5rem;background:rgba(201,168,76,.07);border-left:4px solid var(--gold);border-radius:0 6px 6px 0;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink-mid);line-height:1.9;position:relative}
+  blockquote::before{content:'❝';position:absolute;top:-.3rem;left:.8rem;font-size:2.5rem;color:var(--gold);opacity:.35;line-height:1}
 
-  /* ─── SIDEBAR / TOC ─── */
-  .sidebar {
-    background: var(--ink);
-    padding: 2.5rem 1.2rem 4rem;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold-dark) var(--ink);
-  }
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+  /* PALI BLOCK */
+  .pali-block{background:var(--ink);color:var(--gold-light);font-family:'Noto Serif',serif;font-size:.82rem;padding:1.3rem 1.6rem;border-radius:6px;margin:1.2rem 0;line-height:2;letter-spacing:.01em}
+  .pali-block .source{display:block;margin-top:.8rem;font-size:.72rem;color:rgba(232,212,154,.5);letter-spacing:.08em;text-transform:uppercase;font-style:italic}
 
-  .toc-label {
-    font-family: 'IM Fell English', serif;
-    color: var(--gold);
-    font-size: .65rem;
-    letter-spacing: .3em;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    padding-bottom: .6rem;
-    border-bottom: 1px solid rgba(201,168,76,.25);
-  }
-  .toc-item {
-    display: block;
-    text-decoration: none;
-    color: rgba(232,212,154,.65);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .82rem;
-    line-height: 1.4;
-    padding: .35rem .5rem;
-    margin-bottom: .1rem;
-    border-left: 2px solid transparent;
-    transition: all .2s;
-    border-radius: 0 3px 3px 0;
-  }
-  .toc-item:hover, .toc-item.active {
-    color: var(--gold-light);
-    border-left-color: var(--gold);
-    background: rgba(201,168,76,.08);
-  }
-  .toc-sub {
-    font-size: .75rem;
-    padding-left: 1.1rem;
-    color: rgba(232,212,154,.45);
-  }
-  .toc-sub:hover { color: rgba(232,212,154,.8); }
+  /* CALLOUT */
+  .callout{background:linear-gradient(135deg,rgba(122,30,30,.06),rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.35);border-radius:6px;padding:1.2rem 1.5rem;margin:1.5rem 0}
 
-  /* ─── MAIN CONTENT ─── */
-  .content {
-    padding: 3rem 3.5rem 5rem;
-    background: var(--parchment);
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    position: relative;
-  }
+  /* FOOTNOTE */
+  .footnote{font-size:.8rem;color:var(--ink-light);font-style:italic;background:rgba(201,168,76,.06);border:1px dashed rgba(184,150,46,.3);border-radius:4px;padding:.7rem 1rem;margin:1rem 0}
 
-  /* ─── SECTIONS ─── */
-  .section {
-    margin-bottom: 3.5rem;
-    animation: fadeUp .5s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:1.4rem 0}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  thead tr{background:var(--crimson);color:var(--gold-light)}
+  thead th{padding:.6rem .9rem;font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:500;text-align:left;letter-spacing:.04em}
+  tbody tr{border-bottom:1px solid rgba(184,150,46,.2)}
+  tbody tr:nth-child(even){background:rgba(201,168,76,.05)}
+  tbody tr.hl{background:rgba(122,30,30,.08)!important}
+  tbody tr.hl td{color:var(--crimson);font-weight:600}
+  td{padding:.55rem .9rem;vertical-align:top}
 
-  /* ─── HEADINGS ─── */
-  h2.section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.65rem;
-    font-weight: 500;
-    color: var(--crimson);
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: .5rem;
-    margin-bottom: 1.4rem;
-    display: flex;
-    align-items: baseline;
-    gap: .7rem;
-  }
-  h2.section-title .roman {
-    font-family: 'IM Fell English', serif;
-    font-size: .85rem;
-    color: var(--gold-dark);
-    letter-spacing: .1em;
-    font-style: italic;
-  }
+  /* PALI TABLE (bilingual) */
+  .pali-tbl thead{background:var(--ink-mid)}
+  .pali-tbl td:first-child{font-style:italic;color:var(--ink-light);font-size:.83rem;line-height:1.7;border-right:1px solid rgba(184,150,46,.2);width:46%}
 
-  h3.sub-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--ink-mid);
-    margin: 1.8rem 0 .7rem;
-    padding-left: .8rem;
-    border-left: 3px solid var(--gold);
-  }
+  /* 40 ARTS TABLE */
+  .arts-tbl td:first-child{width:2.8rem;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold-dark);font-weight:600}
+  .arts-tbl td:nth-child(2){font-weight:600;color:var(--ink)}
+  .arts-tbl td:nth-child(3){font-style:italic;font-size:.82rem;color:var(--ink-light)}
+  .arts-group-head td{background:var(--ink-mid)!important;color:var(--gold-light)!important;font-family:'Cormorant Garamond',serif;font-size:.9rem;letter-spacing:.05em;padding:.5rem .9rem;font-weight:500}
 
-  h4.mini-title {
-    font-family: 'IM Fell English', serif;
-    font-size: .95rem;
-    font-weight: normal;
-    color: var(--crimson);
-    margin: 1.4rem 0 .5rem;
-    font-style: italic;
-  }
+  /* STORY CARDS */
+  .story-card{border:1px solid rgba(201,168,76,.25);border-radius:8px;margin-bottom:1.2rem;overflow:hidden;transition:box-shadow .2s}
+  .story-card:hover{box-shadow:0 4px 20px var(--shadow)}
+  .story-head{background:linear-gradient(90deg,var(--ink-mid),#4a3820);color:var(--gold-light);padding:.55rem 1.1rem;font-family:'Cormorant Garamond',serif;font-size:.92rem;display:flex;align-items:center;gap:.6rem}
+  .story-num{background:var(--gold-dark);color:var(--parchment);width:1.5rem;height:1.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;flex-shrink:0}
+  .story-body{padding:.85rem 1.1rem;font-size:.91rem}
+  .story-meta{font-size:.75rem;color:var(--gold-dark);font-style:italic;margin-bottom:.4rem;font-family:'IM Fell English',serif}
 
-  /* ─── BODY TEXT ─── */
-  p { margin-bottom: .9rem; color: var(--ink-mid); }
-  p:last-child { margin-bottom: 0; }
+  /* PERSON CARD */
+  .person-card{background:linear-gradient(135deg,rgba(122,30,30,.05),rgba(201,168,76,.06));border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:1.4rem 1.6rem;margin:1.2rem 0}
+  .plabel{font-family:'IM Fell English',serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.3rem}
 
-  strong { color: var(--crimson); font-weight: 600; }
-  em     { color: var(--ink-light); font-style: italic; }
+  /* TIMELINE */
+  .timeline{margin:1.2rem 0;padding:1.2rem 1.5rem;background:var(--ink);border-radius:8px;font-family:'Noto Serif',monospace;font-size:.78rem;color:var(--gold-light);line-height:2;white-space:pre-wrap;word-break:break-word}
 
-  /* ─── BLOCKQUOTE ─── */
-  blockquote {
-    margin: 1.5rem 0;
-    padding: 1.2rem 1.5rem;
-    background: rgba(201,168,76,.07);
-    border-left: 4px solid var(--gold);
-    border-radius: 0 6px 6px 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    color: var(--ink-mid);
-    line-height: 1.9;
-    position: relative;
-  }
-  blockquote::before {
-    content: '❝';
-    position: absolute;
-    top: -.3rem; left: .8rem;
-    font-size: 2.5rem;
-    color: var(--gold);
-    opacity: .35;
-    line-height: 1;
-  }
+  ul{margin:.8rem 0 .8rem 0;color:var(--ink-mid);list-style:none;padding:0}
+  ul li{margin-bottom:.3rem}
+  ul li::before{content:'◆ ';color:var(--gold);font-size:.65rem;vertical-align:middle;margin-right:.4rem}
+  ol{list-style:none;counter-reset:oc;padding:0;margin:.8rem 0}
+  ol li{counter-increment:oc;display:flex;gap:.6rem;margin-bottom:.25rem}
+  ol li::before{content:counter(oc)'.';color:var(--gold-dark);font-family:'Cormorant Garamond',serif;min-width:1.6rem;flex-shrink:0}
 
-  /* ─── HIGHLIGHT BOX ─── */
-  .callout {
-    background: linear-gradient(135deg, rgba(122,30,30,.06), rgba(201,168,76,.08));
-    border: 1px solid rgba(201,168,76,.35);
-    border-radius: 6px;
-    padding: 1.2rem 1.5rem;
-    margin: 1.5rem 0;
-  }
-  .callout .callout-icon { font-size: 1.3rem; margin-right: .4rem; }
+  /* REFS */
+  .refs-group{margin-bottom:1.2rem}
+  .refs-group-title{font-family:'IM Fell English',serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:.3rem;margin-bottom:.6rem}
+  .ref-item{padding:.25rem 0;color:var(--ink-mid);line-height:1.5}
+  .ref-item::before{content:'— ';color:var(--gold)}
 
-  /* ─── TABLES ─── */
-  .table-wrap { overflow-x: auto; margin: 1.4rem 0; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: .88rem;
-    font-family: 'Noto Serif', serif;
-  }
-  thead tr {
-    background: var(--crimson);
-    color: var(--gold-light);
-  }
-  thead th {
-    padding: .6rem .9rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .9rem;
-    font-weight: 500;
-    text-align: left;
-    letter-spacing: .04em;
-  }
-  tbody tr { border-bottom: 1px solid rgba(184,150,46,.2); }
-  tbody tr:nth-child(even) { background: rgba(201,168,76,.05); }
-  tbody tr.highlight-row {
-    background: rgba(122,30,30,.08) !important;
-    font-weight: 600;
-  }
-  tbody tr.highlight-row td { color: var(--crimson); }
-  td { padding: .55rem .9rem; vertical-align: top; }
+  /* COLOPHON */
+  .colophon{text-align:center;padding:2.5rem 3rem 3rem;border-top:2px solid var(--gold-dark);background:var(--ink);color:rgba(232,212,154,.55);font-family:'Cormorant Garamond',serif;font-size:.85rem;font-style:italic;line-height:2}
+  .colophon .dh{color:var(--gold);font-size:1.2rem;letter-spacing:.2em;display:block;margin-bottom:.8rem}
 
-  /* Pali table */
-  .pali-table thead { background: var(--ink-mid); }
-  .pali-table td:first-child {
-    font-style: italic;
-    color: var(--ink-light);
-    font-size: .83rem;
-    line-height: 1.7;
-    border-right: 1px solid rgba(184,150,46,.2);
-  }
-  .pali-table td:last-child { font-style: normal; color: var(--ink-mid); }
+  /* SCROLL BTN */
+  #top-btn{position:fixed;bottom:2rem;right:2rem;width:2.6rem;height:2.6rem;background:var(--gold-dark);color:var(--parchment);border:none;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s,transform .2s;z-index:100}
+  #top-btn.vis{opacity:1}
+  #top-btn:hover{transform:translateY(-3px);background:var(--gold)}
 
-  /* ─── LISTS ─── */
-  ul, ol {
-    margin: .8rem 0 .8rem 1.5rem;
-    color: var(--ink-mid);
-  }
-  li { margin-bottom: .3rem; }
-  ul { list-style: none; padding-left: 0; }
-  ul li::before {
-    content: '◆ ';
-    color: var(--gold);
-    font-size: .65rem;
-    vertical-align: middle;
-    margin-right: .4rem;
-  }
-  ol { list-style: none; counter-reset: ol-ctr; padding-left: 0; }
-  ol li { counter-increment: ol-ctr; display: flex; gap: .6rem; }
-  ol li::before {
-    content: counter(ol-ctr, decimal) '.';
-    color: var(--gold-dark);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .9rem;
-    min-width: 1.4rem;
-    flex-shrink: 0;
-    padding-top: .05rem;
-  }
-
-  /* ─── ART GROUPS (nghệ thuật quyến rũ) ─── */
-  .art-group {
-    margin-bottom: 1.8rem;
-    border: 1px solid rgba(201,168,76,.22);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .art-group-header {
-    background: var(--ink-mid);
-    color: var(--gold-light);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .95rem;
-    padding: .6rem 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-  .art-group-header .icon { font-size: 1.1rem; }
-  .art-list { padding: .8rem 1.1rem; background: var(--parchment); }
-  .art-list ol { margin: 0; }
-  .art-list ol li { padding: .22rem 0; font-size: .9rem; }
-
-  /* ─── STORY CARDS ─── */
-  .story-card {
-    border: 1px solid rgba(201,168,76,.25);
-    border-radius: 8px;
-    margin-bottom: 1.2rem;
-    overflow: hidden;
-    transition: box-shadow .2s;
-  }
-  .story-card:hover { box-shadow: 0 4px 20px var(--shadow); }
-  .story-header {
-    background: linear-gradient(90deg, var(--ink-mid), #4a3820);
-    color: var(--gold-light);
-    padding: .55rem 1.1rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .92rem;
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-  }
-  .story-num {
-    background: var(--gold-dark);
-    color: var(--parchment);
-    width: 1.5rem; height: 1.5rem;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: .72rem;
-    flex-shrink: 0;
-  }
-  .story-body { padding: .85rem 1.1rem; font-size: .91rem; }
-
-  /* ─── TIMELINE ─── */
-  .timeline {
-    margin: 1.2rem 0;
-    padding: 1.2rem 1.5rem;
-    background: var(--ink);
-    border-radius: 8px;
-    font-family: 'Noto Serif', monospace;
-    font-size: .78rem;
-    color: var(--gold-light);
-    line-height: 2;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-
-  /* ─── PERSON CARD (Kāḷudāyī) ─── */
-  .person-card {
-    background: linear-gradient(135deg, rgba(122,30,30,.05), rgba(201,168,76,.06));
-    border: 1px solid rgba(201,168,76,.3);
-    border-radius: 8px;
-    padding: 1.4rem 1.6rem;
-    margin: 1.2rem 0;
-  }
-  .person-card h4 { margin-bottom: .7rem; color: var(--crimson); }
-  .person-section { margin-bottom: .9rem; }
-  .person-section-label {
-    font-family: 'IM Fell English', serif;
-    font-size: .8rem;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    margin-bottom: .3rem;
-  }
-
-  /* ─── FOOTNOTE AREA ─── */
-  .footnote {
-    font-size: .8rem;
-    color: var(--ink-light);
-    font-style: italic;
-    background: rgba(201,168,76,.06);
-    border: 1px dashed rgba(184,150,46,.3);
-    border-radius: 4px;
-    padding: .7rem 1rem;
-    margin: 1rem 0;
-  }
-
-  /* ─── REFERENCES ─── */
-  .refs-section { font-size: .88rem; }
-  .refs-group { margin-bottom: 1.2rem; }
-  .refs-group-title {
-    font-family: 'IM Fell English', serif;
-    font-size: .82rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--gold-dark);
-    border-bottom: 1px solid rgba(201,168,76,.3);
-    padding-bottom: .3rem;
-    margin-bottom: .6rem;
-  }
-  .ref-item { padding: .25rem 0; color: var(--ink-mid); line-height: 1.5; }
-  .ref-item::before { content: '— '; color: var(--gold); }
-
-  /* ─── COLOPHON ─── */
-  .colophon {
-    text-align: center;
-    padding: 2.5rem 3rem 3rem;
-    border-top: 2px solid var(--gold-dark);
-    background: var(--ink);
-    color: rgba(232,212,154,.55);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: .85rem;
-    font-style: italic;
-    line-height: 2;
-  }
-  .colophon .dhamma { color: var(--gold); font-size: 1.2rem; letter-spacing: .2em; display: block; margin-bottom: .8rem; }
-  .colophon a { color: var(--gold-light); text-decoration: none; opacity: .7; }
-
-  /* ─── SCROLL TO TOP ─── */
-  #top-btn {
-    position: fixed;
-    bottom: 2rem; right: 2rem;
-    width: 2.6rem; height: 2.6rem;
-    background: var(--gold-dark);
-    color: var(--parchment);
-    border: none; border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.1rem;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 3px 12px rgba(0,0,0,.4);
-    opacity: 0;
-    transition: opacity .3s, transform .2s;
-    z-index: 100;
-  }
-  #top-btn.visible { opacity: 1; }
-  #top-btn:hover { transform: translateY(-3px); background: var(--gold); }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 760px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { height: auto; position: static; display: none; }
-    .content { padding: 2rem 1.4rem 4rem; }
-    .hero-overlay { padding: 1.5rem 1.2rem 1.2rem; }
-    .gold-rule { padding: .8rem 1.2rem; }
-  }
+  @media(max-width:760px){.layout{grid-template-columns:1fr}.sidebar{display:none}.content{padding:2rem 1.4rem 4rem}.hero-overlay{padding:1.5rem 1.2rem 1.2rem}.gold-rule{padding:.8rem 1.2rem}}
 </style>
 </head>
 <body>
-
 <div class="page-frame">
 
-  <!-- ═══ HERO ═══ -->
-  <div class="hero">
-    <img src="kunala_jataka.jpg" alt="Tranh minh họa Kuṇāla Jātaka — Wisdom of Detachment">
-    <div class="hero-overlay">
-      <p class="hero-caption">Tiểu Bộ Kinh · Khuddaka Nikāya · Jātaka số 536</p>
-      <h1 class="hero-title">Bốn Mươi Nghệ Thuật Quyến Rũ Của Nữ Giới</h1>
-      <p class="hero-subtitle">Kuṇāla Jātaka — Kuṇāla và Puṇṇamukha Đối Thoại · Trí Tuệ Của Sự Buông Bỏ</p>
-    </div>
+<!-- HERO -->
+<div class="hero">
+  <img src="kunala_jataka.jpg" alt="Tranh minh họa Kuṇāla Jātaka — Wisdom of Detachment">
+  <div class="hero-overlay">
+    <p class="hero-caption">Tiểu Bộ Kinh · Khuddaka Nikāya · Jātaka số 536</p>
+    <h1 class="hero-title">Bốn Mươi Nghệ Thuật Quyến Rũ Của Nữ Giới</h1>
+    <p class="hero-sub">Kuṇāla Jātaka — Kuṇāla và Puṇṇamukha Đối Thoại · Trí Tuệ Của Sự Buông Bỏ</p>
+  </div>
+</div>
+
+<div class="gold-rule"><span></span><em>Namo Tassa Bhagavato Arahato Sammāsambuddhassa</em><span></span></div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <p class="toc-label">Mục Lục</p>
+  <a class="toc-item" href="#s1">I. Tổng Quan</a>
+  <a class="toc-item" href="#s2">II. Bối Cảnh Lịch Sử</a>
+  <a class="toc-item toc-sub" href="#s2-1">↳ Hạ thứ 15</a>
+  <a class="toc-item toc-sub" href="#s2-2">↳ Duyên khởi</a>
+  <a class="toc-item toc-sub" href="#s2-4">↳ Hồ Kuṇāla</a>
+  <a class="toc-item" href="#s3">III. Nhân Vật</a>
+  <a class="toc-item toc-sub" href="#s3-1">↳ Tôn giả Kāḷudāyī</a>
+  <a class="toc-item" href="#s4">IV. Câu Chuyện Tiền Thân</a>
+  <a class="toc-item" href="#s5">V. Tám Câu Chuyện Minh Họa</a>
+  <a class="toc-item" href="#s6">VI. Lời Bình Luận</a>
+  <a class="toc-item" href="#s7">VII. 40 Nghệ Thuật Quyến Rũ</a>
+  <a class="toc-item toc-sub" href="#s7-pali">↳ Nguyên văn Pāli</a>
+  <a class="toc-item toc-sub" href="#s7-table">↳ Bảng 40 nghệ thuật</a>
+  <a class="toc-item" href="#s8">VIII. Cấu Trúc Văn Học</a>
+  <a class="toc-item" href="#s9">IX. Ý Nghĩa Giáo Lý</a>
+  <a class="toc-item" href="#s10">X. Kết Quả Lịch Sử</a>
+  <a class="toc-item" href="#s11">XI. Trích Dịch Pāli-Việt</a>
+  <a class="toc-item toc-sub" href="#s11-3">↳ Kệ ngôn chính</a>
+  <a class="toc-item toc-sub" href="#s11-7">↳ Nhận diện bổn sanh</a>
+  <a class="toc-item" href="#s12">XII. Tài Liệu Tham Khảo</a>
+</nav>
+
+<!-- MAIN -->
+<main class="content">
+
+<!-- I -->
+<section class="section" id="s1">
+  <h2 class="section-title"><span class="roman">I.</span> Tổng Quan</h2>
+  <p><strong>Kuṇāla Jātaka</strong> (Bổn Sanh số 536) là một trong những câu chuyện tiền thân độc đáo nhất trong toàn bộ Tiểu Bộ Kinh (<em>Khuddaka Nikāya</em>). Đây là bổn sanh <strong>duy nhất</strong> trong Pāli tạng có chứa một thể loại văn xuôi cổ đại được xem là kinh điển, xen lẫn với kệ ngôn (<em>gāthā</em>), và được các học giả xem là một trong những văn bản phức tạp nhất về mặt văn học Pāli.</p>
+  <p>Nội dung xoay quanh bài pháp thoại về <strong>bản chất nguy hiểm của dục vọng</strong>, được trao truyền qua hình tượng hai vị chúa chim: <strong>Kuṇāla</strong> (tiền thân của Đức Phật) và <strong>Puṇṇamukha</strong> (tiền thân của Tôn giả Kāḷudāyī). Bài Kinh thu hút <em>cả các vị thần và muôn thú trong rừng đến lắng nghe</em>, và đặc biệt nổi bật với đoạn liệt kê <strong>bốn mươi cách thức</strong> mà một người nữ dùng để mê hoặc người nam — một trong những đoạn văn xuôi Pāli cổ nhất được bảo tồn nguyên vẹn.</p>
+</section>
+
+<!-- II -->
+<section class="section" id="s2">
+  <h2 class="section-title"><span class="roman">II.</span> Bối Cảnh Lịch Sử Và Nhân Duyên Thuyết Pháp</h2>
+
+  <h3 class="sub-title" id="s2-1">2.1 Thời Điểm — Hạ An Cư Thứ 15 Của Đức Phật</h3>
+  <div class="callout">
+    🗓️ Sự kiện này diễn ra trong <strong>năm thứ 15 sau khi Đức Phật thành đạo</strong>, tức <strong>Hạ an cư thứ 15</strong> (<em>paṇṇarasama vassa</em>) — an cư tại <strong>tu viện Nigrodhārāma</strong> gần thành <strong>Kapilavatthu</strong>, quê hương của dòng họ Sākiya.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Hạ</th><th>Địa điểm an cư</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Vườn Lộc Uyển, Bārāṇasī (Sarnath)</td><td>Thuyết Chuyển Pháp Luân lần đầu</td></tr>
+        <tr><td>2–4</td><td>Tu viện Veḷuvana, Rājagaha</td><td></td></tr>
+        <tr><td>5</td><td>Đại Lâm (<em>Mahāvana</em>), Vesālī</td><td></td></tr>
+        <tr><td>6</td><td>Núi Makula</td><td></td></tr>
+        <tr><td>7</td><td>Cõi Trời Tāvatiṁsa</td><td>Thuyết A Tỳ Đàm cho mẫu thân</td></tr>
+        <tr><td>8</td><td>Rừng Bhesakaḷā, Bhagga</td><td></td></tr>
+        <tr><td>9</td><td>Tu viện Ghositārāma, Kosambī</td><td></td></tr>
+        <tr><td>10</td><td>Rừng Pāḷileyyaka</td><td>Voi chúa Pāḷileyyaka hầu hạ</td></tr>
+        <tr><td>11</td><td>Làng bà-la-môn Nāḷa</td><td></td></tr>
+        <tr><td>12</td><td>Verañjā</td><td></td></tr>
+        <tr><td>13</td><td>Núi Cāliya</td><td></td></tr>
+        <tr><td>14</td><td>Tu viện Jetavana, Sāvatthī</td><td></td></tr>
+        <tr class="hl"><td>15</td><td>Tu viện Nigrodhārāma, Kapilavatthu</td><td>← Sự kiện Kuṇāla Jātaka</td></tr>
+        <tr><td>16</td><td>Đền Aggāḷava, Āḷavī</td><td></td></tr>
+        <tr><td>17–20</td><td>Veḷuvana và Núi Cāliya, Rājagaha</td><td></td></tr>
+        <tr><td>21–44</td><td>Luân phiên Jetavana và Pubbārāma, Sāvatthī</td><td>24 hạ liên tiếp</td></tr>
+        <tr><td>45</td><td>Làng Veḷuva, Vesālī</td><td>Hạ cuối trước Niết Bàn</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- ═══ GOLD RULE ═══ -->
-  <div class="gold-rule">
-    <span></span>
-    <em>Namo Tassa Bhagavato Arahato Sammāsambuddhassa</em>
-    <span></span>
+  <h3 class="sub-title" id="s2-2">2.2 Duyên Khởi — Tranh Chấp Sông Rohinī</h3>
+  <p>Sự việc bắt nguồn từ cuộc tranh chấp nguồn nước sông <strong>Rohinī</strong> chảy giữa hai thành Kapilavatthu và Koliya. Vào cuối mùa khô (tháng Jeṭṭhamūla, tức tháng 5–6), hai bên tranh nhau quyền dùng nước, leo thang thành xung đột vũ trang. Đức Phật bay đến hóa giải qua năm bổn sanh (<em>Phandana, Daddabha, Latukika, Rukkhadhamma, Sammodamāna</em>).</p>
+  <p>Hai dòng họ hòa giải, mỗi bên cúng dường <strong>250 hoàng tử</strong> vào Tăng đoàn — tổng cộng 500 vị Tỳ khưu. Tuy nhiên, các vị này xuất gia vì kính trọng Đức Phật chứ chưa phải vì thiện chí tu tập. Qua thời gian, tâm bất mãn và ái dục nổi lên, nhiều vị có ý định hoàn tục.</p>
+  <p>Nhận thấy điều này, Đức Phật dùng thần lực <strong>đưa cả 500 vị bay lên Tuyết Sơn</strong>, đến bờ hồ Kuṇāla, rồi thuyết lại câu chuyện tiền thân. Kết quả: <strong>cả 500 vị đoạn trừ ái dục và chứng đắc A La Hán quả ngay trong ngày hôm đó</strong>.</p>
+
+  <h3 class="sub-title" id="s2-4">2.3 Địa Danh Hồ Kuṇāla</h3>
+  <p>Pháp thoại diễn ra tại <strong>hồ Kuṇāla</strong> (<em>Kuṇāladaha</em>), Tuyết Sơn Himalaya, trên <strong>tảng đá Manosilā</strong> (<em>Manosilātala</em>). Theo chú giải của ngài Buddhaghosa (DA.ii.675), địa điểm này nằm trên bờ sông Kuṇāla — một đại giang chảy ra từ hồ này, sẽ cạn khô vào thời mạt kiếp (A.iv.101). Chính cảnh vật hùng vĩ nơi đây đã bắt đầu tiêu tan ái dục của 500 Tỳ khưu trước khi Đức Phật kể câu chuyện.</p>
+</section>
+
+<!-- III -->
+<section class="section" id="s3">
+  <h2 class="section-title"><span class="roman">III.</span> Các Nhân Vật Trong Câu Chuyện Tiền Thân</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nhân vật tiền kiếp</th><th>Vai trò</th><th>Đồng nhất trong hiện tại</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Kuṇāla</strong> — chúa chim cúc cu đầu rìu (<em>Citrakokilā</em>)</td><td>Bồ Tát — nhân vật chính</td><td>Đức Phật Thích Ca Mâu Ni</td></tr>
+        <tr><td><strong>Puṇṇamukha</strong> — chúa chim cu cu đốm (<em>Phussakokila</em>)</td><td>Bạn thân của Kuṇāla</td><td>Tôn giả <strong>Kāḷudāyī</strong> (Udāyī)</td></tr>
+        <tr><td><strong>Vua chim Kên kên (Ānanda)</strong></td><td>Khán giả, phát biểu thêm</td><td>Tôn giả <strong>Ānanda</strong> — thị giả</td></tr>
+        <tr><td><strong>Ẩn sĩ Nārada</strong></td><td>Khán giả, lời bình</td><td>Tôn giả <strong>Sāriputta</strong> — trí tuệ đệ nhất</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- ═══ LAYOUT ═══ -->
-  <div class="layout">
+  <h3 class="sub-title" id="s3-1">3.1 Tiểu Sử Tôn Giả Kāḷudāyī</h3>
+  <div class="person-card">
+    <h4 class="mini-title">Kāḷudāyī Mahāthera — "Người Hoan Hỷ Các Dòng Tộc Đệ Nhất"</h4>
+    <div class="plabel" style="margin-bottom:.4rem">Thân thế &amp; Tên gọi</div>
+    <p>Con trai của một vị đại thần trong triều đình vua Suddhodana tại Kapilavatthu, <strong>sinh cùng ngày với thái tử Siddhattha</strong>. Được đặt tên <strong>Udāyī</strong> ("người sinh ra trong ngày hoan hỷ") vì toàn thành tràn ngập vui mừng ngày thái tử chào đời. Do nước da hơi sẫm (<em>kāḷa</em>), còn gọi là <strong>Kāḷudāyī</strong>. Lớn lên trong cung điện, là bạn chơi thân thiết của thái tử Siddhattha từ thuở ấu thơ.</p>
+    <div class="plabel" style="margin:.8rem 0 .4rem">Vai trò dẫn Đức Phật về thăm quê</div>
+    <p>Vua Suddhodana phái chín sứ đoàn thỉnh mời Đức Phật về Kapilavatthu — tất cả đều bị cuốn hút vào Chánh pháp mà quên sứ mạng. Cuối cùng nhà vua phái Kāḷudāyī với điều kiện: <em>nếu thỉnh được Đức Phật về, ông được phép xuất gia</em>. Kāḷudāyī xuất gia, đắc quả A La Hán, bay đến Rājagaha ứng khẩu những bài kệ mô tả vẻ đẹp mùa xuân để mời Đức Phật. Mỗi ngày trong hành trình 60 do tuần, Ngài bay về trước báo tin cho nhà vua rồi mang thức ăn thượng vị dâng lên Đức Phật.</p>
+    <blockquote style="margin:.8rem 0 0">"Trong số các đệ tử Tỳ khưu của Ta, người hoan hỷ các dòng tộc đệ nhất chính là Kāḷudāyī." <span style="font-size:.82rem;display:block;margin-top:.3rem"><em>(Etadaggaṁ bhikkhave mama sāvakānaṁ bhikkhūnaṁ kulappasādakānaṁ yad-idaṁ Kāḷudāyī)</em></span></blockquote>
+    <div class="plabel" style="margin:.8rem 0 .4rem">Liên hệ với Kuṇāla Jātaka</div>
+    <p>Trong kinh điển, Tôn giả còn được gọi là <em>Lāludāyī</em> ("Udāyī lắp bắp") vì đặc điểm hay nói lộn ngược — tương ứng với hình tượng chim Puṇṇamukha ban đầu ca ngợi nữ giới, rồi sau khi bị bỏ rơi lúc bệnh tật mới vỡ lẽ và chuyển biến hoàn toàn.</p>
+  </div>
+</section>
 
-    <!-- SIDEBAR -->
-    <nav class="sidebar" aria-label="Mục lục">
-      <p class="toc-label">Mục Lục</p>
-      <a class="toc-item" href="#s1">I. Tổng Quan</a>
-      <a class="toc-item" href="#s2">II. Bối Cảnh Lịch Sử</a>
-      <a class="toc-item toc-sub" href="#s2-1">↳ Hạ thứ 15</a>
-      <a class="toc-item toc-sub" href="#s2-2">↳ Duyên khởi</a>
-      <a class="toc-item toc-sub" href="#s2-3">↳ Hóa giải</a>
-      <a class="toc-item toc-sub" href="#s2-4">↳ Hồ Kuṇāla</a>
-      <a class="toc-item" href="#s3">III. Nhân Vật</a>
-      <a class="toc-item toc-sub" href="#s3-1">↳ Tôn giả Kāḷudāyī</a>
-      <a class="toc-item" href="#s4">IV. Câu Chuyện Tiền Thân</a>
-      <a class="toc-item" href="#s5">V. Tám Câu Chuyện Minh Họa</a>
-      <a class="toc-item" href="#s6">VI. Lời Bình Luận</a>
-      <a class="toc-item" href="#s7">VII. 40 Nghệ Thuật Quyến Rũ</a>
-      <a class="toc-item" href="#s8">VIII. Cấu Trúc Văn Học</a>
-      <a class="toc-item" href="#s9">IX. Ý Nghĩa Giáo Lý</a>
-      <a class="toc-item" href="#s10">X. Kết Quả Lịch Sử</a>
-      <a class="toc-item" href="#s11">XI. Trích Dịch Pāli-Việt</a>
-      <a class="toc-item toc-sub" href="#s11-1">↳ Văn xuôi mở đầu</a>
-      <a class="toc-item toc-sub" href="#s11-3">↳ Kệ ngôn chính</a>
-      <a class="toc-item toc-sub" href="#s11-7">↳ Nhận diện bổn sanh</a>
-      <a class="toc-item" href="#s12">XII. Tài Liệu Tham Khảo</a>
-    </nav>
+<!-- IV -->
+<section class="section" id="s4">
+  <h2 class="section-title"><span class="roman">IV.</span> Tóm Tắt Câu Chuyện Tiền Thân</h2>
+  <h3 class="sub-title">4.1 Sự Tương Phản Giữa Hai Vị Chúa Chim</h3>
+  <p>Vua chim <strong>Kuṇāla</strong> sống ở vùng Tuyết Sơn (Himavā), tuy được <strong>3.500 chim mái</strong> hầu hạ nhưng luôn tỏ ra thô lỗ và xem thường chúng. Ngược lại, vua chim <strong>Puṇṇamukha</strong> có giọng hót ngọt ngào, ánh mắt vui tươi và luôn hết lời khen ngợi, yêu chiều các chim mái theo hầu mình.</p>
+  <p>Khi Puṇṇamukha khuyên bạn nên cư xử nhẹ nhàng hơn với phái nữ, Kuṇāla đáp: <strong>"Vì ta biết quá nhiều về phụ nữ."</strong></p>
+  <h3 class="sub-title">4.2 Bước Ngoặt: Puṇṇamukha Lâm Bệnh</h3>
+  <p>Puṇṇamukha lâm bệnh nặng, toàn bộ những con chim mái từng được ông yêu chiều đã nhẫn tâm bỏ mặc ông để đi theo chim Kuṇāla. Kuṇāla đuổi lũ chim mái phản bội đi, tự mình tìm thuốc và chăm sóc cho Puṇṇamukha khỏi bệnh. Sau khi chứng kiến sự bạc bẽo đó, <strong>Puṇṇamukha hoàn toàn tỉnh ngộ</strong>.</p>
+  <h3 class="sub-title">4.3 Đại Pháp Thoại Trên Đá Manosilā</h3>
+  <p>Kuṇāla đưa Puṇṇamukha đến một phiến đá lớn ở núi Himalaya và diễn giảng một <strong>bài thuyết pháp dài</strong> về những khuyết điểm, mưu mẹo quyến rũ và sự bất định trong tâm lý của nữ giới — bao gồm liệt kê 40 cách phụ nữ quyến rũ đàn ông và 8 lý do khinh thường chồng. Bài thuyết pháp thu hút <em>cả các vị thần và muôn thú trong rừng đến lắng nghe</em>.</p>
+</section>
 
-    <!-- MAIN -->
-    <main class="content">
+<!-- V -->
+<section class="section" id="s5">
+  <h2 class="section-title"><span class="roman">V.</span> Tám Câu Chuyện Minh Họa Của Kuṇāla</h2>
+  <p>Để minh chứng, Kuṇāla kể lại <strong>tám câu chuyện tiền kiếp</strong> — trong mỗi câu chuyện, chính ông đóng một vai cụ thể, nói từ kinh nghiệm trực tiếp với <em>giọng điệu đầy uy quyền</em>. Sau phần của Kuṇāla, còn có hai bài diễn thuyết tiếp theo của <strong>vua chim kên kên (Ānanda)</strong> và <strong>ẩn sĩ Nārada (Sāriputta)</strong>.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Câu chuyện</th><th>Nhân vật nữ</th><th>Vai trò của Kuṇāla</th><th>Bổn sanh liên quan</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Kaṇhā</strong> — Công chúa đa tình</td><td>Ajjuna — một trong những người chồng</td><td>—</td></tr>
+        <tr><td>2</td><td><strong>Saccatapāvī</strong> — Nữ ẩn tu</td><td>Người thợ kim hoàn đặt cược</td><td>—</td></tr>
+        <tr><td>3</td><td><strong>Kākātī</strong> — Hoàng hậu bị Garuda bắt</td><td>Garuḷa (vua chim thần)</td><td>Kakati Jātaka / Sussondi Jātaka #360</td></tr>
+        <tr><td>4</td><td><strong>Kuraṅgavī</strong> — Hoàng hậu và người hầu</td><td>Chaḷaṅgakumāra — nhân chứng</td><td>—</td></tr>
+        <tr><td>5</td><td>Mẹ của <strong>Brahmadatta</strong> — Thái hậu</td><td>Pañcālacaṇḍa — người tình</td><td>—</td></tr>
+        <tr><td>6</td><td><strong>Kiṇṇarā</strong> — Hoàng hậu leo dây</td><td>Vị giáo sĩ (tên Pañcālacaṇḍa)</td><td>—</td></tr>
+        <tr><td>7</td><td><strong>Pañcapāpā</strong> — Bàn tay kỳ diệu</td><td>Baka — người chồng đầu tiên</td><td>—</td></tr>
+        <tr><td>8</td><td><strong>Piṅgiyānī</strong> — Hoàng hậu leo cửa sổ</td><td>Brahmadatta — người chồng</td><td>Culla-Kuṇāla Jātaka #464</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-      <!-- ── I. TỔNG QUAN ── -->
-      <section class="section" id="s1">
-        <h2 class="section-title"><span class="roman">I.</span> Tổng Quan</h2>
-        <p><strong>Kuṇāla Jātaka</strong> (Bổn Sanh số 536) là một trong những câu chuyện tiền thân độc đáo nhất trong toàn bộ Tiểu Bộ Kinh (<em>Khuddaka Nikāya</em>). Đây là bổn sanh <strong>duy nhất</strong> trong Pāli tạng có chứa một thể loại văn xuôi cổ đại được xem là kinh điển, xen lẫn với kệ ngôn (<em>gāthā</em>), và được các học giả xem là một trong những văn bản phức tạp nhất về mặt văn học Pāli.</p>
-        <p>Toàn bộ nội dung xoay quanh bài pháp thoại về <strong>bản chất nguy hiểm của dục vọng và những mặt trái của nữ giới</strong>, được trao truyền qua hình tượng hai vị chúa chim: <strong>Kuṇāla</strong> (tiền thân của Đức Phật) và <strong>Puṇṇamukha</strong> (tiền thân của Tôn giả Kāḷudāyī).</p>
-      </section>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">1</span> Kaṇhā — Người Công Chúa Đa Tình</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Ajjuna — một trong năm anh em chồng</p>Khi là hoàng tử Ajjuna, Kuṇāla lấy công chúa Kaṇhā. Nàng có quan hệ bí mật với cả <strong>6 người đàn ông</strong> — năm anh em chồng và một người hầu gù — rồi khéo léo gửi tín hiệu bí mật riêng cho từng người để mỗi người tin mình là kẻ được nàng yêu nhất. Kuṇāla phát hiện sự thật, cùng các em xuất gia vào Tuyết Sơn.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">2</span> Saccatapāvī — Người Nữ Ẩn Tu</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai người thợ kim hoàn</p>Khi là thợ kim hoàn, Kuṇāla đặt cược <strong>một nghìn đồng tiền vàng</strong> rằng ông có thể khiến nữ tu khổ hạnh Saccatapāvī — tu hành đã <strong>12 năm</strong> — từ bỏ giới hạnh. Ông giả làm người tu, tiếp cận dần qua sáu ngày. Đến ngày thứ sáu nữ tu từ bỏ phạm hạnh vì thiếu nội tâm kiên cố.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">3</span> Kākātī — Hoàng Hậu Và Vua Chim Thần Garuda</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Garuḷa (vua chim thần) — liên quan đến Kakati / Sussondi Jātaka #360</p>Khi là Garuḷa, Kuṇāla thường hóa thành trai đẹp chơi cờ với một vị vua. Hoàng hậu Kākātī lén đến gặp, hai bên phải lòng nhau. Garuda bắt hoàng hậu đưa về đảo xa — nhưng hoàng hậu lại <strong>ngoại tình với một nhạc sĩ</strong> lạc trôi đến đảo. Garuda hối hận và trả hoàng hậu lại cho nhà vua.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">4</span> Kuraṅgavī — Hoàng Hậu Và Người Hầu Thấp Hèn</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Chaḷaṅgakumāra — nhân chứng phát giác</p>Khi là hoàng tử Chaḷaṅgakumāra, Kuṇāla chứng kiến hoàng hậu Kuraṅgavī bí mật leo qua cửa sổ bằng dây vải mỗi đêm để gặp <strong>một người đàn ông xấu xí, tật nguyền</strong>. Bị phát giác qua chiếc hoa tai sư tử rơi xuống, hoàng hậu bị truất ngôi.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">5</span> Mẹ Của Brahmadatta — Thái Hậu Đa Tình</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Pañcālacaṇḍa — người tình</p>Khi là chàng Pañcālacaṇḍa, Kuṇāla chứng kiến một thái hậu — trong chuyến đi thăm con trai — dừng chân tại thị trấn nơi ông sống và <strong>lấy ông làm tình nhân nhiều lần</strong> trên đường đi lẫn đường về, rồi viện cớ thăm con để gặp lại.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">6</span> Kiṇṇarā — Hoàng Hậu Leo Dây</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai vị giáo sĩ (cũng tên Pañcālacaṇḍa)</p>Khi là tế sư (tên Pañcālacaṇḍa), Kuṇāla nhận ra hoàng hậu Kiṇṇarā đêm đêm leo dây ra ngoài <strong>tư thông với một gã hầu xấu xí</strong>. Để chứng minh cho vua tin, ông đề nghị vi hành và cho vua ngủ với cô dâu ngay trong ngày cưới của nàng. Cũng chính vị giáo sĩ này sau đó <em>cứu hoàng hậu Kiṇṇarā khỏi cơn thịnh nộ của chồng</em>.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">7</span> Pañcapāpā — Người Phụ Nữ Bàn Tay Kỳ Diệu</div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Baka — người chồng đầu tiên</p>Khi là vua Baka, Kuṇāla yêu và cưới Pañcapāpā — người phụ nữ dị dạng nhưng có bàn tay kỳ diệu ai chạm vào cũng mê đắm. Dù vua Baka hoàn toàn chung thủy, bà vẫn ngoại tình với người lái đò hói đầu thọt chân <strong>trên sông, giữa hai vương quốc</strong>. Hai vị vua suýt đánh nhau vì bà.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-head"><span class="story-num">8</span> Piṅgiyānī — Hoàng Hậu Leo Cửa Sổ <em>(Culla-Kuṇāla Jātaka #464)</em></div>
+    <div class="story-body"><p class="story-meta">Kuṇāla đóng vai Brahmadatta — người chồng</p>Khi là vua Brahmadatta, hoàng hậu Piṅgiyānī được vua yêu quý nhất <strong>đêm đêm leo qua cửa sổ</strong> đến gặp một người hầu. Khi vua phát hiện, dù tội đáng tử hình, vua chỉ truất ngôi bà vì hiểu rằng đó là bản chất thông thường của nữ giới. Câu chuyện này được ghi lại riêng thành <strong>Culla-Kuṇāla Jātaka số 464</strong>.</div>
+  </div>
+</section>
 
-      <!-- ── II. BỐI CẢNH ── -->
-      <section class="section" id="s2">
-        <h2 class="section-title"><span class="roman">II.</span> Bối Cảnh Lịch Sử Và Nhân Duyên Thuyết Pháp</h2>
+<!-- VI -->
+<section class="section" id="s6">
+  <h2 class="section-title"><span class="roman">VI.</span> Những Lời Bình Luận Bổ Sung</h2>
+  <h3 class="sub-title">6.1 Lời Vua Chim Kên Kên (Tôn giả Ānanda)</h3>
+  <p>Nữ giới là những kẻ ti tiện, không đáng tin cậy. Họ không biết xấu hổ, không phân biệt thật giả, không kiềm chế dục vọng, và theo đuổi đàn ông chỉ vì tài vật — như ký sinh trùng bám vào cây, như bò chỉ chọn cỏ ngon nhất mà ăn.</p>
+  <h3 class="sub-title">6.2 Lời Ẩn Sĩ Nārada (Tôn giả Sāriputta)</h3>
+  <p>Đường lối của nữ giới khó lường như cá trong biển, gây phiền não như gai góc, và nguy hiểm như lửa đang bùng cháy. Dù là những bậc tu hành đức hạnh nhất cũng có thể thất bại trước sự quyến rũ của họ.</p>
+  <h3 class="sub-title">6.3 Lời Kết Của Kuṇāla</h3>
+  <ul>
+    <li>Giao tiếp với quỷ hay rắn vẫn an toàn hơn giao tiếp với nữ giới</li>
+    <li>Chỉ một nụ cười nhỏ, nữ giới đã có thể chiếm đoạt tài sản của đàn ông</li>
+    <li>Những người nổi tiếng và được kính trọng sẽ mất hết phẩm giá khi rơi vào bẫy của nữ giới</li>
+    <li><strong>Để đến thiên giới, đàn ông phải chinh phục dục vọng và không để bị cuốn vào bùa mê của nữ giới</strong></li>
+  </ul>
+</section>
 
-        <h3 class="sub-title" id="s2-1">2.1 Thời Điểm Xảy Ra — Hạ Thứ 15 Của Đức Phật</h3>
-        <div class="callout">
-          <span class="callout-icon">🗓️</span>
-          Sự kiện này diễn ra trong <strong>năm thứ 15 sau khi Đức Phật thành đạo</strong>, tức <strong>Hạ an cư thứ 15</strong> (<em>paṇṇarasama vassa</em>) — an cư tại <strong>tu viện Nigrodhārāma</strong> gần thành <strong>Kapilavatthu</strong>, quê hương của dòng họ Sākiya.
-        </div>
-        <p>Theo <em>Mahābuddhavamsa</em> (Đại Phật Sử) và <em>Jinacarita</em> (Hành trạng Đấng Chiến Thắng), Đức Phật trải qua tổng cộng 45 mùa an cư tại 15 địa điểm khác nhau:</p>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Hạ</th><th>Địa điểm an cư</th><th>Ghi chú</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td>Vườn Lộc Uyển, Bārāṇasī (Sarnath)</td><td>Thuyết Chuyển Pháp Luân lần đầu</td></tr>
-              <tr><td>2–4</td><td>Tu viện Veḷuvana, Rājagaha</td><td></td></tr>
-              <tr><td>5</td><td>Đại Lâm (<em>Mahāvana</em>), Vesālī</td><td></td></tr>
-              <tr><td>6</td><td>Núi Makula</td><td></td></tr>
-              <tr><td>7</td><td>Cõi Trời Tāvatiṁsa</td><td>Thuyết A Tỳ Đàm cho mẫu thân</td></tr>
-              <tr><td>8</td><td>Rừng Bhesakaḷā, Bhagga</td><td></td></tr>
-              <tr><td>9</td><td>Tu viện Ghositārāma, Kosambī</td><td></td></tr>
-              <tr><td>10</td><td>Rừng Pāḷileyyaka</td><td>Voi chúa Pāḷileyyaka hầu hạ</td></tr>
-              <tr><td>11</td><td>Làng bà-la-môn Nāḷa</td><td></td></tr>
-              <tr><td>12</td><td>Verañjā</td><td></td></tr>
-              <tr><td>13</td><td>Núi Cāliya</td><td></td></tr>
-              <tr><td>14</td><td>Tu viện Jetavana, Sāvatthī</td><td></td></tr>
-              <tr class="highlight-row"><td><strong>15</strong></td><td><strong>Tu viện Nigrodhārāma, Kapilavatthu</strong></td><td><strong>← Sự kiện Kuṇāla Jātaka</strong></td></tr>
-              <tr><td>16</td><td>Đền Aggāḷava, Āḷavī</td><td></td></tr>
-              <tr><td>17</td><td>Veḷuvana, Rājagaha</td><td></td></tr>
-              <tr><td>18–19</td><td>Núi Cāliya</td><td></td></tr>
-              <tr><td>20</td><td>Veḷuvana, Rājagaha</td><td></td></tr>
-              <tr><td>21–44</td><td>Luân phiên Jetavana và Pubbārāma, Sāvatthī</td><td>24 hạ liên tiếp</td></tr>
-              <tr><td>45</td><td>Làng Veḷuva, Vesālī</td><td>Hạ cuối trước Niết Bàn</td></tr>
-            </tbody>
-          </table>
-        </div>
+<!-- VII -->
+<section class="section" id="s7">
+  <h2 class="section-title"><span class="roman">VII.</span> Bốn Mươi Nghệ Thuật Quyến Rũ — Nguyên Văn Kinh Điển</h2>
+  <p>Đây là đoạn văn xuôi cổ điển (canonical prose) trong Kuṇāla Jātaka — <strong>một trong những đoạn văn Pāli cổ nhất được bảo tồn nguyên vẹn</strong>, liệt kê chính xác 40 hành động cụ thể mà Kuṇāla mô tả cho Puṇṇamukha nghe. Không giống các kệ ngôn khác, đây là văn xuôi trực tiếp, chi tiết bậc nhất trong toàn bộ Jātakapāḷi.</p>
 
-        <h3 class="sub-title" id="s2-2">2.2 Duyên Khởi Trong Hiện Tại</h3>
-        <p>Sự việc bắt nguồn từ cuộc tranh chấp nguồn nước sông <strong>Rohinī</strong> chảy giữa hai thành Kapilavatthu và Koliya. Vào cuối mùa khô (tháng Jeṭṭhamūla, tức tháng 5–6 dương lịch), hai bên tranh nhau quyền dùng nước, lời qua tiếng lại leo thang thành xung đột vũ trang. Đức Phật dùng thần thông bay đến hóa giải mâu thuẫn qua nhiều pháp thoại (<em>Phandana, Daddabha, Latukika, Rukkhadhamma, Sammodamāna Jātaka</em>).</p>
-        <p>Hai dòng họ hòa giải. Mỗi dòng họ cúng dường <strong>250 hoàng tử</strong> vào Tăng đoàn — tổng cộng 500 vị Tỳ khưu. Tuy nhiên, các vị này xuất gia vì kính trọng Đức Phật chứ chưa phải vì thiện chí tu tập. Qua thời gian, tâm bất mãn và ái dục nổi lên, nhiều vị có ý định hoàn tục.</p>
+  <blockquote>"Này anh bạn Puṇṇamukha, quả thực có bốn mươi cách thức mà một người nữ dùng để mê hoặc một người nam..."</blockquote>
 
-        <h3 class="sub-title" id="s2-3">2.3 Phương Pháp Hóa Giải Của Đức Phật</h3>
-        <p>Nhận thấy căn cơ của các vị Tỳ khưu này, Đức Phật dùng thần lực <strong>đưa cả 500 vị bay lên Tuyết Sơn</strong>, đến bờ hồ Kuṇāla. Tại đó, Ngài thuyết lại câu chuyện tiền thân khi còn là chúa chim Kuṇāla.</p>
-        <blockquote>Kết quả: Sau khi nghe trọn bộ pháp thoại, <strong>cả 500 vị Tỳ khưu đều đoạn trừ tâm ái dục và chứng đắc quả vị A La hán</strong> — ngay trong ngày hôm đó. Với thần thông mới đắc, tất cả cùng bay về lại trú xứ.</blockquote>
+  <h3 class="sub-title" id="s7-pali">7.1 Nguyên Văn Pāli Đầy Đủ</h3>
+  <div class="pali-block">
+    Cattālīsāya khalu, samma puṇṇamukha, ṭhānehi itthī purisaṃ accācarati — vijambhati, vinamati, vilasati, vilajjati, nakhena nakhaṃ ghaṭṭeti, pādena pādaṃ akkamati, kaṭṭhena pathaviṃ vilikhati, dārakaṃ ullaṅghati ullaṅghāpeti, kīḷati kīḷāpeti, cumbati cumbāpeti, bhuñjati bhuñjāpeti, dadāti, yācati, katamanukaroti, uccaṃ bhāsati, nīcaṃ bhāsati, aviccaṃ bhāsati, viviccaṃ bhāsati, naccena gītena vāditena rodanena vilasitena vibhūsitena jagghati, pekkhati, kaṭiṃ cāleti, guyhabhaṇḍakaṃ sañcāleti, ūruṃ vivarati, ūruṃ pidahati, thanaṃ dasseti, kacchaṃ dasseti, nābhiṃ dasseti, akkhiṃ nikhanati, bhamukaṃ ukkhipati, oṭṭhaṃ upalikhati, jivhaṃ nillāleti, dussaṃ muñcati, dussaṃ paṭibandhati, sirasaṃ muñcati, sirasaṃ bandhati. imehi khalu, samma puṇṇamukha, cattālīsāya ṭhānehi itthī purisaṃ accācarati.
+    <span class="source">Nhóm hai mươi kệ ngôn — Kuṇāla Jātaka — JA 536</span>
+  </div>
 
-        <h3 class="sub-title" id="s2-4">2.4 Địa Danh Hồ Kuṇāla</h3>
-        <p>Pháp thoại diễn ra tại <strong>hồ Kuṇāla</strong> (<em>Kuṇāladaha</em>) ở dãy Tuyết Sơn Himalaya, trên <strong>tảng đá Manosilā</strong> (<em>Manosilātala</em>) — một khối đá lớn màu đỏ son. Theo chú giải của ngài Buddhaghosa trong <em>Sumaṅgalavilāsinī</em> (DA.ii.675), hồ Kuṇāla là đầu nguồn của sông Kuṇāla — một đại giang sẽ cạn khô vào thời mạt kiếp khi mặt trời thứ tư mọc lên (A.iv.101). Chính cảnh vật hùng vĩ nơi đây đã bắt đầu tiêu tan ái dục của 500 Tỳ khưu trước khi Đức Phật kể câu chuyện.</p>
-      </section>
+  <h3 class="sub-title" id="s7-table">7.2 Bảng 40 Nghệ Thuật — Song Ngữ Pāli-Việt</h3>
+  <div class="table-wrap">
+    <table class="arts-tbl">
+      <thead><tr><th>#</th><th>Hành động (tiếng Việt)</th><th>Pāli tương ứng</th></tr></thead>
+      <tbody>
+        <tr class="arts-group-head"><td colspan="3">◆ Nhóm I — Cử Chỉ Thân Thể (1–8)</td></tr>
+        <tr><td>1</td><td>Vươn vai ươn mình</td><td>vijambhati</td></tr>
+        <tr><td>2</td><td>Uốn éo thân hình</td><td>vinamati</td></tr>
+        <tr><td>3</td><td>Làm duyên lả lướt</td><td>vilasati</td></tr>
+        <tr><td>4</td><td>Giả vờ bẽn lẽn, e thẹn</td><td>vilajjati</td></tr>
+        <tr><td>5</td><td>Lấy móng tay gảy gảy vào nhau</td><td>nakhena nakhaṃ ghaṭṭeti</td></tr>
+        <tr><td>6</td><td>Lấy bàn chân cọ, giẫm lên bàn chân (đối phương)</td><td>pādena pādaṃ akkamati</td></tr>
+        <tr><td>7</td><td>Cầm que vạch xuống mặt đất</td><td>kaṭṭhena pathaviṃ vilikhati</td></tr>
+        <tr><td>8</td><td>Bế tung đứa trẻ lên rồi bảo người khác bế tung lên</td><td>dārakaṃ ullaṅghati ullaṅghāpeti</td></tr>
+        <tr class="arts-group-head"><td colspan="3">◆ Nhóm II — Tương Tác Xã Hội &amp; Ngôn Từ (9–21)</td></tr>
+        <tr><td>9</td><td>Đùa giỡn</td><td>kīḷati</td></tr>
+        <tr><td>10</td><td>Rủ người khác đùa giỡn</td><td>kīḷāpeti</td></tr>
+        <tr><td>11</td><td>Hôn</td><td>cumbati</td></tr>
+        <tr><td>12</td><td>Đòi được hôn</td><td>cumbāpeti</td></tr>
+        <tr><td>13</td><td>Ăn</td><td>bhuñjati</td></tr>
+        <tr><td>14</td><td>Đút cho người khác ăn</td><td>bhuñjāpeti</td></tr>
+        <tr><td>15</td><td>Cho đi (tặng thứ gì đó)</td><td>dadāti</td></tr>
+        <tr><td>16</td><td>Nài xin (xin thứ gì đó)</td><td>yācati</td></tr>
+        <tr><td>17</td><td>Bắt chước làm theo hành động của đối phương</td><td>katamanukaroti</td></tr>
+        <tr><td>18</td><td>Nói lớn tiếng</td><td>uccaṃ bhāsati</td></tr>
+        <tr><td>19</td><td>Nói nhỏ thì thầm</td><td>nīcaṃ bhāsati</td></tr>
+        <tr><td>20</td><td>Nói lời ngắt quãng, mơ hồ</td><td>aviccaṃ bhāsati</td></tr>
+        <tr><td>21</td><td>Nói chuyện thầm kín rủ rỉ, rõ ràng</td><td>viviccaṃ bhāsati</td></tr>
+        <tr class="arts-group-head"><td colspan="3">◆ Nhóm III — Nghệ Thuật Biểu Diễn &amp; Cảm Xúc (22–27)</td></tr>
+        <tr><td>22</td><td>Dùng điệu múa</td><td>naccena</td></tr>
+        <tr><td>23</td><td>Dùng lời ca, bài hát</td><td>gītena</td></tr>
+        <tr><td>24</td><td>Dùng tiếng nhạc, âm nhạc</td><td>vāditena</td></tr>
+        <tr><td>25</td><td>Dùng sự khóc lóc, nước mắt</td><td>rodanena</td></tr>
+        <tr><td>26</td><td>Dùng điệu lả lơi, nũng nịu</td><td>vilasitena</td></tr>
+        <tr><td>27</td><td>Dùng đồ trang điểm lộng lẫy, rồi cười rinh rích</td><td>vibhūsitena jagghati</td></tr>
+        <tr class="arts-group-head"><td colspan="3">◆ Nhóm IV — Thị Giác &amp; Phơi Bày Thân Thể (28–40)</td></tr>
+        <tr><td>28</td><td>Đưa mắt liếc nhìn, nhìn chằm chằm</td><td>pekkhati</td></tr>
+        <tr><td>29</td><td>Lắc lư vòng hông</td><td>kaṭiṃ cāleti</td></tr>
+        <tr><td>30</td><td>Làm rung rinh những vùng kín đáo</td><td>guyhabhaṇḍakaṃ sañcāleti</td></tr>
+        <tr><td>31</td><td>Mở đùi rồi lại khép đùi lại</td><td>ūruṃ vivarati, ūruṃ pidahati</td></tr>
+        <tr><td>32</td><td>Phô bày bầu ngực</td><td>thanaṃ dasseti</td></tr>
+        <tr><td>33</td><td>Phô bày vùng nách</td><td>kacchaṃ dasseti</td></tr>
+        <tr><td>34</td><td>Phô bày vùng rốn</td><td>nābhiṃ dasseti</td></tr>
+        <tr><td>35</td><td>Nháy mắt khép hờ</td><td>akkhiṃ nikhanati</td></tr>
+        <tr><td>36</td><td>Nhướng mày lên cao</td><td>bhamukaṃ ukkhipati</td></tr>
+        <tr><td>37</td><td>Cắn liếm bờ môi</td><td>oṭṭhaṃ upalikhati</td></tr>
+        <tr><td>38</td><td>Thè rụt đầu lưỡi</td><td>jivhaṃ nillāleti</td></tr>
+        <tr><td>39</td><td>Nới lỏng váy áo rồi lại buộc váy áo vào</td><td>dussaṃ muñcati, dussaṃ paṭibandhati</td></tr>
+        <tr><td>40</td><td>Xõa tung mái tóc rồi lại búi mái tóc lên</td><td>sirasaṃ muñcati, sirasaṃ bandhati</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-      <!-- ── III. NHÂN VẬT ── -->
-      <section class="section" id="s3">
-        <h2 class="section-title"><span class="roman">III.</span> Các Nhân Vật Trong Câu Chuyện Tiền Thân</h2>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Nhân vật trong tiền kiếp</th><th>Vai trò</th><th>Đồng nhất trong hiện tại</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Kuṇāla</strong> — chúa chim cúc cu đầu rìu (<em>Citrakokilā</em>)</td><td>Bồ Tát — nhân vật chính</td><td>Đức Phật Thích Ca Mâu Ni</td></tr>
-              <tr><td><strong>Puṇṇamukha</strong> — chúa chim cu cu đốm (<em>Phussakokila</em>)</td><td>Bạn thân của Kuṇāla</td><td>Tôn giả <strong>Kāḷudāyī</strong> (Udāyī)</td></tr>
-              <tr><td><strong>Vua chim Kên kên</strong></td><td>Khán giả, phát biểu thêm</td><td>Tôn giả <strong>Ānanda</strong> — thị giả của Đức Phật</td></tr>
-              <tr><td><strong>Ẩn sĩ Nārada</strong></td><td>Khán giả, lời bình luận</td><td>Tôn giả <strong>Sāriputta</strong> — trí tuệ đệ nhất</td></tr>
-            </tbody>
-          </table>
-        </div>
+  <h3 class="sub-title">7.3 Lời Kết Của Kuṇāla Và Ghi Chú Cân Đối</h3>
+  <blockquote>"Quả thực, này anh bạn Puṇṇamukha, chính bằng bốn mươi cách thức này mà một người nữ có thể mê hoặc một người nam."</blockquote>
+  <div class="footnote"><strong>Ghi chú về tính cân đối trong giáo lý:</strong> Bản thân văn bản Kuṇāla Jātaka có chú thích: "Trong mọi trường hợp ở đây, khi một người phụ nữ phạm tội, thì cũng có một người đàn ông liên quan. Vì vậy, lời khuyên tương tự — với những thay đổi chi tiết phù hợp — nên được đưa ra cho các nữ tu trẻ về sự cám dỗ của đàn ông để ngăn cản họ cởi bỏ y phục." Điều này cho thấy mục đích giáo lý hướng đến <strong>sự đoạn trừ ái dục nói chung</strong>, không phân biệt giới tính của người tu tập.</div>
+  <div class="footnote"><strong>Điển tích bổ sung:</strong> Trong Kinh Pháp Cú (kệ 415) cũng có điển tích về kỹ nữ quyến rũ một nhà sư — câu chuyện của <strong>Sundara Samudda</strong> — minh họa cùng chủ đề về sức mạnh của ái dục và sự cần thiết phải tu tập tâm xuất ly.</div>
+</section>
 
-        <h3 class="sub-title" id="s3-1">3.1 Tiểu Sử Tôn Giả Kāḷudāyī</h3>
-        <div class="person-card">
-          <h4 class="mini-title">Kāḷudāyī Mahāthera — "Người Hoan Hỷ Các Dòng Tộc Đệ Nhất"</h4>
-          <div class="person-section">
-            <p class="person-section-label">Thân thế &amp; Tên gọi</p>
-            <p>Con trai của một vị đại thần trong triều đình vua Suddhodana tại Kapilavatthu, <strong>sinh cùng ngày với thái tử Siddhattha</strong>. Được đặt tên <strong>Udāyī</strong> ("người sinh ra trong ngày hoan hỷ") vì toàn thành tràn ngập vui mừng ngày thái tử chào đời. Do nước da hơi sẫm (<em>kāḷa</em>), còn được gọi là <strong>Kāḷudāyī</strong>. Lớn lên trong cung điện, là <strong>bạn chơi thân thiết của thái tử Siddhattha từ thuở ấu thơ</strong>.</p>
-          </div>
-          <div class="person-section">
-            <p class="person-section-label">Vai trò dẫn Đức Phật về thăm quê</p>
-            <p>Sau khi Đức Phật thành đạo, vua Suddhodana đã phái chín sứ đoàn thỉnh mời Ngài về thăm Kapilavatthu — tất cả đều bị cuốn hút vào Chánh pháp mà quên mất sứ mạng. Cuối cùng nhà vua phái Kāḷudāyī, với điều kiện: <em>nếu thỉnh được Đức Phật về, ông được phép xuất gia</em>. Kāḷudāyī xuất gia, đắc quả A La Hán, rồi bay đến Rājagaha ứng khẩu những bài kệ mô tả vẻ đẹp mùa xuân để mời Đức Phật về thăm quê. Mỗi ngày trong hành trình 60 do tuần, Ngài bay về trước báo tin cho nhà vua rồi mang thức ăn thượng vị dâng lên Đức Phật.</p>
-          </div>
-          <div class="person-section">
-            <p class="person-section-label">Danh hiệu Đức Phật ban tặng</p>
-            <blockquote style="margin:0">"Trong số các đệ tử Tỳ khưu của Ta, người hoan hỷ các dòng tộc đệ nhất chính là Kāḷudāyī."<br><em style="font-size:.82rem">(Etadaggaṁ bhikkhave mama sāvakānaṁ bhikkhūnaṁ kulappasādakānaṁ yad-idaṁ Kāḷudāyī)</em></blockquote>
-          </div>
-          <div class="person-section" style="margin-bottom:0">
-            <p class="person-section-label">Liên hệ với Kuṇāla Jātaka</p>
-            <p>Trong kinh điển, Tôn giả còn được gọi là <em>Lāludāyī</em> ("Udāyī lắp bắp") vì đặc điểm hay nói lộn ngược, nghĩ một đằng nói một nẻo — tương ứng với hình tượng chim Puṇṇamukha ban đầu ca ngợi nữ giới, rồi sau khi bị bỏ rơi lúc bệnh tật mới vỡ lẽ và chuyển biến hoàn toàn.</p>
-          </div>
-        </div>
-      </section>
+<!-- VIII -->
+<section class="section" id="s8">
+  <h2 class="section-title"><span class="roman">VIII.</span> Cấu Trúc Văn Học</h2>
+  <p>Kuṇāla Jātaka là <strong>bổn sanh duy nhất</strong> trong Pāli tạng có thêm phần văn xuôi được coi là <strong>kinh điển chính tạng</strong> (canonical prose) — không chỉ là chú giải hậu kỳ:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Phần</th><th>Tên Pāli</th><th>Nội dung</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Paccuppanna-vatthu</strong></td><td>Câu chuyện hiện tại — duyên khởi thuyết pháp</td></tr>
+        <tr><td>2</td><td><strong>Atīta-vatthu</strong></td><td>Câu chuyện quá khứ — hai vị chúa chim và pháp thoại</td></tr>
+        <tr><td>3</td><td><strong>Gāthā</strong></td><td>Kệ ngôn — thơ mô tả bản chất nữ giới</td></tr>
+        <tr><td>4</td><td><strong>Veyyākarana</strong></td><td>Phần văn xuôi chính tạng — bao gồm đoạn 40 nghệ thuật</td></tr>
+        <tr><td>5</td><td><strong>Samodhāna</strong></td><td>Kết hợp — nối tiền kiếp với hiện tại</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-      <!-- ── IV. TÓM TẮT ── -->
-      <section class="section" id="s4">
-        <h2 class="section-title"><span class="roman">IV.</span> Tóm Tắt Câu Chuyện Tiền Thân</h2>
+<!-- IX -->
+<section class="section" id="s9">
+  <h2 class="section-title"><span class="roman">IX.</span> Ý Nghĩa Giáo Lý Và Bối Cảnh Phật Học</h2>
+  <h3 class="sub-title">9.1 Mục Đích Tối Hậu</h3>
+  <p>Toàn bộ pháp thoại <strong>không phải là sự phê phán mang tính xã hội về phụ nữ</strong> mà là phương tiện thiện xảo (<em>upāyakaushalya</em>) nhằm giúp 500 vị Tỳ khưu nhận thức rõ bản chất vô thường của dục vọng, thấy được sự nguy hiểm (<em>ādīnava</em>) của ái dục, và phát tâm xuất ly (<em>nekkhamma</em>) để đắc quả giải thoát.</p>
+  <h3 class="sub-title">9.2 Vị Trí Trong Hệ Thống Giáo Lý</h3>
+  <ul>
+    <li><strong>Kāma-rāga</strong> (ái dục) — một trong 10 triền cái cần đoạn trừ</li>
+    <li><strong>Asubha-bhāvanā</strong> (quán bất tịnh) — phương pháp thiền đối trị ái dục</li>
+    <li><strong>Yoniso manasikāra</strong> (tác ý đúng đắn) — nhìn nhận sự vật đúng bản chất</li>
+    <li><strong>Nekkhamma</strong> (tâm xuất ly) — yếu tố thuộc Bát Chánh Đạo</li>
+  </ul>
+  <h3 class="sub-title">9.3 Ngữ Cảnh Xã Hội Cổ Ấn</h3>
+  <p>Cần đặt văn bản trong bối cảnh xã hội Ấn Độ cổ đại (thế kỷ V TCN). Trong cùng Pāli tạng, Đức Phật thành lập <strong>Tỳ Khưu Ni Tăng đoàn</strong> và tập kinh <strong>Therīgāthā</strong> ghi lại những bài kệ giác ngộ của hơn 70 Ni trưởng A La hán. Pháp thoại Kuṇāla Jātaka là <em>pháp thuốc đặc trị</em> cho 500 vị Tỳ khưu cụ thể đang bị ái dục chi phối nặng — bất kỳ đối tượng nào của dục vọng đều có thể trở thành nguyên nhân của khổ đau.</p>
+</section>
 
-        <h3 class="sub-title">4.1 Sự Tương Phản Giữa Hai Vị Chúa Chim</h3>
-        <p>Chúa chim <strong>Kuṇāla</strong> sống trong rừng Tuyết Sơn, được hầu cận bởi <strong>3.500 chim mái</strong> phục vụ chu đáo theo mọi phương. Dù được tận tụy phụng sự, Kuṇāla <strong>luôn coi thường và chỉ trích</strong> họ — xem họ là xảo quyệt, phản phúc và thiếu ơn.</p>
-        <p>Trái lại, chúa chim <strong>Puṇṇamukha</strong> cũng được hầu cận bởi đoàn tùy tùng tương tự, nhưng ông luôn ca ngợi các chim mái. Khi Puṇṇamukha hỏi tại sao bạn đối xử thô lỗ, Kuṇāla đáp: <strong>"Ta biết quá nhiều về bản chất nữ giới."</strong></p>
-
-        <h3 class="sub-title">4.2 Bước Ngoặt: Puṇṇamukha Lâm Bệnh</h3>
-        <p>Puṇṇamukha lâm bệnh nặng. Đoàn chim mái của ông bỏ ông mà đến cầu xin Kuṇāla cứu chữa. Kuṇāla mắng đuổi chúng, nhưng vẫn tự mình mang thuốc đến chăm sóc bạn cho đến lúc khỏi bệnh. Sự phản bội của đám chim mái khiến Puṇṇamukha vỡ lẽ.</p>
-
-        <h3 class="sub-title">4.3 Đại Pháp Thoại Trên Đá Manosilā</h3>
-        <p>Kuṇāla ngồi trên tảng đá Manosilā bên bờ hồ Kuṇāla và bắt đầu thuyết về <strong>bản chất của nữ giới</strong>. Tin đồn lan ra khắp các cõi — chư thiên, người, thú, thần linh — tất cả đổ về nghe Pháp. Kuṇāla tuyên bố: <em>"Nữ giới thích hủy diệt đàn ông như sư tử thích giết thú mồi."</em> Ông ví nữ giới với:</p>
-        <ul>
-          <li>Độc như rắn hổ mang đen</li>
-          <li>Tham lam như quỷ đói</li>
-          <li>Cong vẹo như sừng hươu</li>
-          <li>Kiêu ngạo như thương nhân</li>
-          <li>Nguy hiểm như thuốc độc</li>
-          <li>Tàn phá như dòng lũ lớn</li>
-          <li>Chết chóc như hố có nắp đậy</li>
-          <li>Không bao giờ thỏa mãn như địa ngục</li>
-        </ul>
-      </section>
-
-      <!-- ── V. TÁM CÂU CHUYỆN ── -->
-      <section class="section" id="s5">
-        <h2 class="section-title"><span class="roman">V.</span> Tám Câu Chuyện Minh Họa Của Kuṇāla</h2>
-        <p>Để minh chứng cho lời tuyên bố của mình, Kuṇāla kể lại <strong>tám câu chuyện tiền kiếp</strong> — trong mỗi câu chuyện, chính ông là một trong những nhân vật liên quan, nói từ kinh nghiệm trực tiếp.</p>
-
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">1</span> Người Công Chúa Đa Tình</div>
-          <div class="story-body">Khi là một hoàng tử, Kuṇāla lấy một công chúa xuất thân cao quý. Nàng có quan hệ bí mật với cả <strong>6 người đàn ông</strong> — năm anh em chồng và một người hầu gù — rồi khéo léo gửi tín hiệu bí mật riêng cho từng người để mỗi người tin mình là kẻ được nàng yêu nhất. Kuṇāla phát hiện sự thật và cùng các em xuất gia vào Tuyết Sơn.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">2</span> Người Nữ Ẩn Tu Saccatapavī</div>
-          <div class="story-body">Khi là một thợ kim hoàn, Kuṇāla đặt cược <strong>một nghìn đồng tiền vàng</strong> rằng ông có thể khiến một nữ tu khổ hạnh nổi tiếng — tu hành đã <strong>12 năm</strong> — từ bỏ giới hạnh. Ông giả làm người tu, dần dần tiếp cận qua sáu ngày. Đến ngày thứ sáu nữ tu từ bỏ phạm hạnh vì thiếu nội tâm kiên cố.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">3</span> Hoàng Hậu Và Vua Chim Thần Garuda</div>
-          <div class="story-body">Khi là vua chim thần Garuda, Kuṇāla thường hóa thành trai đẹp chơi cờ với một vị vua. Hoàng hậu lén đến gặp, hai bên phải lòng nhau. Garuda bắt hoàng hậu đưa về đảo xa — nhưng hoàng hậu lại <strong>ngoại tình với một nhạc sĩ</strong> lạc trôi đến đảo. Garuda đầy hối hận và trả hoàng hậu lại cho nhà vua.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">4</span> Hoàng Hậu Và Người Hầu Thấp Hèn</div>
-          <div class="story-body">Khi là tổng tư lệnh quân đội, Kuṇāla chứng kiến hoàng hậu được yêu quý bí mật leo qua cửa sổ bằng dây vải mỗi đêm để gặp <strong>một người đàn ông xấu xí, tật nguyền</strong> sống gần tường cung điện. Bị phát giác qua chiếc hoa tai sư tử rơi xuống, hoàng hậu bị truất ngôi.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">5</span> Thái Hậu Và Người Thanh Niên Bà La Môn</div>
-          <div class="story-body">Khi là một thanh niên Bà La Môn, Kuṇāla chứng kiến một thái hậu — trong chuyến đi thăm con trai — dừng chân tại thị trấn nơi ông sống và <strong>lấy ông làm tình nhân nhiều lần</strong> trên đường đi lẫn đường về, rồi lại viện cớ thăm con để gặp lại.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">6</span> Vị Tế Sư Và Hoàng Hậu Trăng Tình</div>
-          <div class="story-body">Khi là tế sư thông thái của nhà vua, Kuṇāla nhận ra hoàng hậu đêm đêm leo dây ra ngoài <strong>tư thông với một gã hầu xấu xí</strong>, rồi về phết nước hoa lên người nằm cạnh vua. Để chứng minh, ông đề nghị vi hành và thực chứng rằng <strong>mọi phụ nữ đều như nhau</strong> — bằng cách cho vua ngủ với cô dâu ngay trong ngày cưới của nàng với người khác.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">7</span> Người Phụ Nữ Xấu Xí Và Bàn Tay Kỳ Diệu</div>
-          <div class="story-body">Khi là một vị vua, Kuṇāla yêu và cưới một người phụ nữ dị dạng (nghiệp xấu từ kiếp trước) nhưng có bàn tay kỳ diệu mềm mại đến mức ai chạm vào cũng mê đắm. Dù vua hoàn toàn chung thủy, bà vẫn ngoại tình với người lái đò hói đầu thọt chân <strong>trên sông, giữa hai vương quốc</strong>. Hai vị vua suýt đánh nhau vì bà.</div>
-        </div>
-        <div class="story-card">
-          <div class="story-header"><span class="story-num">8</span> Cuộc Ngoại Tình Của Hoàng Hậu Cưng <em>(Culla-Kuṇāla Jātaka)</em></div>
-          <div class="story-body">Khi là một vị vua, hoàng hậu được yêu quý nhất <strong>đêm đêm leo qua cửa sổ</strong> đến gặp một người hầu. Khi vua phát hiện, dù tội đáng tử hình hay trừng phạt nặng, vua chỉ truất ngôi bà vì hiểu rằng đó là bản chất thông thường của nữ giới.</div>
-        </div>
-      </section>
-
-      <!-- ── VI. LỜI BÌNH ── -->
-      <section class="section" id="s6">
-        <h2 class="section-title"><span class="roman">VI.</span> Những Lời Bình Luận Bổ Sung</h2>
-
-        <h3 class="sub-title">6.1 Lời Vua Chim Kên Kên (Tôn giả Ānanda)</h3>
-        <p>Nữ giới là những kẻ ti tiện, không đáng tin cậy. Họ không biết xấu hổ, không phân biệt thật giả, không kiềm chế dục vọng, và theo đuổi đàn ông không vì tình yêu hay thù ghét mà chỉ vì tài vật — như ký sinh trùng bám vào cây, như bò chỉ chọn cỏ ngon nhất mà ăn.</p>
-
-        <h3 class="sub-title">6.2 Lời Ẩn Sĩ Nārada (Tôn giả Sāriputta)</h3>
-        <p>Đường lối của nữ giới khó lường như cá trong biển, gây phiền não như gai góc, và nguy hiểm như lửa đang bùng cháy. Dù là những bậc tu hành đức hạnh nhất cũng có thể thất bại trước sự quyến rũ của họ.</p>
-
-        <h3 class="sub-title">6.3 Lời Kết Của Kuṇāla</h3>
-        <ul>
-          <li>Giao tiếp với quỷ hay rắn vẫn an toàn hơn giao tiếp với nữ giới</li>
-          <li>Chỉ một nụ cười nhỏ, nữ giới đã có thể chiếm đoạt tài sản của đàn ông</li>
-          <li>Những người nổi tiếng và được kính trọng sẽ mất hết phẩm giá khi rơi vào bẫy</li>
-          <li><strong>Để đến thiên giới, đàn ông phải chinh phục dục vọng và không để bị cuốn vào bùa mê của nữ giới</strong></li>
-        </ul>
-      </section>
-
-      <!-- ── VII. 40 NGHỆ THUẬT ── -->
-      <section class="section" id="s7">
-        <h2 class="section-title"><span class="roman">VII.</span> Các Nghệ Thuật Quyến Rũ Trong Kinh Văn</h2>
-        <div class="footnote">
-          <strong>Lưu ý học thuật:</strong> Danh sách "40 nghệ thuật" mang tính tổng hợp và diễn giải từ nội dung các kệ ngôn và phần <em>Veyyākarana</em> (chú giải) trong Kuṇāla Jātaka. Văn bản Pāli gốc không liệt kê chúng thành danh sách đánh số mà phân tán qua nhiều kệ ngôn và câu chuyện minh họa.
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 1 — Ngoại Hình &amp; Cử Chỉ</div>
-          <div class="art-list"><ol start="1">
-            <li>Dùng vẻ đẹp ngoại hình và cử chỉ duyên dáng để thu hút</li>
-            <li>Dùng ánh mắt đong đưa, sắc sảo như mũi tên</li>
-            <li>Dùng giọng nói ngọt ngào, dịu dàng như nhạc</li>
-            <li>Dùng nụ cười che giấu ý định thực sự</li>
-            <li>Dùng nước mắt như vũ khí để gây thương hại</li>
-            <li>Dùng dáng đi uyển chuyển như nước chảy</li>
-            <li>Dùng trang sức, hương thơm để kích thích giác quan</li>
-            <li>Thay đổi vẻ bề ngoài linh hoạt tùy hoàn cảnh</li>
-          </ol></div>
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 2 — Ngôn Từ &amp; Thuyết Phục</div>
-          <div class="art-list"><ol start="9">
-            <li>Nói lời ngọt ngào xen lẫn giả dối</li>
-            <li>Ca ngợi đàn ông theo những gì họ muốn nghe</li>
-            <li>Giả vờ trung thành và chung thủy</li>
-            <li>Khéo léo hứa hẹn mà không cam kết thật sự</li>
-            <li>Dùng lời nịnh để khiến đàn ông hành động theo ý mình</li>
-            <li>Nói khác nghĩ — lời nói và tâm ý không nhất quán</li>
-            <li>Tạo ấn tượng là người đức hạnh, ngây thơ</li>
-          </ol></div>
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 3 — Thao Túng Cảm Xúc</div>
-          <div class="art-list"><ol start="16">
-            <li>Giả vờ yêu thương sâu sắc để chiếm lòng tin</li>
-            <li>Kích thích lòng ghen tuông để nắm quyền kiểm soát</li>
-            <li>Giả đau ốm để được chú ý và phục vụ</li>
-            <li>Đóng kịch buồn bã khi muốn điều gì đó</li>
-            <li>Dùng sự im lặng và giận hờn để gây áp lực</li>
-            <li>Tạo ra sự phụ thuộc cảm xúc từ phía đàn ông</li>
-            <li>Giả vờ yếu đuối để kích thích bản năng bảo vệ</li>
-          </ol></div>
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 4 — Mưu Kế &amp; Xảo Thuật</div>
-          <div class="art-list"><ol start="23">
-            <li>Che giấu quan hệ ngoại tình bằng lý do che đậy khéo léo</li>
-            <li>Bố trí tín hiệu bí mật riêng cho từng người tình</li>
-            <li>Sử dụng người thứ ba làm trung gian hoặc bình phong</li>
-            <li>Tạo ra cơ hội gặp gỡ dường như là ngẫu nhiên</li>
-            <li>Lợi dụng lòng tốt của đàn ông để thao túng họ</li>
-            <li>Nhanh chóng chuyển đổi lòng trung thành khi lợi ích thay đổi</li>
-          </ol></div>
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 5 — Quyền Lực &amp; Kiểm Soát</div>
-          <div class="art-list"><ol start="29">
-            <li>Dùng địa vị xã hội như công cụ thương lượng</li>
-            <li>Khéo léo cô lập đàn ông khỏi những người xung quanh</li>
-            <li>Kiểm soát thông tin mà đàn ông nhận được</li>
-            <li>Tạo ra sự phụ thuộc vật chất từ phía đàn ông</li>
-            <li>Dùng mạng lưới quan hệ để đảm bảo an toàn cho bản thân</li>
-            <li>Xoay chuyển tội lỗi sang người khác</li>
-          </ol></div>
-        </div>
-
-        <div class="art-group">
-          <div class="art-group-header"><span class="icon">✦</span> Nhóm 6 — Bản Năng &amp; Dục Lạc</div>
-          <div class="art-list"><ol start="35">
-            <li>Dùng sự tiếp xúc thể xác như vũ khí chinh phục</li>
-            <li>Kích thích trí tưởng tượng qua sự bí ẩn và khó tiếp cận</li>
-            <li>Nắm bắt điểm yếu tình cảm của từng đàn ông</li>
-            <li>Tạo ra bầu không khí riêng tư và thân mật</li>
-            <li>Duy trì sức hấp dẫn qua sự biến đổi và không thể đoán trước</li>
-            <li>Kết hợp nhiều nghệ thuật cùng lúc tạo hiệu ứng tổng hợp</li>
-          </ol></div>
-        </div>
-      </section>
-
-      <!-- ── VIII. CẤU TRÚC VĂN HỌC ── -->
-      <section class="section" id="s8">
-        <h2 class="section-title"><span class="roman">VIII.</span> Cấu Trúc Văn Học</h2>
-        <p>Kuṇāla Jātaka có cấu trúc năm phần chuẩn của Jātaka, đồng thời là <strong>bổn sanh duy nhất</strong> trong Pāli tạng có thêm phần văn xuôi được coi là <strong>kinh điển chính tạng</strong> (canonical prose):</p>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Phần</th><th>Tên Pāli</th><th>Nội dung</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td><strong>Paccuppanna-vatthu</strong></td><td>Câu chuyện hiện tại — duyên khởi thuyết pháp</td></tr>
-              <tr><td>2</td><td><strong>Atīta-vatthu</strong></td><td>Câu chuyện quá khứ — hai vị chúa chim và pháp thoại</td></tr>
-              <tr><td>3</td><td><strong>Gāthā</strong></td><td>Kệ ngôn — thơ mô tả bản chất nữ giới</td></tr>
-              <tr><td>4</td><td><strong>Veyyākarana</strong></td><td>Phần chú giải — giải thích kệ ngôn chi tiết</td></tr>
-              <tr><td>5</td><td><strong>Samodhāna</strong></td><td>Kết hợp — nối tiền kiếp với hiện tại</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ── IX. Ý NGHĨA GIÁO LÝ ── -->
-      <section class="section" id="s9">
-        <h2 class="section-title"><span class="roman">IX.</span> Ý Nghĩa Giáo Lý Và Bối Cảnh Phật Học</h2>
-
-        <h3 class="sub-title">9.1 Mục Đích Tối Hậu</h3>
-        <p>Toàn bộ pháp thoại <strong>không phải là một sự phê phán mang tính xã hội về phụ nữ</strong> mà là một phương tiện thiện xảo (<em>upāyakaushalya</em>) nhằm giúp 500 vị Tỳ khưu:</p>
-        <ul>
-          <li>Nhận thức rõ bản chất vô thường, hư ảo của dục vọng</li>
-          <li>Hiểu rằng ái dục là gốc rễ của khổ đau (<em>samudaya-sacca</em>)</li>
-          <li>Thấy được sự nguy hiểm (<em>ādīnava</em>) của việc bị ái dục chi phối</li>
-          <li>Phát tâm xuất ly (<em>nekkhamma</em>) mạnh mẽ để đắc quả giải thoát</li>
-        </ul>
-
-        <h3 class="sub-title">9.2 Vị Trí Trong Hệ Thống Giáo Lý</h3>
-        <ul>
-          <li><strong>Kāma-rāga</strong> (ái dục sắc giới) — một trong 10 triền cái cần đoạn trừ</li>
-          <li><strong>Asubha-bhāvanā</strong> (quán bất tịnh) — phương pháp thiền đối trị ái dục</li>
-          <li><strong>Yoniso manasikāra</strong> (tác ý đúng đắn) — nhìn nhận sự vật đúng bản chất</li>
-          <li><strong>Nekkhamma</strong> (tâm xuất ly) — yếu tố thuộc Bát Chánh Đạo</li>
-        </ul>
-
-        <h3 class="sub-title">9.3 Ngữ Cảnh Xã Hội Cổ Ấn &amp; Cách Đọc Kinh Phù Hợp</h3>
-        <p>Cần đặt văn bản trong bối cảnh xã hội Ấn Độ cổ đại (thế kỷ V TCN) — một xã hội phụ quyền. Nhiều học giả Phật giáo hiện đại nhấn mạnh:</p>
-        <ul>
-          <li>Những mô tả này phản ánh <strong>quan điểm của thời đại</strong>, không phải chân lý tuyệt đối</li>
-          <li>Trong cùng Pāli tạng, Đức Phật thành lập <strong>Tỳ Khưu Ni Tăng đoàn</strong> — điều chưa từng có trong các truyền thống tôn giáo đương thời</li>
-          <li>Tập kinh <strong>Therīgāthā</strong> ghi lại những bài kệ giác ngộ của hơn 70 Ni trưởng A La hán</li>
-        </ul>
-        <p><strong>Tầng 1 — Phương tiện thiện xảo:</strong> Đây là pháp thuốc đặc trị cho 500 vị Tỳ khưu đang bị tâm ái dục chi phối nặng. <strong>Tầng 2 — Nguyên lý phổ quát:</strong> Bất kỳ đối tượng nào của dục vọng đều có thể trở thành nguyên nhân của khổ đau — không chỉ riêng nữ giới.</p>
-      </section>
-
-      <!-- ── X. KẾT QUẢ ── -->
-      <section class="section" id="s10">
-        <h2 class="section-title"><span class="roman">X.</span> Kết Quả Và Ý Nghĩa Lịch Sử</h2>
-
-        <h3 class="sub-title">10.1 Dòng Thời Gian Các Sự Kiện</h3>
-        <div class="timeline">Hạ thứ 15 — Tu viện Nigrodhārāma, Kapilavatthu
+<!-- X -->
+<section class="section" id="s10">
+  <h2 class="section-title"><span class="roman">X.</span> Kết Quả Và Ý Nghĩa Lịch Sử</h2>
+  <h3 class="sub-title">10.1 Dòng Thời Gian Các Sự Kiện</h3>
+  <div class="timeline">Hạ thứ 15 — Tu viện Nigrodhārāma, Kapilavatthu
 │
-├─► Tranh chấp nước sông Rohinī giữa Sākiya và Koḷiya
-│     Tháng Jeṭṭhamūla (tháng 5–6 dương lịch)
+├─► Tranh chấp nước sông Rohinī (tháng Jeṭṭhamūla)
+│     Sākiya vs. Koḷiya — gần đến xung đột vũ trang
 │
 ├─► Đức Phật bay đến hòa giải — thuyết 5 bổn sanh
-│     → hai dòng họ hòa giải
 │
 ├─► 500 hoàng tử xuất gia (250 Sākiya + 250 Koḷiya)
+│     → xuất gia vì kính trọng, chưa phải vì tu tập
 │
-├─► 500 vị bất mãn, bị vợ cũ gửi thư kích động
+├─► 500 vị bất mãn — bị vợ cũ gửi thư kích động
 │
 ├─► Đức Phật đưa 500 vị lên hồ Kuṇāla, Tuyết Sơn
 │
-├─► Thuyết Kuṇāla Jātaka trên tảng đá Manosilā
+├─► Thuyết Kuṇāla Jātaka (JA 536) trên tảng đá Manosilā
+│   — 40 nghệ thuật quyến rũ
+│   — 8 câu chuyện tiền kiếp (Kaṇhā đến Piṅgiyānī)
+│   — bình luận của Ānanda và Nārada
 │
-├─► 500 vị đồng loạt chứng đắc A La Hán quả
-│   (sự kiện chứng ngộ tập thể hiếm có nhất trong kinh điển)
+├─► 500 vị đồng loạt chứng đắc A La Hán (cùng một ngày)
 │
-└─► Đức Phật tiếp tục thuyết Mahāsamaya Sutta</div>
+└─► Đức Phật thuyết Mahāsamaya Sutta (Kinh Đại Hội, DN 20)</div>
 
-        <h3 class="sub-title">10.2 Trường Hợp Tôn Giả Rakkhita</h3>
-        <p>Kinh điển ghi lại cụ thể trường hợp <strong>Tôn giả Rakkhita</strong> (sinh tại Devadaha, dòng họ Sākiya): Ngài lắng nghe Kuṇāla Jātaka, liên hệ bài học với đề mục thiền quán, triển khai thiền và chứng quả A La Hán ngay trong buổi pháp thoại đó. Bài kệ chánh trí của Ngài được ghi lại trong <em>Theragāthā</em> (số 79).</p>
+  <h3 class="sub-title">10.2 Trường Hợp Tôn Giả Rakkhita</h3>
+  <p>Kinh điển ghi lại cụ thể trường hợp <strong>Tôn giả Rakkhita</strong> (sinh tại Devadaha, dòng họ Sākiya): Ngài lắng nghe Kuṇāla Jātaka, liên hệ bài học với đề mục thiền quán, triển khai thiền và chứng quả A La Hán ngay trong buổi đó. Bài kệ chánh trí của Ngài được ghi lại trong <em>Theragāthā</em> (số 79).</p>
+  <h3 class="sub-title">10.3 Sự Kiện Kế Tiếp</h3>
+  <p>Ngay sau Kuṇāla Jātaka, Đức Phật tiếp tục thuyết kinh <strong>Mahāsamaya Sutta</strong> (Kinh Đại Hội, DN 20) — bài kinh mô tả sự tụ hội của chư thiên từ khắp mười phương về nghe pháp. Đây được xem là sự kiện trực tiếp kế tiếp cùng ngày 500 vị đắc quả.</p>
+</section>
 
-        <h3 class="sub-title">10.3 Sự Kiện Kế Tiếp</h3>
-        <p>Ngay sau Kuṇāla Jātaka, Đức Phật tiếp tục thuyết kinh <strong>Mahāsamaya Sutta</strong> (Kinh Đại Hội, DN 20) — bài kinh mô tả sự tụ hội của chư thiên từ khắp mười phương về nghe pháp.</p>
-      </section>
+<!-- XI -->
+<section class="section" id="s11">
+  <h2 class="section-title"><span class="roman">XI.</span> Trích Dịch Nguyên Văn Từ Tam Tạng Pāli-Việt</h2>
+  <div class="footnote"><strong>Nguồn:</strong> Bản song ngữ Pāli–Việt do <strong>Tỳ khưu Indacanda</strong> dịch từ Tam Tạng Buddha Jayanti (BJTS), tại tamtangpaliviet.net; và bản dịch <strong>HT. Thích Minh Châu</strong> trong Tiểu Bộ Kinh (Đại Tạng Kinh Việt Nam).</div>
 
-      <!-- ── XI. TRÍCH DỊCH ── -->
-      <section class="section" id="s11">
-        <h2 class="section-title"><span class="roman">XI.</span> Trích Dịch Nguyên Văn Từ Tam Tạng Pāli-Việt</h2>
-        <div class="footnote">
-          <strong>Nguồn:</strong> Bản song ngữ Pāli–Việt do <strong>Tỳ khưu Indacanda</strong> dịch từ Tam Tạng Buddha Jayanti (BJTS), tại tamtangpaliviet.net; và bản dịch <strong>HT. Thích Minh Châu</strong> trong bộ Tiểu Bộ Kinh (Đại Tạng Kinh Việt Nam).
-        </div>
+  <h3 class="sub-title">11.1 Văn Xuôi Mở Đầu — Cảnh Rừng Himalaya</h3>
+  <blockquote>"Ở một vùng núi non có đủ mọi thứ dược liệu, được trải dài với nhiều khóm hoa, được lui tới bởi các loài thú như voi, bò tót, trâu, nai vàng... được náo nhiệt với hàng trăm con chim đang say sưa nhảy nhót... ở khu rừng rậm thật sự đáng yêu với hình thức như vậy, có con chim Kuṇāla ngự trên tảng đá Manosilā..." <span style="font-size:.82rem;display:block;margin-top:.4rem"><em>— Tỳ khưu Indacanda dịch, Tam Tạng Pāli-Việt</em></span></blockquote>
 
-        <h3 class="sub-title" id="s11-1">11.1 Văn Xuôi Mở Đầu — Cảnh Rừng Himalaya</h3>
-        <blockquote>"Ở một vùng núi non có đủ mọi thứ dược liệu, được trải dài với nhiều khóm hoa, được lui tới bởi các loài thú như voi, bò tót, trâu, nai vàng, bò mộng, hươu sao, tê ngưu, nai đốm, sư tử, cọp, báo, gấu, chó sói, chó rừng, rái cá, linh dương, mèo rừng, thỏ tai dài, được trú ngụ đông đúc bởi các đoàn thú nhỏ, các bầy heo rừng, các đàn voi đực, các nhóm voi cái, được lai vãng bởi các loài gấu đen, khỉ, nai sarabha, sơn dương, nai gió, nai nhiều màu, nữ dạ-xoa mõm lừa, nhân điểu, dạ-xoa, quỷ sứ... ở khu rừng rậm thật sự đáng yêu với hình thức như vậy, có con chim Kuṇāla ngự trên tảng đá Manosilā..."
-        <br><em style="font-size:.82rem">— Tỳ khưu Indacanda dịch, Tam Tạng Pāli-Việt</em></blockquote>
+  <h3 class="sub-title" id="s11-3">11.2 Kệ Ngôn Chính (Gāthā) — Song Ngữ Pāli-Việt</h3>
+  <h4 class="mini-title">Kuṇāla Tuyên Bố — Tám Dụ Ngôn</h4>
+  <div class="table-wrap">
+    <table class="pali-tbl">
+      <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
+      <tbody>
+        <tr><td>Itthī yathā sīho mige, tatheva naraghātinī; nāssa attho na aṭṭhassa, sā bāḷhaṃ parikīḷati.</td><td>"Như sư tử giết thú mồi, nữ giới cũng vậy — sát hại đàn ông. Không có lợi ích hay bất lợi ích nào đối với bà ấy; bà ấy chỉ đơn thuần là hưởng thụ."</td></tr>
+        <tr><td>Itthī yathā kaṇho sappa, tatheva naraghātinī...</td><td>"Như rắn hổ mang đen, nữ giới cũng vậy — sát hại đàn ông..."</td></tr>
+        <tr><td>Itthī yathā aggi ḍahati, tatheva naraghātinī...</td><td>"Như lửa thiêu đốt, nữ giới cũng vậy — sát hại đàn ông..."</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-        <h3 class="sub-title">11.2 Cuộc Đối Thoại Giữa Puṇṇamukha Và Kuṇāla</h3>
-        <blockquote>
-          <strong>Puṇṇamukha:</strong> "Này bạn Kuṇāla, tại sao bạn lại cư xử sái quấy đối với các chim mái thuộc dòng dõi cao sang, là những cô con gái gia tộc danh giá, và đã cư xử đúng đắn?"<br><br>
-          <strong>Kuṇāla:</strong> "Ta biết bản chất của họ. Họ không có ơn nghĩa, họ không biết tri ân, họ không biết cảm kích."
-        </blockquote>
+  <h4 class="mini-title">Kệ Ngôn Kết — Lời Khuyến Cáo Tối Hậu</h4>
+  <div class="table-wrap">
+    <table class="pali-tbl">
+      <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
+      <tbody>
+        <tr><td>Seyyo yakkho vā ahi vā, seyyo nāgo mahabbhayo; na itthiyo seyyo, itthī parisaṭā narā.</td><td>"Dạ-xoa hoặc rắn tốt hơn, con rồng lớn đáng sợ tốt hơn; nữ giới không tốt hơn — các đàn ông đã bị các phụ nữ bao vây."</td></tr>
+        <tr><td>Yeso itthīsu baddho, na so saggaṃ upeti ca; yo ca itthīsu na baddho, so saggaṃ upeti naro.</td><td>"Người nào bị ràng buộc bởi các phụ nữ, người ấy không đi đến thiên giới; còn người nào không bị ràng buộc, người đàn ông ấy đi đến thiên giới."</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-        <h3 class="sub-title" id="s11-3">11.3 Các Kệ Ngôn Chính (Gāthā) — Song Ngữ Pāli-Việt</h3>
-        <h4 class="mini-title">Kệ Ngôn 1–3: Kuṇāla Tuyên Bố Sự Nguy Hiểm Của Nữ Giới</h4>
-        <div class="table-wrap">
-          <table class="pali-table">
-            <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
-            <tbody>
-              <tr><td>Itthī yathā sīho mige, tatheva naraghātinī; nāssa attho na aṭṭhassa, sā bāḷhaṃ parikīḷati.</td><td>"Như sư tử giết thú mồi, nữ giới cũng vậy — sát hại đàn ông. Không có lợi ích hay bất lợi ích nào đối với bà ấy; bà ấy chỉ đơn thuần là hưởng thụ."</td></tr>
-              <tr><td>Itthī yathā kaṇho sappa, tatheva naraghātinī; nāssa attho na aṭṭhassa, sā bāḷhaṃ parikīḷati.</td><td>"Như rắn hổ mang đen, nữ giới cũng vậy — sát hại đàn ông. Không có lợi ích hay bất lợi ích nào đối với bà ấy; bà ấy chỉ đơn thuần là hưởng thụ."</td></tr>
-              <tr><td>Itthī yathā aggi ḍahati, tatheva naraghātinī; nāssa attho na aṭṭhassa, sā bāḷhaṃ parikīḷati.</td><td>"Như lửa thiêu đốt, nữ giới cũng vậy — sát hại đàn ông. Không có lợi ích hay bất lợi ích nào đối với bà ấy; bà ấy chỉ đơn thuần là hưởng thụ."</td></tr>
-            </tbody>
-          </table>
-        </div>
+  <h3 class="sub-title" id="s11-7">11.3 Kệ Ngôn Kết Hợp — Nhận Diện Bổn Sanh</h3>
+  <blockquote>"Này các Tỳ khưu, không phải chỉ bây giờ Như Lai mới biết sự vô ân, các xảo thuật, tội lỗi và tánh bại hoại của nữ giới. Ngay cả khi còn ở trong loài thú, Như Lai cũng đã biết rõ điều đó..."<br><br>
+  <strong>Nhận diện:</strong> "Chim cúc cu đốm Puṇṇamukha lúc bấy giờ, nay chính là Trưởng lão Udāyī. Vua chim kên kên lúc bấy giờ, nay chính là Trưởng lão Ānanda. Ẩn sĩ Nārada lúc bấy giờ, nay chính là Trưởng lão Sāriputta. Còn chim chúa Kuṇāla lúc bấy giờ, nay chính là Ta — Đức Như Lai."
+  <span style="font-size:.82rem;display:block;margin-top:.4rem"><em>— HT. Thích Minh Châu dịch, Tiểu Bộ Kinh tập IX</em></span></blockquote>
 
-        <h4 class="mini-title">Kệ Ngôn — Vua Chim Kên Kên (Tôn giả Ānanda)</h4>
-        <div class="table-wrap">
-          <table class="pali-table">
-            <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
-            <tbody>
-              <tr><td>Na itthiyā sadiso koci, loke dubbhī mahesino; sā bhoge tapate loke, yathā aggi vanasmiṃ.</td><td>"Không có ai trong thế gian phản bội giống như nữ giới; bà ấy thiêu đốt tài sản trong thế gian, giống như lửa (thiêu đốt) trong rừng."</td></tr>
-              <tr><td>Na sā lajjaṃ na hirī-ottappaṃ, neva saccaṃ bhaṇanti ca; atthaṃ anatthañca na passanti, yassā kāmo vasaṃ gato.</td><td>"Họ không có xấu hổ, không có tàm quý; họ cũng không nói sự thật; họ không nhìn thấy điều lợi ích và điều bất lợi, khi lòng dục đã trở thành chủ của họ."</td></tr>
-            </tbody>
-          </table>
-        </div>
+  <h3 class="sub-title">11.4 Hai Bản Dịch Tiếng Việt Chính</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>HT. Thích Minh Châu</th><th>Tỳ khưu Indacanda</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nguồn gốc</strong></td><td>Dịch từ bản tiếng Anh PTS, London</td><td>Dịch trực tiếp từ Pāli (BJTS), Sri Lanka</td></tr>
+        <tr><td><strong>Phong cách</strong></td><td>Văn xuôi tự nhiên, kết hợp thơ lục bát Việt</td><td>Song ngữ Pāli-Việt, sát nghĩa, có chú thích</td></tr>
+        <tr><td><strong>Đặc điểm</strong></td><td>Dễ đọc, phổ thông</td><td>Chính xác học thuật, giữ thuật ngữ Pāli</td></tr>
+        <tr><td><strong>Nơi tiếp cận</strong></td><td>thuvienhoasen.org</td><td>tamtangpaliviet.net</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-        <h4 class="mini-title">Kệ Ngôn — Ẩn Sĩ Nārada (Tôn giả Sāriputta)</h4>
-        <div class="table-wrap">
-          <table class="pali-table">
-            <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
-            <tbody>
-              <tr><td>Isiṃ vā tapassiṃ vā, brahmacariyaṃ vā upaṭṭhitaṃ; etā hananti itthiyo, yathā ambu nalīnaṃ.</td><td>"Những vị ẩn sĩ, hay những người khổ hạnh, hay những người đang thực hành Phạm hạnh — những phụ nữ này tiêu diệt họ, như nước tiêu diệt hoa sen."</td></tr>
-            </tbody>
-          </table>
-        </div>
+<!-- XII -->
+<section class="section refs-section" id="s12">
+  <h2 class="section-title"><span class="roman">XII.</span> Tài Liệu Tham Khảo</h2>
+  <div class="refs-group">
+    <p class="refs-group-title">Kinh Điển Và Bản Dịch</p>
+    <p class="ref-item"><strong>Jātakapāḷi</strong> (Chánh Tạng Pāli) — số 536, <em>Kuṇālajātakaṃ</em> — Buddha Jayanti Tripitaka Series (BJTS), Sri Lanka</p>
+    <p class="ref-item"><strong>Tam Tạng Pāli-Việt</strong> (TTPV) — Tỳ khưu Indacanda dịch — tamtangpaliviet.net</p>
+    <p class="ref-item"><strong>Tiểu Bộ Kinh tập IX</strong> (<em>Chuyện Tiền Thân Đức Phật</em>) — HT. Thích Minh Châu dịch — thuvienhoasen.org</p>
+    <p class="ref-item"><strong>The Jataka, Volume V</strong> — H.T. Francis dịch, E.B. Cowell chủ biên — Cambridge University Press / Pāli Text Society, 1905</p>
+  </div>
+  <div class="refs-group">
+    <p class="refs-group-title">Từ Điển Và Học Thuật</p>
+    <p class="ref-item"><strong>Dictionary of Pāli Proper Names</strong> — G.P. Malalasekera — mục từ <em>Kuṇāla-jātaka</em>, <em>Kāḷudāyī</em></p>
+    <p class="ref-item"><strong>A Handbook of Pāli Literature</strong> — Oskar Von Hinüber — Walter de Gruyter, 1996</p>
+    <p class="ref-item"><strong>Maha Buddhavamsa / Great Chronicle of Buddhas</strong> — Ven. Mingun Sayadaw — ancient-buddhist-texts.net</p>
+    <p class="ref-item"><strong>An Analytical Study of Women's Behaviors in Kuṇāla Jātaka</strong> — Journal of MCU Nakhondhat, 2019</p>
+    <p class="ref-item"><strong>Kuṇāla-Jātaka</strong> — Pāli Text Society, London — palitextsociety.org</p>
+  </div>
+  <div class="refs-group">
+    <p class="refs-group-title">Nguồn Bổ Sung</p>
+    <p class="ref-item"><strong>The Jataka Tales</strong> — Tim Bewer — thejatakatales.com (số 536 và số 464)</p>
+    <p class="ref-item"><strong>Jātaka Stories in Theravāda Buddhism</strong> — Naomi Appleton — Ashgate, 2010</p>
+    <p class="ref-item"><strong>Therīgāthā</strong> — Kệ ngôn của các Ni trưởng A La hán — đối chiếu quan điểm về nữ giới trong Pāli tạng</p>
+    <p class="ref-item"><strong>Kinh Pháp Cú (Dhammapada)</strong> — kệ 415 — điển tích Sundara Samudda và kỹ nữ</p>
+  </div>
+</section>
 
-        <h4 class="mini-title">Kệ Ngôn Kết — Lời Khuyến Cáo Tối Hậu Của Kuṇāla</h4>
-        <div class="table-wrap">
-          <table class="pali-table">
-            <thead><tr><th>Pāli (nguyên văn BJTS)</th><th>Việt dịch (Tỳ khưu Indacanda)</th></tr></thead>
-            <tbody>
-              <tr><td>Seyyo yakkho vā ahi vā, seyyo nāgo mahabbhayo; na itthiyo seyyo, itthī parisaṭā narā.</td><td>"Dạ-xoa hoặc rắn tốt hơn, con rồng lớn đáng sợ tốt hơn; nữ giới không tốt hơn — các đàn ông đã bị các phụ nữ bao vây."</td></tr>
-              <tr><td>Yeso itthīsu baddho, na so saggaṃ upeti ca; yo ca itthīsu na baddho, so saggaṃ upeti naro.</td><td>"Người nào bị ràng buộc bởi các phụ nữ, người ấy không đi đến thiên giới; còn người nào không bị ràng buộc, người đàn ông ấy đi đến thiên giới."</td></tr>
-            </tbody>
-          </table>
-        </div>
+</main>
+</div><!-- end .layout -->
 
-        <h3 class="sub-title" id="s11-7">11.7 Kệ Ngôn Kết Hợp (Samodhāna) — Nhận Diện Bổn Sanh</h3>
-        <blockquote>
-          "Này các Tỳ khưu, không phải chỉ bây giờ Như Lai mới biết sự vô ân, các xảo thuật, tội lỗi và tánh bại hoại của nữ giới. Ngay cả khi còn ở trong loài thú, Như Lai cũng đã biết rõ điều đó; lúc bấy giờ không những Như Lai không nằm trong quyền lực của họ, mà còn điều phục họ nằm trong quyền lực của mình."
-          <br><br>
-          <strong>Nhận diện:</strong> "Chim cúc cu đốm Puṇṇamukha lúc bấy giờ, nay chính là Trưởng lão Udāyī. Vua chim kên kên lúc bấy giờ, nay chính là Trưởng lão Ānanda. Ẩn sĩ Nārada lúc bấy giờ, nay chính là Trưởng lão Sāriputta. Còn chim chúa Kuṇāla lúc bấy giờ, nay chính là Ta — Đức Như Lai."
-          <br><em style="font-size:.82rem">— HT. Thích Minh Châu dịch, Tiểu Bộ Kinh tập IX</em>
-        </blockquote>
-
-        <h3 class="sub-title">11.8 Hai Bản Dịch Tiếng Việt Chính</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th></th><th>HT. Thích Minh Châu</th><th>Tỳ khưu Indacanda</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Nguồn gốc</strong></td><td>Dịch từ bản tiếng Anh PTS, London</td><td>Dịch trực tiếp từ Pāli (BJTS), Sri Lanka</td></tr>
-              <tr><td><strong>Phong cách</strong></td><td>Văn xuôi tự nhiên, kết hợp thơ lục bát Việt</td><td>Song ngữ Pāli-Việt, sát nghĩa, có chú thích</td></tr>
-              <tr><td><strong>Đặc điểm</strong></td><td>Dễ đọc, phổ thông, phù hợp đại chúng</td><td>Chính xác học thuật, giữ thuật ngữ Pāli</td></tr>
-              <tr><td><strong>Nơi tiếp cận</strong></td><td>thuvienhoasen.org, daitangkinhvietnam.org</td><td>tamtangpaliviet.net</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ── XII. TÀI LIỆU THAM KHẢO ── -->
-      <section class="section refs-section" id="s12">
-        <h2 class="section-title"><span class="roman">XII.</span> Tài Liệu Tham Khảo</h2>
-        <div class="refs-group">
-          <p class="refs-group-title">Kinh Điển Và Bản Dịch</p>
-          <p class="ref-item"><strong>Jātakapāḷi</strong> (Chánh Tạng Pāli) — số 536, <em>Kuṇālajātakaṃ</em> — Buddha Jayanti Tripitaka Series (BJTS), Sri Lanka</p>
-          <p class="ref-item"><strong>Tam Tạng Pāli-Việt</strong> (TTPV) — Tỳ khưu Indacanda dịch — tamtangpaliviet.net</p>
-          <p class="ref-item"><strong>Tiểu Bộ Kinh tập IX</strong> (<em>Chuyện Tiền Thân Đức Phật</em>) — HT. Thích Minh Châu dịch — thuvienhoasen.org</p>
-          <p class="ref-item"><strong>The Jataka, Volume V</strong> — H.T. Francis dịch, E.B. Cowell chủ biên — Cambridge University Press / Pāli Text Society, 1905</p>
-        </div>
-        <div class="refs-group">
-          <p class="refs-group-title">Từ Điển Và Học Thuật</p>
-          <p class="ref-item"><strong>Dictionary of Pāli Proper Names</strong> — G.P. Malalasekera — mục từ <em>Kuṇāla-jātaka</em>, <em>Kāḷudāyī</em></p>
-          <p class="ref-item"><strong>A Handbook of Pāli Literature</strong> — Oskar Von Hinüber — Walter de Gruyter, 1996</p>
-          <p class="ref-item"><strong>Maha Buddhavamsa / Great Chronicle of Buddhas</strong> — Ven. Mingun Sayadaw — ancient-buddhist-texts.net</p>
-          <p class="ref-item"><strong>An Analytical Study of Women's Behaviors in Kuṇāla Jātaka</strong> — Journal of MCU Nakhondhat, 2019</p>
-          <p class="ref-item"><strong>Kuṇāla-Jātaka</strong> — Pāli Text Society, London — palitextsociety.org</p>
-        </div>
-        <div class="refs-group">
-          <p class="refs-group-title">Nguồn Bổ Sung</p>
-          <p class="ref-item"><strong>The Jataka Tales</strong> — Tim Bewer — thejatakatales.com (số 536)</p>
-          <p class="ref-item"><strong>Jātaka Stories in Theravāda Buddhism</strong> — Naomi Appleton — Ashgate, 2010</p>
-          <p class="ref-item"><strong>Therīgāthā</strong> — Kệ ngôn của các Ni trưởng A La hán — đối chiếu quan điểm về nữ giới trong Pāli tạng</p>
-        </div>
-      </section>
-
-    </main>
-  </div><!-- end .layout -->
-
-  <!-- ═══ COLOPHON ═══ -->
-  <footer class="colophon">
-    <span class="dhamma">❧ &nbsp; Dhamma &nbsp; ❧</span>
-    Tài liệu được biên soạn nhằm mục đích nghiên cứu và học hỏi Phật pháp.<br>
-    Mọi nội dung cần được đặt trong bối cảnh tu tập và giải thoát —<br>
-    mục tiêu tối hậu của toàn bộ Tam Tạng Kinh điển.<br><br>
-    Kệ ngôn trích từ công trình của <strong style="color:var(--gold-light)">Tỳ khưu Indacanda</strong> và <strong style="color:var(--gold-light)">HT. Thích Minh Châu</strong>.<br>
-    Hình minh họa: <em>Kuṇāla Jātaka — The Wisdom of Detachment</em> (phong cách Himalaya).
-  </footer>
-
+<footer class="colophon">
+  <span class="dh">❧ &nbsp; Dhamma &nbsp; ❧</span>
+  Tài liệu được biên soạn nhằm mục đích nghiên cứu và học hỏi Phật pháp.<br>
+  Mọi nội dung cần được đặt trong bối cảnh tu tập và giải thoát —<br>
+  mục tiêu tối hậu của toàn bộ Tam Tạng Kinh điển.<br><br>
+  Kệ ngôn trích từ công trình của <strong style="color:var(--gold-light)">Tỳ khưu Indacanda</strong> và <strong style="color:var(--gold-light)">HT. Thích Minh Châu</strong>.<br>
+  Hình minh họa: <em>Kuṇāla Jātaka — The Wisdom of Detachment</em>.
+</footer>
 </div><!-- end .page-frame -->
 
-<!-- Scroll to top -->
 <button id="top-btn" title="Về đầu trang" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
 <script>
-  // Scroll to top button
-  window.addEventListener('scroll', () => {
-    document.getElementById('top-btn').classList.toggle('visible', window.scrollY > 400);
-  });
-
-  // Active TOC highlighting
-  const sections = document.querySelectorAll('section[id]');
-  const tocLinks = document.querySelectorAll('.toc-item');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`.toc-item[href="#${e.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-  sections.forEach(s => observer.observe(s));
-
-  // Staggered section animation
-  const allSections = document.querySelectorAll('.section');
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.animationDelay = '0s';
-        e.target.style.opacity = '1';
-        revealObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  allSections.forEach(s => { s.style.opacity = '0'; revealObs.observe(s); });
+  window.addEventListener('scroll',()=>{document.getElementById('top-btn').classList.toggle('vis',window.scrollY>400)});
+  const secs=document.querySelectorAll('section[id]'),links=document.querySelectorAll('.toc-item');
+  new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.toc-item[href="#${x.target.id}"]`);if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'}).observe
+  (document.querySelectorAll('section[id]')[0]);
+  document.querySelectorAll('section[id]').forEach(s=>new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector(`.toc-item[href="#${x.target.id}"]`);if(a)a.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'}).observe(s));
+  const allS=document.querySelectorAll('.section');
+  new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.animationDelay='0s'}})},{threshold:.06}).observe&&
+  (() => {
+    const obs = new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1'}})},{threshold:.06});
+    allS.forEach(s=>{s.style.opacity='0';obs.observe(s)});
+  })();
 </script>
 </body>
 </html>
