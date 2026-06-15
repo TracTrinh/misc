@@ -161,10 +161,26 @@ Các điểm này có thể dùng để đặt câu hỏi về độ tin cậy h
 
 ### Tài liệu cần thu thập thêm
 
-- [ ] Bản vẽ hợp đồng gốc (để đối chiếu với claim của VCM về phạm vi trần và chống sét)
-- [ ] Biên bản họp 17/06/2026 (cần lập biên bản chính thức, có chữ ký hai bên)
-- [ ] Danh sách vật tư VCM đã mua và nhập/xuất công trường
-- [ ] Xác nhận pháp luật Myanmar về yêu cầu bắt buộc hệ thống chống sét
+**Để xác định phạm vi hợp đồng gốc (tranh chấp trần + chống sét):**
+- [ ] **Bản vẽ hợp đồng gốc đính kèm lúc ký** (Phụ lục 2 — Annex 2: Detailed Specifications) — để đối chiếu xem thiết kế trần và yêu cầu chống sét có được mô tả không. Đây là tài liệu quan trọng nhất.
+- [ ] **BOQ gốc đầy đủ** (Phụ lục 1) — bản scan gốc có chữ ký, không phải bản OCR — để xác nhận diện tích trần trong Hạng mục 9 là bao nhiêu và thiếu bao nhiêu so với thực tế.
+- [ ] **Thông báo số 01 của VCM ngày 20 hoặc 21/05/2026** (bản gốc) — để xác định ngày chính xác và nội dung đề nghị VO ban đầu.
+
+**Để xác minh ngày tháng hợp đồng (mâu thuẫn 10/05 vs 30/05/2025):**
+- [ ] **Bản hợp đồng 01/2025 có chữ ký gốc** — trang bìa và trang ký — để xác định ngày ký thực tế. Biên bản hiện trường 14/06/2026 ghi **30/05/2025**, trong khi Phụ lục 02 ghi **10/05/2025**.
+
+**Tài liệu phát hiện trong biên bản 14/06 nhưng chưa có bản OCR:**
+- [ ] **Tiến độ thi công phần móng ký ngày 16/12/2025** — được dẫn chiếu trong biên bản hiện trường 14/06, chưa có trong bộ hồ sơ hiện tại.
+- [ ] **Tiến độ thi công phần kết cấu thép và hoàn thiện ký ngày 17/12/2025** — cùng nguồn, chưa có trong bộ hồ sơ hiện tại.
+- [ ] **Các lần gia hạn tiến độ 1, 2, 3** (chỉ có lần 4 ngày 30/03/2026 trong hồ sơ hiện tại) — để xác định điều kiện và lý do từng gia hạn, tránh VCM argue Chủ đầu tư đã "chấp nhận" delay.
+
+**Để verify pattern bóc tách sai và đòi tiền bổ sung (mục 3.5):**
+- [ ] **Email/trao đổi tháng 10–12/2025** xung quanh phát hiện lỗi móng — xem VCM tiếp cận Nhà tài trợ như thế nào, có dùng ngôn ngữ xin hỗ trợ để được chia sẻ 50% chi phí không.
+- [ ] **Hóa đơn và chứng từ mua sắm vật tư của VCM** — để đối chiếu với danh sách vật tư thực tế tại công trường (sau sự kiện 14/06).
+
+**Để chuẩn bị cho kịch bản tranh chấp leo thang:**
+- [ ] **Biên bản họp 17/06/2026** — cần lập chính thức, có chữ ký hai bên, ghi rõ từng nội dung được/không được thống nhất.
+- [ ] **Xác nhận pháp luật Myanmar** về yêu cầu bắt buộc hệ thống chống sét cho công trình tôn giáo tập trung đông người (~300–500 người).
 
 ---
 
