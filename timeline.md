@@ -33,6 +33,16 @@
 - Tiến độ trong Phụ lục hợp đồng số 01 quy định bắt đầu sửa chữa **20/58 móng** từ ngày này, kể cả ngày lễ và Chủ nhật.
 - Bản tiếng Việt ghi hạn hoàn thành **31/12/2025**, trong khi dòng dịch tiếng Anh cùng điều khoản ghi **21/12/2025**; cần đối chiếu bản gốc/ký xác nhận để xác định mốc áp dụng.
 
+### 16/12/2025 — Ký tiến độ thi công phần móng
+
+- Tài liệu tiến độ thi công phần móng được ký ngày này.
+- Dẫn chiếu từ biên bản hiện trường 14/06/2026; chưa có file OCR riêng cho tài liệu này.
+
+### 17/12/2025 — Ký tiến độ thi công phần kết cấu thép và hoàn thiện
+
+- Tài liệu tiến độ thi công phần kết cấu thép và hoàn thiện dự án được ký ngày này.
+- Dẫn chiếu từ biên bản hiện trường 14/06/2026; chưa có file OCR riêng cho tài liệu này.
+
 ### 21/12/2025 — Ký Phụ lục HĐ số 01 về sửa chữa móng
 
 - Ngày ký được ghi nhận trong biên bản hiện trường 14/06/2026; trang đầu bản OCR của Phụ lục 01 để trống ngày hiệu lực và còn hiển thị nhầm năm **2024** tại dòng địa điểm/ngày tháng.

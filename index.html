@@ -427,6 +427,13 @@
     @media (max-width: 680px) {
       .header-inner { min-height: 62px; }
       .brand-text { display: none; }
+      .top-nav {
+        max-width: calc(100vw - 72px);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .top-nav::-webkit-scrollbar { display: none; }
+      .nav-link { white-space: nowrap; }
       .nav-link { padding: 7px 9px; font-size: 0.86rem; }
       main { padding-top: 28px; }
       .hero { padding-top: 28px; }
@@ -458,6 +465,7 @@
         <a class="nav-link" href="#timeline" data-route="timeline">Timeline</a>
         <a class="nav-link" href="#roles" data-route="roles">Roles</a>
         <a class="nav-link" href="#documents" data-route="documents">Documents</a>
+        <a class="nav-link" href="#disputes" data-route="disputes">Disputes</a>
       </nav>
     </div>
   </header>
@@ -499,6 +507,13 @@
           <h2>Project Documents</h2>
           <p>Chỉ mục hợp đồng, phụ lục, cam kết, báo giá, thư từ và biên bản đã được OCR.</p>
           <span class="card-action">Open documents &rarr;</span>
+        </a>
+
+        <a class="section-card" href="#disputes" data-route="disputes">
+          <span class="card-number">04 / Disputes</span>
+          <h2>Disputes Analysis</h2>
+          <p>Phân tích các vấn đề tranh chấp, lập trường của các bên, rủi ro và chiến lược đề xuất.</p>
+          <span class="card-action">Open analysis &rarr;</span>
         </a>
       </div>
     </section>
@@ -856,6 +871,163 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
 - Phụ lục 02 có hai hạn hoàn thành dự án: **15/04/2026** và **13/04/2026**.
 - Các sai khác trên được ghi nhận để tra cứu, không phải kết luận pháp lý về văn bản nào được ưu tiên.
 </script>
+  <script id="fallback-disputes" type="text/plain"># Phân Tích Tranh Chấp – Dự án Pa Auk Tawya Heho
+
+> Tài liệu nội bộ phục vụ việc rà soát hồ sơ và xây dựng lập trường cho phía Chủ đầu tư/Nhà tài trợ (Ông Minh Phạm, Bà Linh Đào).
+> Cập nhật theo tài liệu mới. Dẫn chiếu sự kiện → xem `timeline.md`.
+
+---
+
+## Tổng quan tình trạng (tính đến 15/06/2026)
+
+VCM đang đề nghị thanh toán bổ sung **257,971,956 MMK** (~22% giá trị hợp đồng gốc) cho hai hạng mục mà VCM cho là ngoài phạm vi hợp đồng. Chủ đầu tư đã từ chối hai lần (23/05 và 02/06/2026). Trong khi đó, dự án đã trễ tiến độ ~8 tháng (từ 10/11/2025 → 05/07/2026) và VCM vừa bị ghi nhận đưa vật tư ra khỏi công trường không thông báo (14/06/2026).
+
+| Hạng mục tranh chấp | VCM yêu cầu | Lập trường Chủ đầu tư |
+|---|---|---|
+| Trần hoàn thiện Dhamma Hall | 190,698,981 MMK | Thuộc phạm vi HĐ trọn gói |
+| Hệ thống chống sét ESE | 67,272,975 MMK | Nghĩa vụ an toàn bắt buộc |
+| **Tổng** | **257,971,956 MMK** | **Từ chối toàn bộ** |
+
+---
+
+## 1. Tranh chấp: Trần hoàn thiện Dhamma Hall
+
+### Lập trường VCM
+- Hạng mục trần hoàn thiện nằm ngoài BOQ (Phụ lục 1), ngoài bản vẽ hợp đồng.
+- Yêu cầu ký phụ lục và thanh toán bổ sung **190,698,981 MMK** trước khi thi công.
+- Coi đây là điều kiện tiên quyết để triển khai tiếp.
+
+### Lập trường Chủ đầu tư
+- Đây là hợp đồng **Full Package Construction** — VCM cam kết giao công trình hoàn chỉnh đưa vào sử dụng, không phải giao từng hạng mục riêng lẻ.
+- BOQ Hạng mục 9 đã ghi "Complete the ceiling (frame + trim)" — VCM đã định giá hạng mục này trong hợp đồng gốc.
+- Phụ lục 02 đề cập trần hoàn thiện là hạng mục cần hoàn thành.
+- Điều 2(b): VCM phải hoàn thành công việc "timely with high quality and meet all requirements of the Owner."
+- Thiếu sót trong BOQ (nếu có) là rủi ro của nhà thầu trong hợp đồng trọn gói, không phải căn cứ để yêu cầu thanh toán bổ sung.
+
+### Căn cứ mạnh nhất ủng hộ Chủ đầu tư
+1. **VCM tự báo giá ngày 10/05/2026** — bằng chứng VCM biết đây là hạng mục cần làm, chỉ đang đàm phán tiền thêm, không phải tranh luận về phạm vi.
+2. **Letter of Commitment 01/04/2026**: VCM cam kết bằng văn bản "hoàn thành TẤT CẢ các hạng mục công việc theo Hợp đồng đã ký" để nhận đợt 3.
+3. **BOQ đã có line item ceiling** — VCM cần chỉ ra cụ thể hạng mục nào trong BOQ bị thiếu và trị giá bao nhiêu; cho đến nay VCM chưa cung cấp được phân tích này.
+
+### Điểm yếu cần lưu ý
+- Nếu VCM chứng minh được BOQ mô tả một loại trần khác với thiết kế thực tế (scope change), yêu cầu phát sinh có thể có cơ sở một phần.
+- Cần đối chiếu bản vẽ hợp đồng gốc với thiết kế trần thực tế để loại trừ rủi ro này.
+
+---
+
+## 2. Tranh chấp: Hệ thống chống sét ESE
+
+### Lập trường VCM
+- Hệ thống ESE không có trong BOQ, không có trong bản vẽ hợp đồng.
+- Yêu cầu thanh toán bổ sung **67,272,975 MMK** trước khi triển khai.
+
+### Lập trường Chủ đầu tư
+- Điều 2(a): VCM cam kết xây dựng công trình đảm bảo tiêu chuẩn chịu động đất cấp 8 — tiêu chuẩn an toàn tổng thể là nghĩa vụ cố hữu của nhà thầu.
+- Điều 2(l): VCM có nghĩa vụ "Ensure worker safety throughout the construction process."
+- Điều 2(d): VCM phải hỗ trợ "getting all licenses and permits under the regulating law" — công trình phải đáp ứng yêu cầu pháp lý Myanmar để được nghiệm thu và vận hành.
+- Chống sét là yêu cầu bắt buộc để công trình đủ điều kiện nghiệm thu và đưa vào sử dụng hợp pháp tại Myanmar — thuộc trách nhiệm giao công trình hoàn chỉnh của nhà thầu trọn gói.
+
+### Căn cứ mạnh nhất ủng hộ Chủ đầu tư
+1. **VCM tự báo giá ngày 05/05/2026** (trước khi gửi VO ngày 21/05) — thừa nhận đây là hạng mục cần thực hiện; nếu thực sự ngoài phạm vi, VCM nên nêu ngay từ đầu, không phải tự đi báo giá trước.
+2. **Letter of Commitment 01/04/2026**: cùng cam kết hoàn thành toàn bộ công trình.
+3. Hợp đồng Full Package → nghĩa vụ giao công trình đủ điều kiện vận hành, không phân biệt item có trong BOQ hay không.
+
+### Điểm yếu cần lưu ý
+- Đây là hạng mục kỹ thuật chuyên biệt (ESE lightning protection), không phải hạng mục xây dựng thông thường — VCM có thể argue đây là add-on ngoài scope ban đầu.
+- Cần xác nhận: pháp luật Myanmar có quy định bắt buộc chống sét cho công trình loại này không? Nếu có, lập trường Chủ đầu tư rất mạnh.
+
+---
+
+## 3. Vi phạm và bất lợi của VCM (leverage points)
+
+### 3.1 Chậm tiến độ nghiêm trọng
+
+| Mốc | Ngày ban đầu | Ngày hiện tại | Số ngày trễ |
+|---|---|---|---|
+| Hoàn thành dự án | 10/11/2025 | 05/07/2026 (cam kết lần 4) | ~237 ngày |
+
+- Điều 6.2: phạt **1%/ngày** giá trị hợp đồng, tối đa **10%** = ~**118,802,200 MMK**.
+- Dù phần lớn delay có lý do (sửa móng), VCM vẫn chịu trách nhiệm vì lỗi thi công móng là do VCM.
+- Mỗi gia hạn đều do VCM đề nghị và được Chủ đầu tư chấp thuận — cần track xem gia hạn nào đi kèm điều kiện gì.
+
+### 3.2 Lỗi thi công móng — đã thừa nhận bằng văn bản
+
+- Phụ lục 01 (ký 21/12/2025): VCM chính thức thừa nhận "quản lý và giám sát kỹ thuật chưa đảm bảo chất lượng" giai đoạn móng.
+- Đây là căn cứ quan trọng để bác bỏ bất kỳ lập luận nào của VCM về việc Chủ đầu tư gây ra delay hoặc tạo thêm công việc phát sinh.
+- VCM đã buộc Chủ đầu tư phải bỏ thêm 49,410,000 MMK (50% chi phí làm lại móng) — khoản này nên được ghi nhận như một precedent về trách nhiệm.
+
+### 3.3 Sự kiện 14/06/2026 — Đưa vật tư ra ngoài công trường
+
+- **Đây là dấu hiệu đáng lo nhất hiện tại.** VCM đưa ống nước lên xe tải lúc 8:30 sáng mà không thông báo.
+- Có thể là chuẩn bị "rút lui" khỏi dự án, hoặc dùng vật tư cho công trình khác.
+- Chủ đầu tư đã lập biên bản và yêu cầu thông báo bằng văn bản cho mọi lần xuất vật tư — đây là bước đúng.
+- **Cần làm ngay:** yêu cầu VCM cung cấp danh sách toàn bộ vật tư đã mua, đối chiếu với hóa đơn các đợt thanh toán đã nhận.
+
+### 3.4 VCM đã nhận phần lớn tiền nhưng công trình chưa hoàn thành
+
+- Đợt 1 (30%): ~356,406,600 MMK — đã nhận từ 05/2025
+- Đợt 2 (20%): ~237,604,400 MMK — xuất hóa đơn 26/09/2025
+- Đợt 3 (20%): ~237,604,400 MMK — VCM đã cam kết (Letter of Commitment 01/04/2026), dự kiến đang xử lý
+- **Tổng đã/sắp nhận: 70% = ~831,615,400 MMK** trong khi công trình chưa bàn giao.
+
+### 3.5 Mâu thuẫn và bất nhất trong tài liệu VCM
+
+Các điểm này có thể dùng để đặt câu hỏi về độ tin cậy hồ sơ nếu tranh chấp leo thang:
+
+| Điểm mâu thuẫn | Chi tiết |
+|---|---|
+| Ngày ký hợp đồng | Phụ lục 02 ghi 10/05/2025; biên bản 14/06/2026 ghi 30/05/2025 |
+| Tổng giá trị hợp đồng | Điều 4 ghi 1,188,022,000 MMK; BOQ ghi 1,188,032,000 MMK |
+| Ngày hoàn thành Phụ lục 02 | Bản Việt và một dòng Anh ghi 15/04/2026; Điều 1.2 Anh ghi 13/04/2026 |
+| Chi phí sửa móng | Bản Việt: Chủ đầu tư hỗ trợ 49,410,000 MMK; bản Anh: 49,430,000 MMK |
+| Ngày Thông báo VO | VCM tự dẫn cả 20/05 lẫn 21/05/2026 trong cùng bộ tài liệu |
+| Phụ lục 01 ký hồi tố | Ký 21/12/2025 nhưng ghi bắt đầu từ 01/12/2025 |
+
+---
+
+## 4. Rủi ro cho phía Chủ đầu tư/Nhà tài trợ
+
+| Rủi ro | Mức độ | Ghi chú |
+|---|---|---|
+| VCM chứng minh được trần/chống sét thực sự ngoài BOQ | Trung bình | Cần đối chiếu bản vẽ gốc và BOQ chi tiết |
+| VCM viện dẫn Điều 6.4 (chậm thanh toán → dừng thi công) | Thấp–Trung bình | Cần đảm bảo đợt 3 được xử lý đúng timeline cam kết |
+| VCM rút khỏi dự án trước 05/07/2026 | Cao | Sự kiện 14/06 là dấu hiệu; cần giám sát chặt |
+| Trọng tài tốn thời gian nếu VCM kiện | Trung bình | Điều 12: trọng tài tại Yangon theo Luật Trọng tài 2016 Myanmar |
+| Phụ lục 01 ký hồi tố bị tranh luận | Thấp | VCM đã ký và thừa nhận lỗi — khó bác bỏ chính văn bản mình ký |
+
+---
+
+## 5. Chiến lược đề xuất
+
+### Ngắn hạn (trước họp 17/06/2026)
+
+1. **Giữ vững lập trường từ chối VO** — không nhượng bộ về nguyên tắc hợp đồng trọn gói. Mọi thảo luận chỉ giới hạn ở kỹ thuật và tiến độ như đã thông báo.
+
+2. **Yêu cầu VCM xuất trình kế hoạch hoàn thành chi tiết đến 05/07/2026** trong cuộc họp 17/06 — nếu VCM không cung cấp được, đây là cơ sở để ghi nhận vi phạm tiếp.
+
+3. **Kiểm kê vật tư tại công trường** — dựa trên biên bản 14/06, yêu cầu VCM cung cấp danh sách vật tư hiện có và so sánh với hóa đơn đã xuất. Bảo lưu quyền đối chiếu.
+
+4. **Không ban hành bất kỳ chỉ thị nào** có thể bị VCM diễn giải là thừa nhận phạm vi phát sinh hoặc cho phép điều chỉnh giá.
+
+### Trung hạn (nếu VCM tiếp tục không thi công sau 17/06)
+
+5. **Gửi thông báo vi phạm chính thức** (Notice of Default) nếu VCM không thi công hoặc bỏ công trường — kích hoạt điều khoản phạt và quyền chấm dứt theo Điều 10.2(h).
+
+6. **Tính phạt chậm tiến độ** — từ mốc hết hạn gia hạn lần 4 (05/07/2026) trở đi: 1%/ngày × 1,188,022,000 MMK = ~11,880,220 MMK/ngày.
+
+7. **Giữ lại đợt 4 (25%) và đợt 5 (5%)** cho đến khi công trình đáp ứng đủ điều kiện nghiệm thu — quyền này được bảo đảm theo cấu trúc thanh toán hợp đồng.
+
+### Tài liệu cần thu thập thêm
+
+- [ ] Bản vẽ hợp đồng gốc (để đối chiếu với claim của VCM về phạm vi trần và chống sét)
+- [ ] Biên bản họp 17/06/2026 (cần lập biên bản chính thức, có chữ ký hai bên)
+- [ ] Danh sách vật tư VCM đã mua và nhập/xuất công trường
+- [ ] Xác nhận pháp luật Myanmar về yêu cầu bắt buộc hệ thống chống sét
+
+---
+
+*Cập nhật lần cuối: 15/06/2026 — dựa trên bộ tài liệu OCR hiện có.*
+</script>
 
   <script>
     "use strict";
@@ -863,7 +1035,8 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
     const documents = {
       timeline: { file: "timeline.md", title: "Timeline" },
       roles: { file: "roles.md", title: "Roles" },
-      documents: { file: "documents.md", title: "Documents" }
+      documents: { file: "documents.md", title: "Documents" },
+      disputes: { file: "disputes_analysis.md", title: "Disputes Analysis" }
     };
 
     const cache = new Map();
@@ -1062,7 +1235,7 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
       return output.join("\n");
     }
 
-    function buildToc() {
+    function buildToc(route) {
       const headings = [...documentElement.querySelectorAll("h2, h3")];
       if (!headings.length) {
         tocElement.hidden = true;
@@ -1072,7 +1245,7 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
       tocElement.hidden = false;
       tocElement.innerHTML = '<p class="toc-title">On this page</p>' + headings.map(heading => {
         const className = heading.tagName === "H3" ? "toc-h3" : "toc-h2";
-        return `<a class="${className}" href="#${heading.id}">${escapeHtml(heading.textContent)}</a>`;
+        return `<a class="${className}" href="#${route}/${heading.id}">${escapeHtml(heading.textContent)}</a>`;
       }).join("");
     }
 
@@ -1093,12 +1266,12 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
           cache.set(config.file, markdown);
         }
         documentElement.innerHTML = renderMarkdown(markdown);
-        buildToc();
+        buildToc(route);
       } catch (error) {
         const fallback = document.getElementById(`fallback-${route}`)?.textContent.trim();
         if (fallback) {
           documentElement.innerHTML = renderMarkdown(fallback);
-          buildToc();
+          buildToc(route);
         } else {
           documentElement.innerHTML = `
             <div class="status">
@@ -1120,7 +1293,7 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
     }
 
     async function route() {
-      const requested = location.hash.slice(1).split("/")[0] || "home";
+      const [requested = "home", sectionId = ""] = location.hash.slice(1).split("/");
       const current = documents[requested] ? requested : "home";
       const previousViewWasDocument = !documentView.hidden;
 
@@ -1135,7 +1308,11 @@ Nhà thầu (VCM / Trần Mạnh Dũng)
         await loadDocument(current);
       }
 
-      if (!previousViewWasDocument || current === "home") window.scrollTo(0, 0);
+      if (sectionId && current !== "home") {
+        requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ block: "start" }));
+      } else if (!previousViewWasDocument || current === "home") {
+        window.scrollTo(0, 0);
+      }
     }
 
     window.addEventListener("hashchange", route);
