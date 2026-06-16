@@ -73,6 +73,49 @@ a:hover{color:var(--link-h)}
   #ftoc{bottom:14px;right:10px;padding:9px 13px}
 }
 @media print{#ftoc{display:none}.back-link{display:none}}
+
+/* Font size control */
+#font-ctrl {
+  display:flex;
+  align-items:center;
+  gap:0;
+  position:fixed;
+  bottom:22px;
+  left:18px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:50px;
+  box-shadow:0 3px 14px rgba(0,0,0,.18);
+  z-index:999;
+  overflow:hidden;
+}
+#font-ctrl button {
+  background:none;
+  border:none;
+  color:var(--accent);
+  font-family:var(--ui);
+  font-size:1.1rem;
+  font-weight:700;
+  cursor:pointer;
+  padding:9px 14px;
+  line-height:1;
+  transition:background .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+#font-ctrl button:hover { background:var(--accent-bg); }
+#font-ctrl button:active { background:var(--border); }
+#font-ctrl .size-label {
+  font-family:var(--ui);
+  font-size:.72rem;
+  font-weight:600;
+  color:var(--muted);
+  padding:0 4px;
+  min-width:28px;
+  text-align:center;
+  user-select:none;
+}
+@media print { #font-ctrl { display:none; } }
+
 </style>
 </head>
 <body>
@@ -878,7 +921,45 @@ a:hover{color:var(--link-h)}
 
 </div>
 
+
+<div id="font-ctrl" aria-label="Cỡ chữ">
+  <button id="font-dn" onclick="adjFont(-1)" aria-label="Giảm cỡ chữ" title="Giảm chữ">A−</button>
+  <span class="size-label" id="font-lbl">17</span>
+  <button id="font-up" onclick="adjFont(1)" aria-label="Tăng cỡ chữ" title="Tăng chữ">A+</button>
+</div>
+
 <a href="#toc" id="ftoc">&#9776; Mục lục</a>
+
+
+<script>
+(function(){
+  var SIZES = [14,15,16,17,18,19,20,22,24,26,28];
+  var idx = SIZES.indexOf(17);
+  var lbl = document.getElementById('font-lbl');
+  var key = 'papanca-font-idx';
+
+  // Restore saved preference
+  var saved = localStorage.getItem(key);
+  if (saved !== null) {
+    var n = parseInt(saved);
+    if (n >= 0 && n < SIZES.length) { idx = n; }
+  }
+  applySize();
+
+  window.adjFont = function(dir) {
+    idx = Math.max(0, Math.min(SIZES.length-1, idx + dir));
+    applySize();
+    try { localStorage.setItem(key, idx); } catch(e){}
+  };
+
+  function applySize() {
+    document.documentElement.style.fontSize = SIZES[idx] + 'px';
+    if (lbl) lbl.textContent = SIZES[idx];
+    document.getElementById('font-dn').disabled = (idx === 0);
+    document.getElementById('font-up').disabled = (idx === SIZES.length-1);
+  }
+})();
+</script>
 
 </body>
 </html>
