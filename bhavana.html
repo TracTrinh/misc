@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhāvanā — Pāḷi Learning & Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Tokens ── */
+:root {
+  --paper:    #F7F5F0;
+  --ink:      #222222;
+  --ink2:     #555555;
+  --ink3:     #999999;
+  --olive:    #556B2F;
+  --olive-lt: #7a9444;
+  --rule:     #D8D4CC;
+  --rule-lt:  #E8E4DC;
+  --fn-serif: 'EB Garamond', Georgia, serif;
+  --fn-sans:  'Inter', system-ui, sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--fn-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── Manuscript ghost texture (CSS only) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(160,148,120,.07) 28px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Layout ── */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+.container--narrow {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Nav ── */
+nav {
+  position: relative;
+  z-index: 10;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.nav-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav-brand {
+  font-family: var(--fn-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: .01em;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav-links a:hover { color: var(--olive); }
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  padding: 7rem 0 5.5rem;
+  overflow: hidden;
+  background-image: url('hero.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+.hero-eyebrow {
+  font-family: var(--fn-sans);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 1.4rem;
+}
+.hero-title {
+  font-family: var(--fn-serif);
+  font-size: clamp(3.8rem, 9vw, 6.5rem);
+  font-weight: 400;
+  line-height: .95;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  margin-bottom: 1.6rem;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--ink2);
+  font-size: .58em;
+  display: block;
+  letter-spacing: .01em;
+  line-height: 1.6;
+  margin-top: .3em;
+}
+.hero-quote {
+  font-family: var(--fn-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink2);
+  margin-bottom: 2.2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+}
+.hero-desc {
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--ink2);
+  max-width: 480px;
+  line-height: 1.75;
+  margin-bottom: 2.4rem;
+}
+.btn-primary {
+  display: inline-block;
+  font-family: var(--fn-sans);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--olive);
+  padding: .75rem 2rem;
+  text-decoration: none;
+  transition: background .2s;
+}
+.btn-primary:hover { background: var(--olive-lt); }
+
+/* ── Section chrome ── */
+section {
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+.section-label {
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+.section-title {
+  font-family: var(--fn-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.section-subtitle {
+  font-size: .85rem;
+  color: var(--ink2);
+  max-width: 480px;
+  margin-bottom: 2.8rem;
+}
+
+/* ── 4-card grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.area-card {
+  background: var(--paper);
+  padding: 2rem 1.8rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background .15s;
+  display: block;
+}
+.area-card:hover { background: #F0EDE6; }
+.area-card-num {
+  font-family: var(--fn-serif);
+  font-size: .75rem;
+  font-style: italic;
+  color: var(--ink3);
+  margin-bottom: .9rem;
+}
+.area-card-title {
+  font-family: var(--fn-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: .6rem;
+  color: var(--ink);
+}
+.area-card-body {
+  font-size: .8rem;
+  font-weight: 300;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+
+/* ── Learning path ── */
+.path-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 400px;
+}
+.path-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule-lt);
+}
+.path-step:last-child { border-bottom: none; }
+.path-step-term {
+  font-family: var(--fn-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--ink);
+  min-width: 130px;
+  flex-shrink: 0;
+  padding-top: .05rem;
+}
+.path-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: .35rem;
+  gap: .2rem;
+  flex-shrink: 0;
+}
+.path-connector-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--olive);
+  flex-shrink: 0;
+}
+.path-connector-line {
+  width: 1px;
+  height: 2rem;
+  background: var(--rule);
+}
+.path-step:last-child .path-connector-line { display: none; }
+.path-step-body {
+  font-size: .82rem;
+  font-weight: 300;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+
+/* ── Featured texts ── */
+.text-list {
+  list-style: none;
+  border-top: 1px solid var(--rule-lt);
+}
+.text-item {
+  border-bottom: 1px solid var(--rule-lt);
+}
+.text-item a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 0;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color .15s;
+}
+.text-item a:hover { color: var(--olive); }
+.text-item-title {
+  font-family: var(--fn-serif);
+  font-size: 1rem;
+  font-style: italic;
+}
+.text-item-meta {
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--ink3);
+  white-space: nowrap;
+}
+
+/* ── Daily Pāḷi ── */
+.daily-block {
+  border: 1px solid var(--rule);
+  padding: 2.4rem 2.2rem;
+  max-width: 400px;
+  background: rgba(255,253,248,.6);
+}
+.daily-word {
+  font-family: var(--fn-serif);
+  font-size: 2.2rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: .6rem;
+}
+.daily-pos {
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 1rem;
+}
+.daily-meaning {
+  font-size: .9rem;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin-bottom: .8rem;
+}
+.daily-root {
+  font-size: .78rem;
+  font-weight: 300;
+  color: var(--ink3);
+  font-family: var(--fn-serif);
+  font-style: italic;
+}
+
+/* ── Recent additions ── */
+.recent-list {
+  list-style: none;
+}
+.recent-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: .65rem 0;
+  border-bottom: 1px solid var(--rule-lt);
+  font-size: .85rem;
+}
+.recent-item:first-child { border-top: 1px solid var(--rule-lt); }
+.recent-date {
+  font-size: .7rem;
+  letter-spacing: .06em;
+  color: var(--ink3);
+  white-space: nowrap;
+  min-width: 5rem;
+}
+.recent-link {
+  font-family: var(--fn-serif);
+  font-style: italic;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color .15s;
+}
+.recent-link:hover { color: var(--olive); }
+.recent-tag {
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-left: auto;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 3rem 0 2.5rem;
+}
+.footer-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3rem;
+}
+.footer-quote {
+  font-family: var(--fn-serif);
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--ink2);
+}
+.footer-quote small {
+  display: block;
+  font-size: .68rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-top: .3rem;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 1.6rem;
+}
+.footer-links a {
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  transition: color .15s;
+}
+.footer-links a:hover { color: var(--olive); }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero { padding: 4rem 0 3.5rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; gap: 1.5rem; }
+  .footer-links { flex-wrap: wrap; gap: 1rem; }
+  .path-step-term { min-width: 100px; }
+}
+@media (max-width: 480px) {
+  .container, .container--narrow { padding: 0 1.2rem; }
+  .nav-inner { padding: 0 1.2rem; }
+  .footer-inner { padding: 0 1.2rem; }
+  .text-item-meta { display: none; }
+}
+
+/* ── Focus ── */
+a:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">Bhāvanā</a>
+    <ul class="nav-links">
+      <li><a href="#chanting">Chanting</a></li>
+      <li><a href="#study">Study</a></li>
+      <li><a href="#practice">Practice</a></li>
+      <li><a href="#references">References</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-eyebrow">tractrinh.github.io</p>
+      <h1 class="hero-title">
+        Bhāvanā
+        <em>bhāvanābhiratā hontu</em>
+      </h1>
+      <p class="hero-desc">
+        A collection of Pāḷi chanting texts, study materials, practice exercises,
+        and Dhamma references — for learning, memorization, and cultivation.
+      </p>
+      <a class="btn-primary" href="#chanting">Start Learning</a>
+    </div>
+  </div>
+</div>
+
+<!-- Learning Areas -->
+<section id="chanting">
+  <div class="container">
+    <p class="section-label">Learning Areas</p>
+    <h2 class="section-title">Where would you like to begin?</h2>
+    <p class="section-subtitle">Four areas of study, each supporting a different aspect of practice.</p>
+
+    <div class="card-grid">
+      <a class="area-card" href="index.html">
+        <p class="area-card-num">i.</p>
+        <h3 class="area-card-title">Pāḷi Chanting</h3>
+        <p class="area-card-body">Paritta, vandanā, and chanting texts with interlinear word-by-word analysis and pronunciation support.</p>
+      </a>
+      <a class="area-card" href="#study">
+        <p class="area-card-num">ii.</p>
+        <h3 class="area-card-title">Study</h3>
+        <p class="area-card-body">Word analysis, grammar notes, textual comparison, Jātaka, and original research on canonical texts.</p>
+      </a>
+      <a class="area-card" href="#practice">
+        <p class="area-card-num">iii.</p>
+        <h3 class="area-card-title">Practice</h3>
+        <p class="area-card-body">Cloze exercises, memorization tools, and review materials for active learning of Pāḷi texts.</p>
+      </a>
+      <a class="area-card" href="#references">
+        <p class="area-card-num">iv.</p>
+        <h3 class="area-card-title">References</h3>
+        <p class="area-card-body">Books, commentaries, dictionaries, and learning resources compiled for the Theravāda practitioner.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Learning Path -->
+<section id="study">
+  <div class="container">
+    <p class="section-label">A Suggested Path</p>
+    <h2 class="section-title">From text to cultivation</h2>
+    <p class="section-subtitle">A progression that mirrors the classical threefold training.</p>
+
+    <div class="path-list">
+      <div class="path-step">
+        <div class="path-connector">
+          <div class="path-connector-dot"></div>
+          <div class="path-connector-line"></div>
+        </div>
+        <div>
+          <div class="path-step-term">Pariyatti</div>
+          <div class="path-step-body">Learn the text — read, listen, understand the words and their meaning in context.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-connector">
+          <div class="path-connector-dot"></div>
+          <div class="path-connector-line"></div>
+        </div>
+        <div>
+          <div class="path-step-term">Paṭipatti</div>
+          <div class="path-step-body">Practice regularly — chant, memorize, work through exercises with attention.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-connector">
+          <div class="path-connector-dot"></div>
+          <div class="path-connector-line"></div>
+        </div>
+        <div>
+          <div class="path-step-term">Paṭivedha</div>
+          <div class="path-step-body">Penetrate the meaning — let the Dhamma enter the mind through sustained cultivation.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-connector">
+          <div class="path-connector-dot"></div>
+        </div>
+        <div>
+          <div class="path-step-term">Bhāvanā</div>
+          <div class="path-step-body">Cultivate the mind — the fruit of the three preceding stages, and the purpose of the path.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Texts -->
+<section id="practice">
+  <div class="container">
+    <p class="section-label">Chanting Texts</p>
+    <h2 class="section-title">Featured texts</h2>
+    <p class="section-subtitle">A curated selection of important paritta and chanting texts.</p>
+
+    <ul class="text-list">
+      <li class="text-item">
+        <a href="ratana-sutta-interlinear.html">
+          <span class="text-item-title">Ratanasuttaṁ</span>
+          <span class="text-item-meta">Sn 2.1 · Interlinear</span>
+        </a>
+      </li>
+      <li class="text-item">
+        <a href="pbs.html">
+          <span class="text-item-title">Pubbaṇhasuttaṁ</span>
+          <span class="text-item-meta">AN 3.14 · Interlinear</span>
+        </a>
+      </li>
+      <li class="text-item">
+        <a href="#">
+          <span class="text-item-title">Mettāsuttaṁ</span>
+          <span class="text-item-meta">Sn 1.8 · coming soon</span>
+        </a>
+      </li>
+      <li class="text-item">
+        <a href="#">
+          <span class="text-item-title">Maṅgalasuttaṁ</span>
+          <span class="text-item-meta">Sn 2.4 · coming soon</span>
+        </a>
+      </li>
+      <li class="text-item">
+        <a href="#">
+          <span class="text-item-title">Mora Paritta</span>
+          <span class="text-item-meta">Ja 159 · coming soon</span>
+        </a>
+      </li>
+      <li class="text-item">
+        <a href="#">
+          <span class="text-item-title">Dhammacakkappavattanasuttaṁ</span>
+          <span class="text-item-meta">SN 56.11 · coming soon</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Daily Pāḷi + Recent additions side by side -->
+<section id="references">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start;">
+
+      <div>
+        <p class="section-label" style="margin-bottom:1.8rem;">Daily Pāḷi</p>
+        <div class="daily-block">
+          <div class="daily-word">bhāvanā</div>
+          <div class="daily-pos">f. · noun</div>
+          <div class="daily-meaning">Development, cultivation, mental training. The practice of bringing forth and sustaining a wholesome quality of mind.</div>
+          <div class="daily-root">√bhū — to become, to be</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="section-label" style="margin-bottom:1.8rem;">Recent Additions</p>
+        <ul class="recent-list">
+          <li class="recent-item">
+            <span class="recent-date">Jun 2025</span>
+            <a class="recent-link" href="ratana-sutta-interlinear.html">Ratanasuttaṁ — Interlinear</a>
+            <span class="recent-tag">Chanting</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-date">Jun 2025</span>
+            <a class="recent-link" href="Ratanasuttam_cloze.html">Ratanasuttaṁ — Cloze Exercise</a>
+            <span class="recent-tag">Practice</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-date">May 2025</span>
+            <a class="recent-link" href="pbs.html">Pubbaṇhasuttaṁ — Interlinear</a>
+            <span class="recent-tag">Chanting</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-date">Apr 2025</span>
+            <a class="recent-link" href="kunala_jataka.html">Kuṇāla Jātaka — No. 536</a>
+            <span class="recent-tag">Study</span>
+          </li>
+          <li class="recent-item">
+            <span class="recent-date">Mar 2025</span>
+            <a class="recent-link" href="papanca.html">Papañca &amp; Papañca-Saññā-Saṅkhā</a>
+            <span class="recent-tag">Reference</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-quote">
+      Bhāvanābhiratā hontu.
+      <small>tractrinh.github.io</small>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">GitHub</a></li>
+      <li><a href="#">References</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+/* Responsive: collapse two-col section on narrow screens */
+(function(){
+  const twoCol = document.querySelector('section#references .container > div');
+  function check(){
+    if(window.innerWidth < 600){
+      twoCol.style.gridTemplateColumns = '1fr';
+      twoCol.style.gap = '3rem';
+    } else {
+      twoCol.style.gridTemplateColumns = '';
+      twoCol.style.gap = '';
+    }
+  }
+  check();
+  window.addEventListener('resize', check);
+})();
+</script>
+</body>
+</html>
