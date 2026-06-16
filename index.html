@@ -67,11 +67,11 @@ details {
 }
 
 details > summary {
-  list-style: none;          /* hide default triangle */
+  list-style: none;
   -webkit-appearance: none;
-  display: flex;
-  align-items: center;
-  gap: .9rem;
+  display: inline-flex;
+  align-items: flex-start;
+  flex-direction: column;
   padding: .95rem 0 .75rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -87,7 +87,7 @@ details > summary:focus-visible {
   outline-offset: 2px;
 }
 
-.acc-label { flex: 1; }
+.acc-label { }
 .acc-label-main {
   font-family: var(--fn-main);
   font-size: 1rem;
@@ -97,9 +97,24 @@ details > summary:focus-visible {
   color: var(--gold);
   display: block;
   transition: color .2s ease;
+  position: relative;
+  padding-bottom: .18rem;
+}
+.acc-label-main::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold-bd), transparent);
+  opacity: 0;
+  transition: opacity .25s ease;
 }
 details > summary:hover .acc-label-main {
   color: var(--gold-bd);
+}
+details > summary:hover .acc-label-main::after {
+  opacity: 1;
 }
 .acc-label-sub {
   font-size: .85rem;
@@ -112,18 +127,6 @@ details > summary:hover .acc-label-main {
 }
 details > summary:hover .acc-label-sub {
   color: var(--gold);
-}
-.acc-chevron {
-  font-size: .85rem;
-  color: var(--sep);
-  flex-shrink: 0;
-  transition: transform .2s ease, color .2s ease;
-}
-details > summary:hover .acc-chevron {
-  color: var(--gold-bd);
-}
-details[open] > summary .acc-chevron {
-  transform: rotate(90deg);
 }
 
 /* panel */
@@ -227,7 +230,7 @@ details[open] > summary .acc-chevron {
         <span class="acc-label-main">Pāḷi Chanting</span>
         <span class="acc-label-sub">Kinh tụng &amp; luyện tập</span>
       </span>
-      <span class="acc-chevron">▶</span>
+
     </summary>
     <div class="acc-panel">
 
@@ -270,7 +273,7 @@ details[open] > summary .acc-chevron {
         <span class="acc-label-main">Học Kinh</span>
         <span class="acc-label-sub">Nghiên cứu văn bản</span>
       </span>
-      <span class="acc-chevron">▶</span>
+
     </summary>
     <div class="acc-panel">
 
@@ -293,7 +296,7 @@ details[open] > summary .acc-chevron {
         <span class="acc-label-main">Sách</span>
         <span class="acc-label-sub">Luận đề &amp; tham khảo</span>
       </span>
-      <span class="acc-chevron">▶</span>
+
     </summary>
     <div class="acc-panel">
 
