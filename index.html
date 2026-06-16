@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pāḷi Chanting — Tuyển Tập</title>
+<title>Tuyển Tập — tractrinh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:       #fdf6e8;
@@ -18,7 +18,6 @@
   --ca:       #8b4f00;
   --crimson:  #7b1c1d;
   --fn-main:  'Noto Serif','Times New Roman',serif;
-  --fn-ttl:   'Cinzel','Times New Roman',serif;
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; }
@@ -32,12 +31,12 @@ body {
   min-height: 100vh;
   padding: 2rem 1rem 4rem;
 }
-.page { max-width: 680px; margin: 0 auto; }
+.page { max-width: 640px; margin: 0 auto; }
 
-/* Header */
+/* ── Header ── */
 .header {
   text-align: center;
-  padding: 2.8rem 2rem 2rem;
+  padding: 2.6rem 2rem 2rem;
   margin-bottom: 2.4rem;
   border-bottom: 2px solid var(--gold-bd);
   position: relative;
@@ -52,49 +51,84 @@ body {
   background: var(--bg);
   padding: 0 .5rem;
 }
-.title-main {
-  font-family: var(--fn-ttl);
-  font-size: 1.9rem;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.title-sub {
-  font-family: var(--fn-ttl);
-  font-size: .85rem;
+.title-quote {
+  font-family: var(--fn-main);
+  font-size: 1.15rem;
+  font-style: italic;
   font-weight: 400;
-  color: #7a4f28;
-  letter-spacing: .18em;
-  margin-top: .5rem;
-  text-transform: uppercase;
+  color: var(--gold);
+  letter-spacing: .06em;
 }
 
-/* Section label */
-.section-label {
-  font-family: var(--fn-ttl);
-  font-size: .68rem;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: center;
-  margin: 2.2rem 0 1rem;
+/* ── Accordion — native <details> ── */
+details {
+  margin-bottom: 1.1rem;
+}
+
+details > summary {
+  list-style: none;          /* hide default triangle */
+  -webkit-appearance: none;
   display: flex;
   align-items: center;
-  gap: .8rem;
+  gap: .9rem;
+  border-bottom: 2px solid var(--sep);
+  padding: .75rem 0 .6rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
-.section-label::before,
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--sep));
-}
-.section-label::after {
-  background: linear-gradient(to left, transparent, var(--sep));
+details > summary::-webkit-details-marker { display: none; }
+details > summary:focus-visible {
+  outline: 2px solid var(--gold-bd);
+  outline-offset: 2px;
 }
 
-/* Card */
+.acc-icon {
+  font-family: var(--fn-main);
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-bd);
+  flex-shrink: 0;
+  min-width: 2rem;
+  text-align: center;
+  opacity: .8;
+}
+.acc-label { flex: 1; }
+.acc-label-main {
+  font-family: var(--fn-main);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+}
+.acc-label-sub {
+  font-size: .72rem;
+  font-style: italic;
+  color: #9a7040;
+  letter-spacing: .03em;
+  margin-top: .1rem;
+  display: block;
+}
+.acc-chevron {
+  font-size: .75rem;
+  color: var(--sep);
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+details[open] > summary .acc-chevron {
+  transform: rotate(90deg);
+}
+
+/* panel */
+.acc-panel {
+  padding: .85rem 0 .3rem;
+}
+
+/* ── Card ── */
 .card {
   display: flex;
   align-items: center;
@@ -103,38 +137,39 @@ body {
   background: var(--bg-inner);
   border: 1px solid var(--sep);
   border-radius: 10px;
-  padding: .9rem 1.2rem;
-  margin-bottom: .7rem;
+  padding: .85rem 1.15rem;
+  margin-bottom: .65rem;
   box-shadow: 2px 2px 8px var(--shadow);
   text-decoration: none;
   color: inherit;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
 }
 .card:hover {
   border-color: var(--gold-bd);
-  box-shadow: 2px 3px 14px rgba(100,60,10,.16);
+  box-shadow: 2px 3px 14px rgba(100,60,10,.18);
+  transform: translateY(-1px);
 }
+.card:active { transform: translateY(0); }
 .card-text { flex: 1; }
 .card-pali {
-  font-family: var(--fn-main);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--gold);
   letter-spacing: .03em;
 }
 .card-viet {
-  font-size: .8rem;
+  font-size: .78rem;
   color: #7a4f28;
-  margin-top: .18rem;
+  margin-top: .15rem;
   font-style: italic;
 }
 .card-arrow {
-  font-size: 1rem;
+  font-size: .95rem;
   color: var(--sep);
   flex-shrink: 0;
 }
 
-/* Practice card */
+/* card variants */
 .card.practice {
   border-color: #c8a0a0;
   background: linear-gradient(135deg, #fff9f9 0%, #fdf3f0 100%);
@@ -142,16 +177,35 @@ body {
 .card.practice .card-pali { color: var(--crimson); }
 .card.practice:hover { border-color: var(--crimson); }
 
-/* Footer */
-.footer {
-  text-align: center;
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--sep);
-  font-size: .75rem;
-  color: #9a7040;
-  line-height: 1.9;
-  letter-spacing: .05em;
+.card.study {
+  border-color: #a0bfc8;
+  background: linear-gradient(135deg, #f6fbfc 0%, #eef6f8 100%);
+}
+.card.study .card-pali { color: #1a5c55; }
+.card.study:hover { border-color: #2d8a80; }
+
+.card.book {
+  border-color: #b5afc8;
+  background: linear-gradient(135deg, #f9f7fd 0%, #f2eef8 100%);
+}
+.card.book .card-pali { color: #4a2d7a; }
+.card.book:hover { border-color: #7a5abf; }
+
+/* sub-label inside panel */
+.panel-sublabel {
+  font-family: var(--fn-main);
+  font-size: .6rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .65;
+  margin: .9rem 0 .5rem .05rem;
+}
+.panel-sublabel:first-child { margin-top: 0; }
+
+@media (max-width: 420px) {
+  .card-pali   { font-size: .93rem; }
+  .title-quote { font-size: 1rem; }
 }
 </style>
 </head>
@@ -159,49 +213,97 @@ body {
 <div class="page">
 
   <div class="header">
-    <div class="title-main">Pāḷi Chanting</div>
-    <div class="title-sub">Tuyển Tập Interlinear</div>
+    <div class="title-quote">bhāvanābhiratā hontu</div>
   </div>
 
-  <div class="section-label">Kinh Tụng — Interlinear</div>
+  <!-- I · Pāḷi Chanting -->
+  <details>
+    <summary>
+      <span class="acc-icon">I</span>
+      <span class="acc-label">
+        <span class="acc-label-main">Pāḷi Chanting</span>
+        <span class="acc-label-sub">Kinh tụng &amp; luyện tập</span>
+      </span>
+      <span class="acc-chevron">▶</span>
+    </summary>
+    <div class="acc-panel">
 
-  <a class="card" href="ratana-sutta-interlinear.html">
-    <div class="card-text">
-      <div class="card-pali">Ratanasuttaṁ</div>
-      <div class="card-viet">Kinh Châu Báu</div>
+      <div class="panel-sublabel">Kinh Tụng — Interlinear</div>
+
+      <a class="card" href="ratana-sutta-interlinear.html">
+        <div class="card-text">
+          <div class="card-pali">Ratanasuttaṁ</div>
+          <div class="card-viet">Kinh Châu Báu</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a class="card" href="pbs.html">
+        <div class="card-text">
+          <div class="card-pali">Pubbaṇhasuttaṁ</div>
+          <div class="card-viet">Kinh Ban Mai</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <div class="panel-sublabel">Luyện Tập — Practice</div>
+
+      <a class="card practice" href="Ratanasuttam_cloze.html">
+        <div class="card-text">
+          <div class="card-pali">Ratanasuttaṁ — Điền Vào Chỗ Trống</div>
+          <div class="card-viet">Cloze exercise · 20 kệ</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
     </div>
-    <div class="card-arrow">→</div>
-  </a>
+  </details>
 
-  <a class="card" href="pbs.html">
-    <div class="card-text">
-      <div class="card-pali">Pubbaṇhasuttaṁ</div>
-      <div class="card-viet">Kinh Ban Mai</div>
+  <!-- II · Học Kinh -->
+  <details>
+    <summary>
+      <span class="acc-icon">II</span>
+      <span class="acc-label">
+        <span class="acc-label-main">Học Kinh</span>
+        <span class="acc-label-sub">Nghiên cứu văn bản</span>
+      </span>
+      <span class="acc-chevron">▶</span>
+    </summary>
+    <div class="acc-panel">
+
+      <a class="card study" href="kunala_jataka.html">
+        <div class="card-text">
+          <div class="card-pali">Kuṇāla Jātaka</div>
+          <div class="card-viet">Bổn Sanh số 536</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
     </div>
-    <div class="card-arrow">→</div>
-  </a>
+  </details>
 
-  <a class="card" href="kunala_jataka.html">
-    <div class="card-text">
-      <div class="card-pali">Kuṇāla Jātaka</div>
-      <div class="card-viet">Bổn Sanh số 536</div>
+  <!-- III · Sách -->
+  <details>
+    <summary>
+      <span class="acc-icon">III</span>
+      <span class="acc-label">
+        <span class="acc-label-main">Sách</span>
+        <span class="acc-label-sub">Luận đề &amp; tham khảo</span>
+      </span>
+      <span class="acc-chevron">▶</span>
+    </summary>
+    <div class="acc-panel">
+
+      <a class="card book" href="papanca.html">
+        <div class="card-text">
+          <div class="card-pali">Papañca &amp; Papañca-Saññā-Saṅkhā</div>
+          <div class="card-viet">Luận đề phân tích khái niệm</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
     </div>
-    <div class="card-arrow">→</div>
-  </a>
-
-  <div class="section-label">Luyện Tập — Practice</div>
-
-  <a class="card practice" href="Ratanasuttam_cloze.html">
-    <div class="card-text">
-      <div class="card-pali">Ratanasuttaṁ — Điền Vào Chỗ Trống</div>
-      <div class="card-viet">Cloze exercise · 20 kệ</div>
-    </div>
-    <div class="card-arrow">→</div>
-  </a>
-
-  <div class="footer">
-    tractrinh.github.io · Pāḷi Interlinear Collection
-  </div>
+  </details>
 
 </div>
 </body>
