@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paṭṭhāna — Paccayaniddeso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Project palette ── */
+    :root {
+      --bg:        #fdf6e8;
+      --bg-inner:  #fef9f0;
+      --gold:      #8b6914;
+      --gold-l:    #c4982a;
+      --gold-bd:   #d4a843;
+      --sep:       #c9a96e;
+      --shadow:    rgba(100,60,10,0.10);
+      --source:    #8b4f00;   /* nâu — dhamma nguồn */
+      --target:    #1f5c3a;   /* xanh — dhamma đích */
+      --paccaya:   #6b4b8a;   /* tím — tên paccaya */
+      --text:      #2a1800;
+      --muted:     #7a5a30;
+      --rule:      #dfd0b0;
+      --font-main: 'Noto Serif','Times New Roman',serif;
+      --font-ttl:  'Noto Serif','Times New Roman',serif;
+      --reader-font-size: 18px;
+    }
+
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(253,246,232,.88), rgba(253,246,232,.92)),
+        radial-gradient(ellipse at 20% 10%, rgba(212,168,67,.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(107,75,138,.06) 0%, transparent 50%),
+        url('patthana.png');
+      background-size: auto, auto, auto, cover;
+      background-position: center, center, center, center;
+      background-attachment: fixed;
+      font-family: var(--font-main);
+      font-size: var(--reader-font-size);
+      color: var(--text);
+      line-height: 1.72;
+      min-height: 100vh;
+      padding: 2rem 1rem 6rem;
+    }
+
+    .page { max-width: 880px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 2.8rem 2rem 2rem;
+      margin-bottom: 2.4rem;
+      position: relative;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--sep), var(--gold-bd), var(--sep), transparent);
+    }
+    .title-pali {
+      font-family: var(--font-ttl);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .title-diacritic {
+      font-family: var(--font-main);
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    /* ── Section labels ── */
+    .section-label {
+      font-family: var(--font-ttl);
+      font-size: .7rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin: 3rem 0 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--sep));
+    }
+    .section-label::after {
+      background: linear-gradient(to left, transparent, var(--sep));
+    }
+
+    /* ── Homage block ── */
+    .homage {
+      text-align: center;
+      padding: 1.4rem 1.5rem 1.6rem;
+      margin: 0 0 2.4rem;
+      background: var(--bg-inner);
+      border: 1px solid var(--sep);
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px var(--shadow);
+    }
+    .homage-text {
+      display: block;
+      font-family: var(--font-main);
+      font-size: calc(var(--reader-font-size) * 1.22);
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1.55;
+      letter-spacing: .015em;
+    }
+
+    /* ── Uddeso list panel ── */
+    .uddeso-panel {
+      background: var(--bg-inner);
+      border: 1px solid var(--sep);
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px var(--shadow);
+      padding: 1.3rem 1.8rem 1.5rem;
+      margin-bottom: 2.4rem;
+    }
+    .uddeso-panel p {
+      margin: .22rem 0;
+      font-size: calc(var(--reader-font-size) * 1.08);
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .uddeso-key {
+      color: var(--paccaya);
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    /* ── Section heading (h1) ── */
+    h1.section-title {
+      font-family: var(--font-ttl);
+      font-size: calc(var(--reader-font-size) * 1.45);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 2.8rem 0 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    h1.section-title::before,
+    h1.section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--sep));
+    }
+    h1.section-title::after {
+      background: linear-gradient(to left, transparent, var(--sep));
+    }
+
+    /* ── Paccaya blocks (h2 + paragraphs) ── */
+    .paccaya-block {
+      margin-bottom: 1.2rem;
+      background: var(--bg-inner);
+      border: 1px solid var(--sep);
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px var(--shadow);
+      overflow: hidden;
+    }
+    .paccaya-block h2 {
+      margin: 0;
+      padding: .65rem 1.4rem .6rem;
+      background: linear-gradient(135deg, rgba(212,168,67,.12) 0%, rgba(212,168,67,.04) 100%);
+      border-bottom: 1px solid var(--sep);
+      font-family: var(--font-ttl);
+      font-size: calc(var(--reader-font-size) * 1.02);
+      font-weight: 700;
+      color: #7a2e2e;
+      letter-spacing: .04em;
+      line-height: 1.4;
+    }
+    .paccaya-block p {
+      margin: 0;
+      padding: .55rem 1.4rem;
+      font-size: var(--reader-font-size);
+      line-height: 1.75;
+      border-bottom: 1px solid rgba(201,169,110,.25);
+    }
+    .paccaya-block p:last-child { border-bottom: none; }
+
+    /* ── Term colours ── */
+    .term { font-weight: 600; }
+    .term.source { color: var(--source); }
+    .term.target { color: var(--target); }
+    .term.paccaya { color: var(--paccaya); }
+
+    em { font-style: italic; color: inherit; }
+
+    /* plain-colours toggle */
+    body.plain-colors .term { color: inherit; }
+
+    /* ── Colophon ── */
+    .colophon {
+      margin-top: .6rem;
+      padding: .5rem 1.4rem .6rem;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      font-size: .9em;
+      border-top: 1px solid rgba(201,169,110,.3);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--sep);
+      font-size: .78rem;
+      color: #7a4f28;
+      line-height: 1.8;
+      letter-spacing: .05em;
+    }
+
+    /* ── Reader controls ── */
+    .reader-controls {
+      position: fixed;
+      left: 18px;
+      bottom: 22px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0;
+      background: rgba(254,249,240,.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--sep);
+      border-radius: 50px;
+      box-shadow: 0 3px 14px rgba(80,52,18,.18);
+      overflow: hidden;
+    }
+    .reader-controls button {
+      min-width: 0;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      background: none;
+      color: var(--gold);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      padding: 9px 13px;
+      transition: background .15s, color .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .reader-controls button:hover { background: rgba(212,168,67,.14); }
+    .reader-controls button[aria-pressed="true"] {
+      background: rgba(107,75,138,.11);
+      color: var(--paccaya);
+    }
+    .reader-controls button:active { background: rgba(201,169,110,.35); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      :root { --reader-font-size: 16px; }
+      .title-pali { font-size: 1.55rem; }
+      body { padding: 1.5rem .75rem 5rem; }
+      .paccaya-block h2,
+      .paccaya-block p { padding-left: 1rem; padding-right: 1rem; }
+      .uddeso-panel { padding: 1rem 1.1rem 1.2rem; }
+      .reader-controls { left: 10px; bottom: 10px; }
+      .reader-controls button { padding: 8px 11px; font-size: .92rem; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      @page { size: A4; margin: 1.8cm 1.5cm 1.8cm 1.5cm; }
+      body {
+        padding: 0;
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .reader-controls { display: none; }
+      .header { margin-bottom: 1rem; padding: 1rem 0 .8rem; }
+      .header::before { display: none; }
+      .paccaya-block { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; margin-bottom: .7rem; }
+      .term.source { color: #8b4f00 !important; }
+      .term.target { color: #1f5c3a !important; }
+      .term.paccaya { color: #6b4b8a !important; }
+      .footer { font-size: .65rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="title-pali">Pa<span class="title-diacritic">ṭṭ</span>hāna</div>
+  </div>
+
+  <div class="homage" aria-label="Lễ bái">
+    <span class="homage-text">Namo tassa Bhagavato Arahato Sammāsambuddhassa.</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <h1 class="section-title">Paccayuddeso</h1>
+
+  <div class="uddeso-panel" aria-label="Paccayuddeso list">
+    <p><span class="uddeso-key">Hetu</span>paccayo, <span class="uddeso-key">ārammaṇa</span>paccayo,</p>
+    <p><span class="uddeso-key">adhipati</span>paccayo, <span class="uddeso-key">anantara</span>paccayo,</p>
+    <p><span class="uddeso-key">samanantara</span>paccayo, <span class="uddeso-key">sahajāta</span>paccayo,</p>
+    <p><span class="uddeso-key">aññamañña</span>paccayo, <span class="uddeso-key">nissaya</span>paccayo,</p>
+    <p><span class="uddeso-key">upanissaya</span>paccayo, <span class="uddeso-key">purejāta</span>paccayo,</p>
+    <p><span class="uddeso-key">pacchājāta</span>paccayo, <span class="uddeso-key">āsevana</span>paccayo,</p>
+    <p><span class="uddeso-key">kamma</span>paccayo, <span class="uddeso-key">vipāka</span>paccayo,</p>
+    <p><span class="uddeso-key">āhāra</span>paccayo, <span class="uddeso-key">indriya</span>paccayo,</p>
+    <p><span class="uddeso-key">jhāna</span>paccayo, <span class="uddeso-key">magga</span>paccayo,</p>
+    <p><span class="uddeso-key">sampayutta</span>paccayo, <span class="uddeso-key">vippayutta</span>paccayo,</p>
+    <p><span class="uddeso-key">atthi</span>paccayo, <span class="uddeso-key">natthi</span>paccayo,</p>
+    <p><span class="uddeso-key">vigata</span>paccayo, <span class="uddeso-key">avigata</span>paccayoti.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <h1 class="section-title">Paccayaniddeso</h1>
+
+  <div class="paccaya-block">
+    <h2>01. Hetupaccayoti</h2>
+    <p><span class="term source"><em>Hetū</em></span> <span class="term target"><em>hetu</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>hetu</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>02. Ārammaṇapaccayoti</h2>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Saddā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Gandhā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rasā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Phoṭṭhabbā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term source"><em>saddā</em>yatanaṁ</span> <span class="term source"><em>gandhā</em>yatanaṁ</span>, <span class="term source"><em>rasā</em>yatanaṁ</span> <span class="term source"><em>phoṭṭhabbā</em>yatanaṁ</span> <span class="term target">manodhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p>Sabbe dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ yaṁ dhammaṁ ārabbha ye ye dhammā uppajjanti, cittacetasikā dhammā, te te dhammā tesaṁ tesaṁ dhammānaṁ, <span class="term paccaya"><em>ārammaṇa</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>03. Adhipatipaccayoti</h2>
+    <p><span class="term source"><em>Chandā</em>dhipati</span> <span class="term target"><em>chanda</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>adhipati</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Vīriyā</em>dhipati</span> <span class="term target"><em>vīriya</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>adhipati</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Cittā</em>dhipati</span> <span class="term target"><em>citta</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>adhipati</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Vīmaṁsā</em>dhipati</span> <span class="term target"><em>vīmaṁsa</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>adhipati</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ yaṁ dhammaṁ garuṁ katvā, ye ye dhammā uppajjanti, cittacetasikā dhammā, te te dhammā tesaṁ tesaṁ dhammānaṁ, <span class="term paccaya"><em>adhipati</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>04. Anantarapaccayoti</h2>
+    <p><span class="term source"><em>Cakkhuviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghānaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhāviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+    <p>Yesaṁ yesaṁ dhammānaṁ anantarā ye ye dhammā uppajjanti cittacetasikā dhammā, te te dhammā tesaṁ tesaṁ dhammānaṁ, <span class="term paccaya"><em>anantara</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>05. Samanantarapaccayoti</h2>
+    <p><span class="term source"><em>Cakkhuviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghāṇaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhāviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyaviññāṇa</em>dhātu</span> taṁsampayuttakā ca dhammā <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Manodhātu taṁsampayuttakā ca dhammā <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+    <p>Yesaṁ yesaṁ dhammānaṁ samanantarā ye ye dhammā uppajjanti cittacetasikā dhammā, te te dhammā tesaṁ tesaṁ dhammānaṁ, <span class="term paccaya"><em>samanantara</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>06. Sahajātapaccayoti</h2>
+    <p>Cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Cattāro mahābhūtā aññamaññaṁ, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Okkantikkhaṇe nāmarūpaṁ aññamaññaṁ, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Cittacetasikā dhammā cittasamuṭṭhānānaṁ rūpānaṁ, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Mahābhūtā upādārūpānaṁ, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Rūpino dhammā arūpīnaṁ dhammānaṁ kiñci kāle, <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+    <p>Kiñci kāle na <span class="term paccaya"><em>sahajāta</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>07. Aññamaññapaccayoti</h2>
+    <p>Cattāro khandhā arūpino, <span class="term paccaya"><em>aññamañña</em>paccayena paccayo</span>.</p>
+    <p>Cattāro mahābhūtā, <span class="term paccaya"><em>aññamañña</em>paccayena paccayo</span>.</p>
+    <p>Okkantikkhaṇe nāmarūpaṁ, <span class="term paccaya"><em>aññamañña</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>08. Nissayapaccayoti</h2>
+    <p>Cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p>Cattāro mahābhūtā aññamaññaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p>Okkantikkhaṇe nāmarūpaṁ aññamaññaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p>Cittacetasikā dhammā cittasamuṭṭhānānaṁ rūpānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p>Mahābhūtā upādārūpānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Cakkhā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghānā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ rūpaṁ nissāya <span class="term source">manodhātu</span> ca <span class="term source"><em>manoviññāṇa</em>dhātu</span> ca vattanti, taṁ rūpaṁ <span class="term target">manodhātuyā</span> ca <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> ca taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>nissaya</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>09. Upanissayapaccayoti</h2>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span> kesañci, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span> kesañci, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>abyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>abyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Utubhojanampi <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Puggalopi <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+    <p>Senāsanampi <span class="term paccaya"><em>upanissaya</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>10. Purejātapaccayoti</h2>
+    <p><span class="term source"><em>Cakkhā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghānā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Saddā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Gandhā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rasā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Phoṭṭhabbā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term source"><em>saddā</em>yatanaṁ</span> <span class="term source"><em>gandhā</em>yatanaṁ</span>, <span class="term source"><em>rasā</em>yatanaṁ</span> <span class="term source"><em>phoṭṭhabbā</em>yatanaṁ</span> <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ rūpaṁ nissāya <span class="term source">manodhātu</span> ca <span class="term source"><em>manoviññāṇa</em>dhātu</span> ca vattanti, taṁ rūpaṁ <span class="term target">manodhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p><span class="term target"><em>Manoviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ kiñci kāle, <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+    <p>Kiñci kāle na <span class="term paccaya"><em>purejāta</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>11. Pacchājātapaccayoti</h2>
+    <p>Pacchājātā cittacetasikā dhammā purejātassa imassa kāyassa, <span class="term paccaya"><em>pacchājāta</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>12. Āsevanapaccayoti</h2>
+    <p>Purimā purimā <span class="term source"><em>kusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>āsevana</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>akusalā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>akusalānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>āsevana</em>paccayena paccayo</span>.</p>
+    <p>Purimā purimā <span class="term source"><em>kiriyābyākatā</em> dhammā</span> pacchimānaṁ pacchimānaṁ <span class="term target"><em>kiriyābyākatānaṁ</em> dhammānaṁ</span>, <span class="term paccaya"><em>āsevana</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>13. Kammapaccayoti</h2>
+    <p>Kusalākusalaṁ kammaṁ vipākānaṁ khandhānaṁ kaṭattā ca rūpānaṁ, <span class="term paccaya"><em>kamma</em>paccayena paccayo</span>.</p>
+    <p>Cetanā sampayuttakānaṁ dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>kamma</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>14. Vipākapaccayoti</h2>
+    <p>Vipākā cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>vipāka</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>15. Āhārapaccayoti</h2>
+    <p>Kabaḷīkāro āhāro imassa kāyassa, <span class="term paccaya"><em>āhāra</em>paccayena paccayo</span>.</p>
+    <p>Arūpino āhārā sampayuttakānaṁ dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>āhāra</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>16. Indriyapaccayoti</h2>
+    <p><span class="term source"><em>Cakkhu</em>ndriyaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sot</em>indriyaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghān</em>indriyaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivh</em>indriyaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāy</em>indriyaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpajīvit</em>indriyaṁ</span> kaṭattārūpānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+    <p>Arūpino indriyā sampayuttakānaṁ dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>indriya</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>17. Jhānapaccayoti</h2>
+    <p><span class="term source"><em>Jhāna</em>ṅgāni</span> <span class="term target"><em>jhāna</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>jhāna</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>18. Maggapaccayoti</h2>
+    <p><span class="term source"><em>Magga</em>ṅgāni</span> <span class="term target"><em>magga</em>sampayuttakānaṁ</span> dhammānaṁ, taṁ·samuṭṭhānā·nañca rūpānaṁ, <span class="term paccaya"><em>magga</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>19. Sampayuttapaccayoti</h2>
+    <p>Cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>sampayutta</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>20. Vippayuttapaccayoti</h2>
+    <p>Rūpino dhammā arūpīnaṁ dhammānaṁ, <span class="term paccaya"><em>vippayutta</em>paccayena paccayo</span>.</p>
+    <p>Arūpino dhammā rūpīnaṁ dhammānaṁ, <span class="term paccaya"><em>vippayutta</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>21. Atthipaccayoti</h2>
+    <p>Cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p>Cattāro mahābhūtā aññamaññaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p>Okkantikkhaṇe nāmarūpaṁ aññamaññaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p>Cittacetasikā dhammā cittasamuṭṭhānānaṁ rūpānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p>Mahābhūtā upādārūpānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Cakkhā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghānā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Saddā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Gandhā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rasā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Phoṭṭhabbā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term source"><em>saddā</em>yatanaṁ</span> <span class="term source"><em>gandhā</em>yatanaṁ</span>, <span class="term source"><em>rasā</em>yatanaṁ</span> <span class="term source"><em>phoṭṭhabbā</em>yatanaṁ</span> <span class="term target">manodhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ rūpaṁ nissāya <span class="term source">manodhātu</span> ca <span class="term source"><em>manoviññāṇa</em>dhātu</span> ca vattanti, taṁ rūpaṁ <span class="term target">manodhātuyā</span> ca <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> ca taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>atthi</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>22. Natthipaccayoti</h2>
+    <p>Samanantaraniruddhā cittacetasikā dhammā, paṭuppannānaṁ cittacetasikānaṁ dhammānaṁ, <span class="term paccaya"><em>natthi</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>23. Vigatapaccayoti</h2>
+    <p>Samanantaravigatā cittacetasikā dhammā, paṭuppannānaṁ cittacetasikānaṁ dhammānaṁ, <span class="term paccaya"><em>vigata</em>paccayena paccayo</span>.</p>
+  </div>
+
+  <div class="paccaya-block">
+    <h2>24. Avigatapaccayoti</h2>
+    <p>Cattāro khandhā arūpino aññamaññaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p>Cattāro mahābhūtā aññamaññaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p>Okkantikkhaṇe nāmarūpaṁ aññamaññaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p>Cittacetasikā dhammā cittasamuṭṭhānānaṁ rūpānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p>Mahābhūtā upādārūpānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Cakkhā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Sotā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Ghānā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Jivhā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Kāyā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span> taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term target"><em>cakkhuviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Saddā</em>yatanaṁ</span> <span class="term target"><em>sotaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Gandhā</em>yatanaṁ</span> <span class="term target"><em>ghānaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rasā</em>yatanaṁ</span> <span class="term target"><em>jivhāviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Phoṭṭhabbā</em>yatanaṁ</span> <span class="term target"><em>kāyaviññāṇa</em>dhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p><span class="term source"><em>Rūpā</em>yatanaṁ</span> <span class="term source"><em>saddā</em>yatanaṁ</span> <span class="term source"><em>gandhā</em>yatanaṁ</span>, <span class="term source"><em>rasā</em>yatanaṁ</span> <span class="term source"><em>phoṭṭhabbā</em>yatanaṁ</span> <span class="term target">manodhātuyā</span>, taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p>Yaṁ rūpaṁ nissāya <span class="term source">manodhātu</span> ca <span class="term source"><em>manoviññāṇa</em>dhātu</span> ca vattanti, taṁ rūpaṁ <span class="term target">manodhātuyā</span> ca <span class="term target"><em>manoviññāṇa</em>dhātuyā</span> ca taṁ·sampayuttakā·nañca dhammānaṁ, <span class="term paccaya"><em>avigata</em>paccayena paccayo</span>.</p>
+    <p class="colophon"><em>Paccayaniddeso Niṭṭhito.</em></p>
+  </div>
+
+  <div class="footer">
+    Paccayuddeso &amp; Paccayaniddeso
+  </div>
+
+</div><!-- .page -->
+
+<!-- ── Reader controls ── -->
+<div class="reader-controls" aria-label="Reader controls">
+  <button type="button" id="font-decrease" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" id="font-reset"    aria-label="Reset cỡ chữ">A</button>
+  <button type="button" id="font-increase" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" id="color-toggle"  aria-label="Bật/tắt màu" aria-pressed="true">Color</button>
+</div>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const fontKey  = 'patthana-reader-font-size';
+    const colorKey = 'patthana-reader-colors';
+    const defaultSize = window.matchMedia('(max-width: 600px)').matches ? 16 : 18;
+    const clamp = v => Math.min(30, Math.max(13, v));
+    const colorBtn = document.getElementById('color-toggle');
+
+    const applyFont = v => {
+      const s = clamp(v);
+      root.style.setProperty('--reader-font-size', `${s}px`);
+      localStorage.setItem(fontKey, String(s));
+    };
+    const applyColors = on => {
+      body.classList.toggle('plain-colors', !on);
+      colorBtn.setAttribute('aria-pressed', String(on));
+      colorBtn.textContent = on ? 'Color' : 'Plain';
+      localStorage.setItem(colorKey, on ? '1' : '0');
+    };
+
+    const saved = Number(localStorage.getItem(fontKey));
+    if (Number.isFinite(saved) && saved > 0) {
+      applyFont(saved);
+    }
+    applyColors(localStorage.getItem(colorKey) !== '0');
+
+    document.getElementById('font-decrease').addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(cur - 1);
+    });
+    document.getElementById('font-reset').addEventListener('click', () => {
+      localStorage.removeItem(fontKey);
+      root.style.setProperty('--reader-font-size', `${defaultSize}px`);
+    });
+    document.getElementById('font-increase').addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(cur + 1);
+    });
+    colorBtn.addEventListener('click', () => applyColors(body.classList.contains('plain-colors')));
+  })();
+</script>
+</body>
+</html>
