@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q&A Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg:        #fdf6e8;
+  --bg-inner:  #fef9f0;
+  --gold:      #8b6914;
+  --gold-l:    #c4982a;
+  --gold-bd:   #d4a843;
+  --sep:       #c9a96e;
+  --shadow:    rgba(100,60,10,0.10);
+  --ca:        #8b4f00;
+  --answer-bg: #f5f0e4;
+  --answer-bd: #d4b87a;
+  --fn-main:   'Noto Serif','Times New Roman',serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(212,168,67,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(158,42,43,.05) 0%, transparent 50%),
+    url('hero.png');
+  background-size: auto, auto, cover;
+  background-position: center top, center bottom, center center;
+  background-attachment: fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  font-family: var(--fn-main);
+  color: var(--ca);
+  min-height: 100vh;
+  padding: 2rem 1rem 5rem;
+}
+.page { max-width: 720px; margin: 0 auto; }
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  padding: 2.4rem 2rem 1.8rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-bd) 20%, var(--gold-bd) 80%, transparent);
+  margin-top: 1.4rem;
+}
+.header-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+.header-sub {
+  font-size: .78rem;
+  font-style: italic;
+  color: #9a7040;
+  margin-top: .4rem;
+  letter-spacing: .03em;
+}
+
+/* ── Search bar ── */
+.search-wrap {
+  position: relative;
+  margin-bottom: 1.6rem;
+  display: none;
+}
+.search-wrap.visible { display: block; }
+.search-input {
+  width: 100%;
+  font-family: var(--fn-main);
+  font-size: .9rem;
+  color: var(--ca);
+  background: var(--bg-inner);
+  border: 1.5px solid var(--sep);
+  border-radius: 8px;
+  padding: .6rem 2.4rem .6rem .9rem;
+  outline: none;
+  transition: border-color .15s;
+}
+.search-input:focus { border-color: var(--gold-bd); }
+.search-input::placeholder { color: #b8966a; font-style: italic; }
+.search-clear {
+  position: absolute;
+  right: .7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--sep);
+  cursor: pointer;
+  display: none;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.search-clear.visible { display: block; }
+
+/* ── Tab strip (sheets) ── */
+.tab-strip {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+  display: none;
+}
+.tab-strip.visible { display: flex; }
+.tab-btn {
+  font-family: var(--fn-main);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--bg-inner);
+  border: 1.5px solid var(--sep);
+  border-radius: 20px;
+  padding: .32rem .85rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.tab-btn:hover { border-color: var(--gold-bd); }
+.tab-btn.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+
+/* ── Stats bar ── */
+.stats-bar {
+  font-size: .7rem;
+  color: #9a7040;
+  font-style: italic;
+  margin-bottom: 1rem;
+  display: none;
+  letter-spacing: .03em;
+}
+.stats-bar.visible { display: block; }
+
+/* ── Q&A list ── */
+.qa-list { }
+
+.qa-item {
+  margin-bottom: .75rem;
+  border: 1px solid var(--sep);
+  border-radius: 10px;
+  background: var(--bg-inner);
+  box-shadow: 2px 2px 8px var(--shadow);
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.qa-item:hover { border-color: var(--gold-bd); }
+.qa-item.hidden { display: none; }
+
+.qa-question {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  padding: .85rem 1.1rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.qa-q-mark {
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-bd);
+  flex-shrink: 0;
+  margin-top: .18rem;
+  min-width: 1.2rem;
+}
+.qa-q-text {
+  flex: 1;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ca);
+  line-height: 1.5;
+}
+.qa-chevron {
+  font-size: .75rem;
+  color: var(--sep);
+  flex-shrink: 0;
+  margin-top: .22rem;
+  transition: transform .2s ease;
+}
+.qa-item.open .qa-chevron { transform: rotate(90deg); }
+
+.qa-answer {
+  display: none;
+  border-top: 1px solid var(--answer-bd);
+  background: var(--answer-bg);
+  padding: .85rem 1.1rem .85rem 3rem;
+}
+.qa-item.open .qa-answer { display: block; }
+.qa-a-mark {
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-l);
+  margin-bottom: .35rem;
+}
+.qa-a-text {
+  font-size: .92rem;
+  line-height: 1.65;
+  color: #5a3a10;
+  white-space: pre-wrap;
+}
+
+/* ── Mark (search highlight) ── */
+mark {
+  background: rgba(212,168,67,.35);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ── Loading / error ── */
+.status {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #9a7040;
+  font-style: italic;
+  font-size: .9rem;
+  display: none;
+}
+.status.visible { display: block; }
+.status.error { color: #8b1c1d; }
+
+/* ── Empty state ── */
+.empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #b8966a;
+  font-style: italic;
+  font-size: .88rem;
+  display: none;
+}
+.empty.visible { display: block; }
+
+/* ── Expand/Collapse all ── */
+.ctrl-bar {
+  display: none;
+  justify-content: flex-end;
+  gap: .6rem;
+  margin-bottom: .8rem;
+}
+.ctrl-bar.visible { display: flex; }
+.ctrl-btn {
+  font-family: var(--fn-main);
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #9a7040;
+  background: none;
+  border: 1px solid var(--sep);
+  border-radius: 5px;
+  padding: .22rem .65rem;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.ctrl-btn:hover { border-color: var(--gold-bd); color: var(--gold); }
+
+@media (max-width: 480px) {
+  .header-title { font-size: 1.1rem; }
+  .qa-q-text { font-size: .88rem; }
+  .qa-a-text { font-size: .85rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-title">Q &amp; A</div>
+    <div class="header-sub" id="header-sub">Đang tải…</div>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <!-- Controls (shown after load) -->
+  <div id="search-wrap" class="search-wrap">
+    <input type="text" id="search-input" class="search-input"
+           placeholder="Tìm câu hỏi hoặc câu trả lời…"
+           oninput="onSearch(this.value)">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Xóa">✕</button>
+  </div>
+
+  <div id="tab-strip" class="tab-strip"></div>
+
+  <div id="stats-bar" class="stats-bar"></div>
+
+  <div class="ctrl-bar" id="ctrl-bar">
+    <button class="ctrl-btn" onclick="expandAll()">Mở tất cả</button>
+    <button class="ctrl-btn" onclick="collapseAll()">Đóng tất cả</button>
+  </div>
+
+  <div id="qa-list" class="qa-list"></div>
+  <div id="empty" class="empty">Không tìm thấy kết quả phù hợp.</div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// Config
+// ─────────────────────────────────────────────
+const XLSX_FILE = 'QA_Collection.xlsx';
+
+// ─────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────
+let allSheets = {};      // { sheetName: [{q, a}, …] }
+let activeSheet = null;
+let searchQuery = '';
+
+// ─────────────────────────────────────────────
+// Auto-fetch on load
+// ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  showStatus('Đang tải dữ liệu…', '');
+  fetch(XLSX_FILE)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.arrayBuffer();
+    })
+    .then(buf => parseWorkbook(buf, XLSX_FILE))
+    .catch(err => {
+      showStatus('Không tải được ' + XLSX_FILE + ' — ' + err.message, 'error');
+    });
+});
+
+// ─────────────────────────────────────────────
+// Parse workbook
+// ─────────────────────────────────────────────
+function parseWorkbook(arrayBuffer, filename) {
+  try {
+    const wb = XLSX.read(arrayBuffer, { type: 'array' });
+    allSheets = {};
+
+    wb.SheetNames.forEach(sheetName => {
+      const ws = wb.Sheets[sheetName];
+      // header_detect: tìm cột Q và A (không phân biệt hoa/thường)
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      if (!rows.length) return;
+
+      // Tự động phát hiện cột Q và A
+      const keys = Object.keys(rows[0]);
+      const qKey = keys.find(k => /^q/i.test(k.trim())) || keys[0];
+      const aKey = keys.find(k => /^a/i.test(k.trim())) || keys[1];
+
+      const items = rows
+        .map(row => ({
+          q: String(row[qKey] || '').trim(),
+          a: String(row[aKey] || '').trim()
+        }))
+        .filter(item => item.q);
+
+      if (items.length) allSheets[sheetName] = items;
+    });
+
+    const sheetNames = Object.keys(allSheets);
+    if (!sheetNames.length) {
+      showStatus('File không có dữ liệu Q&A hợp lệ.', 'error');
+      return;
+    }
+
+    // Update header
+    const totalQ = sheetNames.reduce((s, n) => s + allSheets[n].length, 0);
+    document.getElementById('header-sub').textContent =
+      filename + ' · ' + totalQ + ' câu hỏi · ' + sheetNames.length + ' chủ đề';
+
+    hideStatus();
+    buildTabs(sheetNames);
+    switchSheet(sheetNames[0]);
+
+    document.getElementById('search-wrap').classList.add('visible');
+    document.getElementById('ctrl-bar').classList.add('visible');
+
+  } catch (err) {
+    showStatus('Lỗi đọc file: ' + err.message, 'error');
+  }
+}
+
+// ─────────────────────────────────────────────
+// Tabs
+// ─────────────────────────────────────────────
+function buildTabs(names) {
+  const strip = document.getElementById('tab-strip');
+  strip.innerHTML = '';
+  names.forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = name;
+    btn.addEventListener('click', () => switchSheet(name));
+    strip.appendChild(btn);
+  });
+  strip.classList.add('visible');
+}
+
+function switchSheet(name) {
+  activeSheet = name;
+  // update active tab
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === name);
+  });
+  // clear search
+  document.getElementById('search-input').value = '';
+  searchQuery = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  renderList();
+}
+
+// ─────────────────────────────────────────────
+// Render list
+// ─────────────────────────────────────────────
+function renderList() {
+  const container = document.getElementById('qa-list');
+  const items = allSheets[activeSheet] || [];
+  const q = searchQuery.toLowerCase();
+
+  container.innerHTML = '';
+  let visibleCount = 0;
+
+  items.forEach((item, idx) => {
+    const matchQ = item.q.toLowerCase().includes(q);
+    const matchA = item.a.toLowerCase().includes(q);
+    if (q && !matchQ && !matchA) return;
+    visibleCount++;
+
+    const div = document.createElement('div');
+    div.className = 'qa-item';
+    div.dataset.idx = idx;
+
+    // Question
+    const qDiv = document.createElement('div');
+    qDiv.className = 'qa-question';
+    qDiv.innerHTML =
+      '<span class="qa-q-mark">Q</span>' +
+      '<span class="qa-q-text">' + highlight(item.q, q) + '</span>' +
+      '<span class="qa-chevron">▶</span>';
+    qDiv.addEventListener('click', () => toggleItem(div));
+
+    // Answer
+    const aDiv = document.createElement('div');
+    aDiv.className = 'qa-answer';
+    aDiv.innerHTML =
+      '<div class="qa-a-mark">A</div>' +
+      '<div class="qa-a-text">' + highlight(item.a, q) + '</div>';
+
+    div.appendChild(qDiv);
+    div.appendChild(aDiv);
+    container.appendChild(div);
+  });
+
+  // Stats
+  const statsBar = document.getElementById('stats-bar');
+  statsBar.classList.add('visible');
+  statsBar.textContent = q
+    ? visibleCount + ' / ' + items.length + ' câu hỏi phù hợp'
+    : items.length + ' câu hỏi';
+
+  // Empty
+  document.getElementById('empty').classList.toggle('visible', visibleCount === 0);
+
+  // Auto-expand when searching
+  if (q && visibleCount <= 8) {
+    container.querySelectorAll('.qa-item').forEach(el => el.classList.add('open'));
+  }
+}
+
+// ─────────────────────────────────────────────
+// Accordion toggle
+// ─────────────────────────────────────────────
+function toggleItem(el) {
+  el.classList.toggle('open');
+}
+function expandAll() {
+  document.querySelectorAll('.qa-item').forEach(el => el.classList.add('open'));
+}
+function collapseAll() {
+  document.querySelectorAll('.qa-item').forEach(el => el.classList.remove('open'));
+}
+
+// ─────────────────────────────────────────────
+// Search
+// ─────────────────────────────────────────────
+function onSearch(val) {
+  searchQuery = val.trim();
+  document.getElementById('search-clear').classList.toggle('visible', !!searchQuery);
+  renderList();
+}
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  onSearch('');
+}
+
+// ─────────────────────────────────────────────
+// Highlight helper
+// ─────────────────────────────────────────────
+function highlight(text, query) {
+  if (!query) return escHtml(text);
+  const escaped = escHtml(text);
+  if (!query) return escaped;
+  const re = new RegExp('(' + regEsc(escHtml(query)) + ')', 'gi');
+  return escaped.replace(re, '<mark>$1</mark>');
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function regEsc(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ─────────────────────────────────────────────
+// Status helpers
+// ─────────────────────────────────────────────
+function showStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status visible' + (type === 'error' ? ' error' : '');
+}
+function hideStatus() {
+  document.getElementById('status').className = 'status';
+}
+</script>
+</body>
+</html>

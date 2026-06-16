@@ -197,6 +197,13 @@ details > summary:hover .acc-label-sub {
 .card.book .card-pali { color: #4a2d7a; }
 .card.book:hover { border-color: #7a5abf; }
 
+.card.qa {
+  border-color: #a0b8a0;
+  background: linear-gradient(135deg, #f6fbf6 0%, #eef5ee 100%);
+}
+.card.qa .card-pali { color: #2d5a2d; }
+.card.qa:hover { border-color: #4a8a4a; }
+
 /* sub-label inside panel */
 .panel-sublabel {
   font-family: var(--fn-main);
@@ -304,6 +311,29 @@ details > summary:hover .acc-label-sub {
         <div class="card-text">
           <div class="card-pali">Papañca &amp; Papañca-Saññā-Saṅkhā</div>
           <div class="card-viet">Luận đề phân tích khái niệm</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </div>
+  </details>
+
+  <!-- IV · Q&A -->
+  <details>
+    <summary>
+
+      <span class="acc-label">
+        <span class="acc-label-main">Q &amp; A</span>
+        <span class="acc-label-sub">Câu hỏi &amp; giải đáp</span>
+      </span>
+
+    </summary>
+    <div class="acc-panel">
+
+      <a class="card qa" href="qa-viewer.html">
+        <div class="card-text">
+          <div class="card-pali">Mở Q&amp;A Viewer</div>
+          <div class="card-viet">Load danh sách câu hỏi từ file Excel</div>
         </div>
         <div class="card-arrow">→</div>
       </a>
