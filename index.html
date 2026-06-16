@@ -43,18 +43,14 @@ body {
   text-align: center;
   padding: 2.6rem 2rem 2rem;
   margin-bottom: 2.4rem;
-  border-bottom: 2px solid var(--gold-bd);
   position: relative;
 }
-.header::before {
-  content: '❖';
-  position: absolute;
-  bottom: -.75rem; left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.1rem;
-  color: var(--gold-bd);
-  background: transparent;
-  padding: 0 .5rem;
+.header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-bd) 20%, var(--gold-bd) 80%, transparent);
+  margin-top: 1.6rem;
 }
 .title-quote {
   font-family: var(--fn-main);
@@ -76,11 +72,14 @@ details > summary {
   display: flex;
   align-items: center;
   gap: .9rem;
-  border-bottom: 2px solid var(--sep);
-  padding: .75rem 0 .6rem;
+  padding: .95rem 0 .75rem;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  transition: padding-left .2s ease;
+}
+details > summary:hover {
+  padding-left: .5rem;
 }
 details > summary::-webkit-details-marker { display: none; }
 details > summary:focus-visible {
@@ -91,26 +90,37 @@ details > summary:focus-visible {
 .acc-label { flex: 1; }
 .acc-label-main {
   font-family: var(--fn-main);
-  font-size: .78rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: .22em;
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--gold);
   display: block;
+  transition: color .2s ease;
+}
+details > summary:hover .acc-label-main {
+  color: var(--gold-bd);
 }
 .acc-label-sub {
-  font-size: .72rem;
+  font-size: .85rem;
   font-style: italic;
   color: #9a7040;
   letter-spacing: .03em;
-  margin-top: .1rem;
+  margin-top: .2rem;
   display: block;
+  transition: color .2s ease;
+}
+details > summary:hover .acc-label-sub {
+  color: var(--gold);
 }
 .acc-chevron {
-  font-size: .75rem;
+  font-size: .85rem;
   color: var(--sep);
   flex-shrink: 0;
-  transition: transform .2s ease;
+  transition: transform .2s ease, color .2s ease;
+}
+details > summary:hover .acc-chevron {
+  color: var(--gold-bd);
 }
 details[open] > summary .acc-chevron {
   transform: rotate(90deg);
