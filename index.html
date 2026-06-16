@@ -22,10 +22,15 @@
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; }
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   background-image:
     radial-gradient(ellipse at 20% 10%, rgba(212,168,67,.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(158,42,43,.05) 0%, transparent 50%);
+    radial-gradient(ellipse at 80% 90%, rgba(158,42,43,.05) 0%, transparent 50%),
+    url('hero.png');
+  background-size: auto, auto, cover;
+  background-position: center top, center bottom, center center;
+  background-attachment: fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   font-family: var(--fn-main);
   color: var(--ca);
   min-height: 100vh;
@@ -48,7 +53,7 @@ body {
   transform: translateX(-50%);
   font-size: 1.1rem;
   color: var(--gold-bd);
-  background: var(--bg);
+  background: transparent;
   padding: 0 .5rem;
 }
 .title-quote {
@@ -83,18 +88,6 @@ details > summary:focus-visible {
   outline-offset: 2px;
 }
 
-.acc-icon {
-  font-family: var(--fn-main);
-  font-size: .6rem;
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold-bd);
-  flex-shrink: 0;
-  min-width: 2rem;
-  text-align: center;
-  opacity: .8;
-}
 .acc-label { flex: 1; }
 .acc-label-main {
   font-family: var(--fn-main);
@@ -219,7 +212,7 @@ details[open] > summary .acc-chevron {
   <!-- I · Pāḷi Chanting -->
   <details>
     <summary>
-      <span class="acc-icon">I</span>
+
       <span class="acc-label">
         <span class="acc-label-main">Pāḷi Chanting</span>
         <span class="acc-label-sub">Kinh tụng &amp; luyện tập</span>
@@ -262,7 +255,7 @@ details[open] > summary .acc-chevron {
   <!-- II · Học Kinh -->
   <details>
     <summary>
-      <span class="acc-icon">II</span>
+
       <span class="acc-label">
         <span class="acc-label-main">Học Kinh</span>
         <span class="acc-label-sub">Nghiên cứu văn bản</span>
@@ -285,7 +278,7 @@ details[open] > summary .acc-chevron {
   <!-- III · Sách -->
   <details>
     <summary>
-      <span class="acc-icon">III</span>
+
       <span class="acc-label">
         <span class="acc-label-main">Sách</span>
         <span class="acc-label-sub">Luận đề &amp; tham khảo</span>
