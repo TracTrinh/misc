@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaṭṭaka Paritta — Paritta Chim Cút Non</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ────────────────────────────────────────────── */
+:root {
+  --bg:        #fdf6e8;
+  --bg-inner:  #fef9f0;
+  --gold:      #8b6914;
+  --gold-l:    #c4982a;
+  --gold-bd:   #d4a843;
+  --sep:       #c9a96e;
+  --shadow:    rgba(100,60,10,0.10);
+  --ca:        #8b4f00;
+  --cb:        #1f5c3a;
+  --breath:    #b08030;
+  --crimson:   #7b1c1d;
+  --gloss-c:   #6b5a3e;
+  --note-c:    #5a4a30;
+  --prose-c:   #3a2a14;
+  --font-main: 'Noto Serif','Times New Roman',serif;
+  --font-ttl:  'Cinzel','Times New Roman',serif;
+  --reader-font-size: 18px;
+}
+
+/* ── RESET ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+
+/* ── BODY ──────────────────────────────────────────────── */
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 10%,rgba(212,168,67,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 90%,rgba(158,42,43,.05) 0%,transparent 50%);
+  font-family:var(--font-main);
+  color:var(--prose-c);
+  min-height:100vh;
+}
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero{
+  width:100%;
+  /* padding-top:33.3% giữ đúng tỉ lệ 3:1 của hình — thấy toàn bộ cảnh */
+  padding-top:33.3%;
+  background-image: url('hero-vattaka.png');
+  background-size:cover;
+  background-position:center center;
+  background-color:#2a1a08;
+  position:relative;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(20,10,2,0.0)  0%,
+    rgba(20,10,2,0.0)  50%,
+    rgba(20,10,2,0.65) 82%,
+    rgba(20,10,2,0.88) 100%
+  );
+}
+.hero-text{
+  position:absolute;bottom:0;left:0;right:0;
+  z-index:1;
+  max-width:860px;margin:0 auto;
+  padding:1.6rem 2rem 1.8rem;
+  text-align:center;
+}
+.hero-eyebrow{
+  font-family:var(--font-ttl);
+  font-size:.72rem;letter-spacing:.30em;text-transform:uppercase;
+  color:rgba(212,168,67,.85);
+  margin-bottom:.7rem;
+}
+.hero-title{
+  font-family:var(--font-ttl);
+  font-size:2.6rem;font-weight:600;
+  color:#f5e8c8;
+  letter-spacing:.07em;text-transform:uppercase;
+  line-height:1.2;
+  text-shadow:0 2px 18px rgba(0,0,0,.5);
+}
+.hero-title .td{
+  font-family:var(--font-main);
+  font-weight:600;letter-spacing:.06em;
+}
+.hero-sub{
+  font-family:var(--font-main);
+  font-size:1.05rem;font-weight:400;font-style:italic;
+  color:rgba(245,232,200,.78);
+  margin-top:.55rem;
+  letter-spacing:.04em;
+}
+
+/* ── PAGE WRAPPER ──────────────────────────────────────── */
+.page{max-width:860px;margin:0 auto;padding:0 1.2rem 5rem}
+
+/* ── PROSE HEADER (below hero) ─────────────────────────── */
+.doc-header{
+  text-align:center;
+  padding:1.8rem 1rem 1.2rem;
+  margin-bottom:1.8rem;
+}
+.doc-meta{
+  font-size:calc(var(--reader-font-size) * .8);letter-spacing:.12em;color:var(--gold);
+  text-transform:uppercase;font-family:var(--font-main);
+}
+
+/* ── SECTION HEADINGS ──────────────────────────────────── */
+/* Cấp 1: tên phần lớn (Tổng Quan, Câu Chuyện...) */
+.sec-label{
+  font-family:var(--font-main);
+  font-size:calc(var(--reader-font-size) * 1.05);
+  font-weight:700;
+  letter-spacing:.04em;
+  color:var(--gold);
+  text-align:left;
+  margin:3rem 0 1.2rem;
+  padding-bottom:.5rem;
+  border-bottom:2px solid var(--gold-bd);
+}
+
+/* Cấp 2: tiêu đề con (Bối cảnh hiện tại, Câu chuyện tiền kiếp...) */
+.sec-heading{
+  font-family:var(--font-main);
+  font-size:calc(var(--reader-font-size) * .9);
+  font-weight:700;
+  color:var(--ca);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin:1.8rem 0 .8rem;
+}
+.sec-heading.sub{
+  font-size:calc(var(--reader-font-size) * .85);font-weight:600;
+  color:#7a4f28;letter-spacing:.06em;
+  margin:1.4rem 0 .6rem;
+}
+
+/* ── PROSE ─────────────────────────────────────────────── */
+.prose{
+  font-size:calc(var(--reader-font-size) * .97);line-height:1.9;
+  color:var(--prose-c);
+  margin-bottom:1rem;
+  font-weight:400;
+}
+.prose + .prose{margin-top:-.3rem}
+
+/* ── PALI QUOTE BLOCK ──────────────────────────────────── */
+.pali-quote{
+  margin:1.2rem 0;
+  padding:.9rem 1.3rem;
+  border-left:3px solid var(--gold-bd);
+  background:var(--bg-inner);
+  border-radius:0 8px 8px 0;
+  font-family:var(--font-main);
+  font-size:calc(var(--reader-font-size) * .97);
+  color:var(--cb);
+  line-height:1.9;
+}
+.pali-quote cite{
+  display:block;margin-top:.5rem;
+  font-size:calc(var(--reader-font-size) * .78);font-style:italic;
+  color:var(--gloss-c);
+}
+
+/* ── INFO TABLE ────────────────────────────────────────── */
+.info-table{
+  width:100%;border-collapse:collapse;
+  margin:1rem 0 1.4rem;
+  font-size:calc(var(--reader-font-size) * .88);
+}
+.info-table td{
+  padding:.45rem .7rem;
+  border-bottom:1px solid rgba(201,169,110,.35);
+  vertical-align:top;
+  color:var(--prose-c);
+}
+.info-table td:first-child{
+  width:38%;
+  color:var(--gold);
+  font-weight:600;
+  white-space:nowrap;
+}
+.info-table tr:last-child td{border-bottom:none}
+
+/* ── VARIANT TABLE ─────────────────────────────────────── */
+.var-table{
+  width:100%;border-collapse:collapse;
+  margin:1rem 0 1.5rem;
+  font-size:calc(var(--reader-font-size) * .85);
+}
+.var-table th{
+  padding:.45rem .6rem;
+  background:rgba(201,169,110,.18);
+  color:var(--gold);font-weight:700;
+  font-family:var(--font-main);font-size:calc(var(--reader-font-size) * .75);
+  letter-spacing:.1em;text-transform:uppercase;
+  text-align:left;border-bottom:2px solid var(--sep);
+}
+.var-table td{
+  padding:.4rem .6rem;
+  border-bottom:1px solid rgba(201,169,110,.25);
+  color:var(--prose-c);
+  vertical-align:top;
+  line-height:1.6;
+}
+.var-table code{
+  font-family:var(--font-main);
+  color:var(--ca);font-size:.88em;
+  background:rgba(139,79,0,.07);
+  padding:.05em .25em;border-radius:3px;
+}
+.var-table tr:last-child td{border-bottom:none}
+
+/* ── SACCA TABLE ───────────────────────────────────────── */
+.sacca-table{
+  width:100%;border-collapse:collapse;
+  margin:1rem 0 1.5rem;font-size:calc(var(--reader-font-size) * .88);
+}
+.sacca-table th{
+  padding:.45rem .7rem;
+  background:rgba(201,169,110,.18);
+  color:var(--gold);font-weight:700;
+  font-family:var(--font-main);font-size:calc(var(--reader-font-size) * .75);
+  letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:2px solid var(--sep);text-align:left;
+}
+.sacca-table td{
+  padding:.4rem .7rem;
+  border-bottom:1px solid rgba(201,169,110,.22);
+  vertical-align:top;line-height:1.6;color:var(--prose-c);
+}
+.sacca-table tr:last-child td{border-bottom:none}
+.sacca-table .src{color:var(--gloss-c);font-size:.82em;font-style:italic}
+
+/* ── CALLOUT ───────────────────────────────────────────── */
+.callout{
+  margin:1.4rem 0;
+  padding:1rem 1.3rem;
+  border:1px solid var(--gold-bd);
+  border-radius:8px;
+  background:linear-gradient(135deg,#fef9ee 0%,#fdf3e0 100%);
+  font-size:calc(var(--reader-font-size) * .9);line-height:1.85;
+  color:var(--prose-c);
+}
+.callout strong{color:var(--gold);font-weight:600}
+
+/* ── INTERLINEAR BLOCK ─────────────────────────────────── */
+.stanza{
+  margin-bottom:1.4rem;padding:1.1rem 1.5rem;
+  background:var(--bg-inner);
+  border:1px solid var(--sep);border-radius:10px;
+  box-shadow:2px 2px 8px var(--shadow);
+}
+.stanza.sacca-stanza{
+  border-color:var(--crimson);
+  background:linear-gradient(135deg,#fef9f0 0%,#fdf0ee 100%);
+  box-shadow:2px 2px 12px rgba(123,28,29,.08);
+}
+.stanza.result-stanza{
+  border-color:var(--gold-bd);
+  background:linear-gradient(135deg,#fef9ee 0%,#fdf3e0 100%);
+}
+.stanza-num{
+  font-family:var(--font-main);font-size:calc(var(--reader-font-size) * .68);
+  letter-spacing:.2em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:.9rem;display:block;
+}
+.sacca-stanza .stanza-num{color:var(--crimson)}
+.iline{
+  display:flex;flex-wrap:wrap;
+  align-items:flex-start;
+  gap:.15rem 1.2rem;margin-bottom:.5rem;
+}
+.iline:last-of-type{margin-bottom:0}
+.token{display:inline-flex;flex-direction:column;align-items:flex-start}
+.pali-w{font-size:calc(var(--reader-font-size) * 1.18);line-height:1.5;font-weight:600}
+.gloss{font-size:calc(var(--reader-font-size) * .75);font-style:italic;color:var(--gloss-c);line-height:1.4;margin-top:.1rem;font-weight:400}
+.token.a .pali-w{color:var(--ca)}
+.token.b .pali-w{color:var(--cb)}
+.token.s .pali-w{color:var(--crimson)}
+.r{font-weight:800}
+.ai{font-style:italic;color:var(--ca)}
+.bi{font-style:italic;color:var(--cb)}
+.breath{color:var(--breath);font-size:1.05em;margin-left:.2em;font-style:normal;font-weight:400}
+.idiv{border:none;border-top:1px dashed var(--sep);margin:.7rem 0;opacity:.5}
+.note{
+  font-size:calc(var(--reader-font-size) * .85);color:var(--note-c);
+  border-top:1px dashed var(--sep);
+  margin-top:.85rem;padding-top:.7rem;line-height:1.75;
+}
+.sacca-stanza .note{border-top-color:rgba(123,28,29,.3)}
+.scholar-note{
+  font-size:calc(var(--reader-font-size) * .78);color:var(--gloss-c);font-style:italic;
+  margin-top:.4rem;line-height:1.6;
+}
+
+/* ── FOOTER ────────────────────────────────────────────── */
+.footer{
+  text-align:center;margin-top:3rem;
+  padding-top:1.5rem;border-top:1px solid var(--sep);
+  font-size:calc(var(--reader-font-size) * .78);color:#7a4f28;
+  line-height:1.9;letter-spacing:.05em;
+}
+
+/* ── READER CONTROLS ───────────────────────────────────── */
+.reader-controls{
+  position:fixed;
+  left:18px;
+  bottom:22px;
+  z-index:999;
+  display:flex;
+  align-items:center;
+  gap:0;
+  padding:0;
+  background:rgba(254,249,240,.96);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--sep);
+  border-radius:50px;
+  box-shadow:0 3px 14px rgba(80,52,18,.18);
+  overflow:hidden;
+}
+.reader-controls button{
+  min-width:0;
+  height:auto;
+  border:none;
+  border-radius:0;
+  background:none;
+  color:var(--gold);
+  font-family:var(--font-main);
+  font-size:1rem;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+  padding:9px 13px;
+  transition:background .15s,color .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.reader-controls button:hover{background:rgba(212,168,67,.14)}
+.reader-controls button:active{background:rgba(201,169,110,.35)}
+
+/* ── PRINT ─────────────────────────────────────────────── */
+@media print{
+  @page{size:A4;margin:1.8cm 1.5cm 1.8cm 1.5cm}
+  .hero{display:none}
+  .reader-controls{display:none}
+  body{padding:0;background:white !important;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc-header{margin-bottom:.8rem;padding:.8rem 0}
+  .sec-label{margin:1.2rem 0 .5rem;font-size:.8rem;border-bottom:1px solid #ccc;break-after:avoid}
+  .stanza{break-inside:avoid;box-shadow:none;border:1px solid #ccc;
+    border-radius:8px;padding:.7rem 1rem;margin-bottom:.6rem}
+  .pali-w{font-size:.95rem;line-height:1.4}
+  .gloss{font-size:.65rem}
+  .note{font-size:.65rem;line-height:1.6;color:#5a4a30 !important}
+}
+@media(max-width:600px){
+  .hero-title{font-size:1.8rem}
+  .hero-sub{font-size:.92rem}
+  .stanza{padding:1rem}
+  .pali-w{font-size:var(--reader-font-size)}
+  .iline{gap:.1rem .8rem}
+  .page{padding:0 .9rem 4rem}
+  .reader-controls{left:10px;bottom:10px}
+  .reader-controls button{padding:8px 11px;font-size:.92rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+     Đặt file vattaka-hero.png cùng thư mục là hình tự hiện.
+     Nếu chưa có hình, background-color:#2a1a08 làm fallback.
+══════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="hero-title">Va<span class="td">ṭṭ</span>aka Paritta</div>
+    <div class="hero-sub">Lời Thề Chân Lý Của Chim Cút Non</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE
+══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- DOC META -->
+  <div class="doc-header">
+    <div class="doc-meta">Jātaka 35 · Cariyāpiṭaka Cp 29 · Khuddaka Nikāya</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       I. TỔNG QUAN
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Tổng Quan</div>
+
+  <p class="prose">
+    <strong>Vaṭṭaka Paritta</strong> — <em>Paritta Chim Cút Non</em> — là bài kinh hộ niệm ngắn nhất và độc đáo nhất trong truyền thống Theravāda. Khác với hầu hết các paritta là lời của Đức Phật hay Tăng đoàn, bài này là lời của <strong>tiền thân Đức Phật (Bồ-tát)</strong> khi sinh làm chim cút non trong một kiếp quá khứ xa xôi. Toàn bộ bài kệ được trích từ lời nguyện <em>sacca-kiriyā</em> — lời thề chân lý — mà Bồ-tát thực hiện để cứu bản thân và các chim khác khỏi lửa rừng.
+  </p>
+
+  <table class="info-table">
+    <tr><td>Loại</td><td>Paritta (kinh hộ niệm bảo trợ)</td></tr>
+    <tr><td>Công dụng truyền thống</td><td>Bảo hộ khỏi hỏa hoạn</td></tr>
+    <tr><td>Vị trí trong tụng kinh</td><td>Sau Mora Paritta, trước Dhajagga Paritta</td></tr>
+    <tr><td>Nguồn kinh điển chính</td><td>Jātaka 35 (Vaṭṭakajātaka) · Cariyāpiṭaka Cp 29 (Vaṭṭapotakacariyā)</td></tr>
+    <tr><td>Độ dài</td><td>9 dòng kệ (bản tụng); 11 kệ đầy đủ trong Cariyāpiṭaka</td></tr>
+    <tr><td>Nhân vật</td><td>Bồ-tát trong kiếp chim cút non; cha mẹ = Suddhodana và Mahāmāyā trong tiền kiếp</td></tr>
+  </table>
+
+  <!-- ══════════════════════════════════════════
+       II. CÂU CHUYỆN NỀN TẢNG
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Câu Chuyện Nền Tảng</div>
+
+  <h2 class="sec-heading">Bối cảnh hiện tại</h2>
+  <p class="prose">
+    Đức Phật đang đi khất thực tại một làng ở Magadha với đông đảo chư Tăng. Lửa rừng bùng phát dữ dội, lan rộng thành một bức tường lửa và khói. Các Tỳ-kheo chưa chứng đắc hoảng sợ trước cái chết; họ kêu nhau đốt ngược lửa để tạo vùng đất trống an toàn. Các Tỳ-kheo khác can ngăn: <em>"Các ông không biết oai lực của Phật — hãy đến nương tựa bậc Đạo Sư."</em> Toàn thể Tăng đoàn tập hợp quanh Đức Phật tại một điểm nhất định — lửa dừng lại cách 16 karīsa và tự tắt như đuốc nhúng vào nước.
+  </p>
+  <p class="prose">
+    Các Tỳ-kheo tán thán oai lực Phật. Đức Phật đính chính:
+  </p>
+  <div class="pali-quote">
+    <em>Na, bhikkhave, etaṃ etarahi mayhaṃ balaṃ. Idaṃ pana mayhaṃ porāṇakasaccabalaṃ. Imasmiñhi padese sakalam-pi imaṃ kappaṃ aggi na jalissati, kappaṭṭhiyapāṭihāriyaṃ nāmetan.</em>
+    <cite>Jātakaṭṭhakathā, Ja 35</cite>
+  </div>
+  <p class="prose">
+    "Này các Tỳ-kheo, đây không phải oai lực hiện tại của Ta. Đây là oai lực sacca (chân lý) ngày xưa của Ta. Tại vùng này, lửa sẽ không cháy trong suốt đại kiếp này — đây là kỳ tích kéo dài cả đại kiếp (<em>kappaṭṭhiyapāṭihāriya</em>)."
+  </p>
+
+  <h2 class="sec-heading">Câu chuyện tiền kiếp</h2>
+  <p class="prose">
+    Thuở xưa, tại chính địa điểm đó ở Magadha, Bồ-tát sinh làm chim cút non (<em>vaṭṭapotako</em>). Vừa mới nở ra khỏi vỏ trứng, Ngài chỉ lớn bằng quả bóng lớn (<em>mahāgeṇḍukappamāno</em>). Cha mẹ hàng ngày tha mồi về nuôi trong tổ. Ngài chưa đủ sức để giương cánh bay hay đặt bước chân đi.
+  </p>
+  <p class="prose">
+    Lửa rừng bùng phát — năm nào cũng vậy vào mùa khô tại vùng này. Chim muông bỏ chạy, tiếng kêu thét vang trời. Cha mẹ Bồ-tát cũng hoảng sợ bỏ lại Ngài trong tổ. Chú chim duỗi cổ nhìn lửa tiến đến, và nghĩ:
+  </p>
+  <div class="pali-quote">
+    <em>Yesāhaṃ upadhāveyyaṃ, bhīto tasitavedhito; te maṃ ohāya pakkantā, kathaṃ me ajja kātave.</em>
+    <cite>Cariyāpiṭaka Cp 29, kệ 318</cite>
+  </div>
+  <p class="prose">
+    "Những kẻ mà tôi, sợ hãi, hoảng hốt, run rẩy, sẽ chạy đến nương tựa... họ đã bỏ tôi mà đi. Tôi phải làm gì ngày hôm nay?" — Đây là khoảnh khắc tâm lý nền tảng: sự cô đơn và bất lực tuyệt đối làm tiền đề cho sức mạnh của sacca-kiriyā.
+  </p>
+  <p class="prose">
+    Bồ-tát hướng tâm đến phẩm đức giới hạnh hiện hữu trong thế gian, tưởng niệm chư Phật quá khứ, rồi thực hiện lời thề chân lý. Lửa lập tức rút lui 16 karīsa và tắt ngay tại chỗ như đuốc nhúng vào nước.
+  </p>
+
+  <div class="callout">
+    <strong>Nhận diện nhân vật:</strong> Chú giải xác nhận — <em>"Tadā mātāpitaro etarahi mātāpitaro va ahesuṃ, vaṭṭakarājā pana aham-eva ahosiṃ."</em> — Cha mẹ của chim cút ngày đó chính là Suddhodana và Mahāmāyā; còn vua chim cút chính là Đức Phật. Kỳ tích này kéo dài suốt một <strong>đại kiếp</strong> (<em>kappa</em>).
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       III. GIÁO LÝ SACCA-KIRIYĀ
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Giáo Lý Sacca-kiriyā</div>
+
+  <p class="prose">
+    <strong>Sacca-kiriyā</strong> (Skt: <em>satyādhiṣṭhāna</em>) là lời thề chân lý trang trọng, biểu đạt bằng lời nói có tính nghi thức. Người thực hiện xác nhận một đức hạnh thực sự của mình, rồi từ đó phát lệnh hay nguyện vọng. Lời thề được tin là có oai lực kỳ diệu — tùy thuộc hoàn toàn vào <em>sự chân thực</em> của người phát biểu. Nói quá một ly, nói sai một điểm — oai lực mất hoàn toàn.
+  </p>
+
+  <h2 class="sec-heading">Cơ chế ba lớp trong bài này</h2>
+  <p class="prose">
+    Cariyāpiṭakaṭṭhakathā (Dhammapāla, §78) giải thích quá trình tâm lý của Bồ-tát trước khi phát nguyện: sau khi nhận ra sự bất lực hoàn toàn (<em>itikattabbatāsammūḷha</em>), Ngài suy nghĩ có hệ thống và đi đến kết luận hành động:
+  </p>
+  <div class="pali-quote">
+    <em>Evaṃ pana cintetvā mahāsatto attano ānubhāve ṭhatvā yathācintitaṃ paṭipajji.</em>
+    <cite>Cariyāpiṭakaṭṭhakathā §78</cite>
+  </div>
+  <p class="prose">
+    "Sau khi suy nghĩ như vậy, Đại sĩ <strong>đứng vững trên oai lực của chính mình</strong> (<em>attano ānubhāve ṭhatvā</em>) và hành động theo những gì đã suy nghĩ." — Đây là điểm then chốt: sacca-kiriyā không phải phép màu từ bên ngoài mà là oai lực chân thật nội tại.
+  </p>
+
+  <table class="info-table">
+    <tr>
+      <td>Lớp 1 — Sīlaguṇa</td>
+      <td>Phẩm đức của giới hạnh hiện hữu trong thế gian</td>
+    </tr>
+    <tr>
+      <td>Lớp 2 — Buddhaguṇa</td>
+      <td>Tưởng niệm oai lực chư Phật quá khứ đã viên mãn Ba-la-mật</td>
+    </tr>
+    <tr>
+      <td>Lớp 3 — Saccasabhāvadhammo</td>
+      <td>Một chân lý thực tế trong bản thân: có cánh không bay được, có chân không bước được, bị bỏ rơi</td>
+    </tr>
+  </table>
+
+  <p class="prose">
+    Chú giải CpA §82 xác nhận tính độc nhất của sacca-kiriyā này:
+  </p>
+  <div class="pali-quote">
+    <em>Sā panesā bodhisattassa vaṭṭakayoniyaṃ tasmiṃ samaye buddhaguṇānaṃ āvajjanapubbikā saccakiriyā <strong>anaññasādhāraṇā</strong>.</em>
+    <cite>Cariyāpiṭakaṭṭhakathā §82</cite>
+  </div>
+  <p class="prose">
+    "Sacca-kiriyā của Bồ-tát trong kiếp chim cút đó — sacca-kiriyā có sự tưởng niệm phẩm đức Phật làm tiền đề — là điều <strong>không ai khác có thể làm được</strong> (<em>anaññasādhāraṇā</em>)." Đó là lý do kỳ tích kéo dài suốt một đại kiếp.
+  </p>
+
+  <!-- ══════════════════════════════════════════
+       IV. BÀI KINH INTERLINEAR
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Bài Kinh — Interlinear</div>
+
+  <p class="prose" style="margin-bottom:1.4rem">
+    Bản tụng thông dụng trong thực hành hiện nay (theo Jātakaṭṭhakathā và truyền thống Dhammayut). Phần tự sự kệ 312–318 của Cariyāpiṭaka được lược bỏ, chỉ giữ lại phần sacca-kiriyā và kết quả.
+  </p>
+
+  <!-- STANZA 00 — Nidānagāthā (kệ giới thiệu) -->
+  <div class="stanza refrain">
+    <span class="stanza-num">Kệ Giới Thiệu · Nidānagāthā</span>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Pūrenta<span class="ai">ṁ</span></span>
+        <span class="gloss">đang viên mãn</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">Bodhi·sambhāre</span>
+        <span class="gloss">các tư lương Bồ-đề</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">ni<span class="r">bb</span>a<span class="ai">ttaṁ</span></span>
+        <span class="gloss">đã được sinh vào</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">va<span class="r">ṭṭ</span>a·jātiya<span class="bi">ṁ</span></span>
+        <span class="gloss">loài chim cút</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">yassa</span>
+        <span class="gloss">do oai lực của Ngài</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">teje<span class="bi">na</span></span>
+        <span class="gloss">bằng oai lực đó</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">dāva<span class="r">gg</span>i</span>
+        <span class="gloss">lửa rừng</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Mahā·sa<span class="r">tt</span>a<span class="bi">ṁ</span></span>
+        <span class="gloss">Đại sĩ [Bồ-tát]</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">vivajjayi</span>
+        <span class="gloss">đã tránh khỏi</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">The<span class="r">rass</span>a</span>
+        <span class="gloss">của Trưởng lão</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">Sāripu<span class="ai">ttassa</span></span>
+        <span class="gloss">Sāriputta</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Loka·nāthe<span class="bi">na</span></span>
+        <span class="gloss">bởi bậc Hộ Thế</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">bhāsita<span class="ai">ṁ</span></span>
+        <span class="gloss">được tuyên thuyết</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Ka<span class="r">pp</span>a<span class="r">ṭṭh</span>āyi<span class="bi">ṁ</span></span>
+        <span class="gloss">kéo dài suốt đại kiếp</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">mahā·teja<span class="ai">ṁ</span></span>
+        <span class="gloss">đại oai lực</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">pari<span class="r">tt</span>a<span class="bi">ṁ</span></span>
+        <span class="gloss">bài paritta</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">ta<span class="ai">ṁ</span></span>
+        <span class="gloss">ấy</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">bhaṇāma</span>
+        <span class="gloss">chúng ta hãy tụng</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">he</span>
+        <span class="gloss">[lên nào]</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="note">
+      Khi đang viên mãn các tư lương Bồ-đề, Ngài đã sinh vào loài chim cút — do oai lực của Ngài, lửa rừng đã tránh khỏi Đại sĩ. [Bài paritta này] được Trưởng lão Sāriputta [tụng lại], [với nội dung] được bậc Hộ Thế tuyên thuyết — có đại oai lực kéo dài suốt một đại kiếp: bài paritta đó, chúng ta hãy tụng lên.
+      <div class="scholar-note">Kệ dẫn nhập theo truyền thống Pa-Auk (Myanmar). <em>Bodhi·sambhāra</em>: các điều kiện/tư lương dẫn đến Giác Ngộ, tức mười pāramī. <em>Mahāsatta</em>: Đại sĩ — danh hiệu của Bồ-tát. <em>Kappaṭṭhāyiṁ</em>: kéo dài suốt một đại kiếp — xác nhận kỳ tích được đề cập trong Jātakaṭṭhakathā.</div>
+    </div>
+  </div>
+
+  <!-- STANZA 01 — Nền tảng -->
+  <div class="stanza">
+    <span class="stanza-num">01 · Nền tảng chân lý</span>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Atthi</span>
+        <span class="gloss">có, hiện hữu</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">loke</span>
+        <span class="gloss">trong thế gian</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">sīla·<span class="r">gu</span>ṇo</span>
+        <span class="gloss">phẩm đức giới hạnh</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Sacca<span class="bi">ṁ</span></span>
+        <span class="gloss">chân lý</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">soceyy'anuddayā</span>
+        <span class="gloss">thanh tịnh và từ mẫn</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Tena</span>
+        <span class="gloss">bằng</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">sa<span class="r">cc</span><span class="ai">ena</span></span>
+        <span class="gloss">chân lý đó</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">kāhāmi</span>
+        <span class="gloss">ta sẽ thực hiện</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Sa<span class="r">cc</span>a·kiriyam</span>
+        <span class="gloss">lời thề chân lý</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">anu<span class="r">tt</span>ara<span class="bi">ṁ</span></span>
+        <span class="gloss">vô thượng</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="note">
+      Trong thế gian này có phẩm đức của giới hạnh, có chân lý, thanh tịnh và lòng từ mẫn. Bằng chân lý đó, ta sẽ thực hiện một lời thề chân lý vô thượng.
+      <div class="scholar-note">Dị bản: Cariyāpiṭaka Cp 29 dùng <em>saccakiriyamuttamaṃ</em> (tối thắng) thay vì <em>anuttaraṁ</em> (vô thượng). Bản tụng theo Jātakaṭṭhakathā.</div>
+    </div>
+  </div>
+
+  <!-- STANZA 02 — Viện dẫn -->
+  <div class="stanza">
+    <span class="stanza-num">02 · Viện dẫn sức mạnh Pháp và chư Phật</span>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Āva<span class="r">jj</span>itvā</span>
+        <span class="gloss">hướng tâm đến</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">dha<span class="r">mm</span>a·bala<span class="bi">ṁ</span></span>
+        <span class="gloss">sức mạnh của Pháp</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Saritvā</span>
+        <span class="gloss">tưởng nhớ</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">pubbake</span>
+        <span class="gloss">trong quá khứ</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">jine</span>
+        <span class="gloss">các Đấng Chiến Thắng</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Sa<span class="r">cc</span>a·balam</span>
+        <span class="gloss">sức mạnh chân lý</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">ava<span class="r">ss</span>āya</span>
+        <span class="gloss">nương tựa vào</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Sa<span class="r">cc</span>a·kiriyam</span>
+        <span class="gloss">lời thề chân lý</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">akāsa'ha<span class="ai">ṁ</span></span>
+        <span class="gloss">ta đã thực hiện</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="note">
+      Hướng tâm về sức mạnh của Pháp, tưởng nhớ các Đấng Chiến Thắng trong quá khứ, nương tựa vào sức mạnh của chân lý, ta đã thực hiện lời thề chân lý.
+      <div class="scholar-note"><em>Pubbake jine</em> — chư Phật quá khứ đã viên mãn Ba-la-mật và chứng đắc dưới cội Bồ-đề. Đây là lớp thứ hai trong ba lớp nền tảng của sacca-kiriyā.</div>
+    </div>
+  </div>
+
+  <!-- STANZA 03 — Lời thề chính -->
+  <div class="stanza sacca-stanza">
+    <span class="stanza-num">03 · Lời thề chân lý — Sacca-kiriyā</span>
+    <div class="iline">
+      <span class="token s">
+        <span class="pali-w">Santi</span>
+        <span class="gloss">có, hiện hữu</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">pa<span class="r">kk</span>hā</span>
+        <span class="gloss">đôi cánh</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">apa<span class="r">tt</span>anā</span>
+        <span class="gloss">không thể bay</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token s">
+        <span class="pali-w">Santi</span>
+        <span class="gloss">có, hiện hữu</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">pādā</span>
+        <span class="gloss">đôi chân</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">avañcanā</span>
+        <span class="gloss">không thể bước</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token s">
+        <span class="pali-w">Mātā</span>
+        <span class="gloss">mẹ</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">pitā</span>
+        <span class="gloss">cha</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">ca</span>
+        <span class="gloss">và</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">ni<span class="r">kkh</span>antā</span>
+        <span class="gloss">đã rời bỏ</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token s">
+        <span class="pali-w">Jāta·veda</span>
+        <span class="gloss">hỡi Jātaveda</span>
+      </span>
+      <span class="token s">
+        <span class="pali-w">paṭikkama</span>
+        <span class="gloss">hãy lui trở lại!</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="note">
+      Có đôi cánh mà không thể bay, có đôi chân mà không thể bước. Cha mẹ đã rời bỏ ta. Hỡi Jātaveda, hãy lui trở lại!
+      <div class="scholar-note">
+        <em>Jātaveda</em>: danh hiệu Vedic cổ của thần lửa Agni — "kẻ được nhận biết ngay khi sinh ra, qua sự bốc lên của khói và ngọn lửa" (<em>dhūmajāluṭṭhānena paññāyati</em>, CpA §81). Đây là lời gọi tên trực tiếp ngọn lửa như một nhân vật, không phải hình tượng ẩn dụ. · <em>Apatanā</em>: không phải "không có lông" như một số bản dịch — chú giải gốc nói "không thể bay lên không trung" (<em>uppatituṃ ākāsena gantuṃ na sakkā</em>).
+      </div>
+    </div>
+  </div>
+
+  <!-- STANZA 04 — Kết quả -->
+  <div class="stanza result-stanza">
+    <span class="stanza-num">04 · Kết quả và tuyên bố Ba-la-mật</span>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Saha</span>
+        <span class="gloss">cùng lúc</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">sa<span class="r">cc</span>e</span>
+        <span class="gloss">lời thề chân lý</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">kate</span>
+        <span class="gloss">được thực hiện</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">mayha<span class="bi">ṁ</span></span>
+        <span class="gloss">bởi ta</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Mahā·pa<span class="r">jj</span>alito</span>
+        <span class="gloss">cháy rực to lớn</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">sikhī</span>
+        <span class="gloss">ngọn lửa có mào</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token a">
+        <span class="pali-w">Va<span class="r">jj</span>esi</span>
+        <span class="gloss">đã tránh khỏi</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">soḷasa</span>
+        <span class="gloss">mười sáu</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">karīs<span class="ai">āni</span></span>
+        <span class="gloss">karīsa</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Udaka<span class="bi">ṁ</span></span>
+        <span class="gloss">nước</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">patvā</span>
+        <span class="gloss">khi chạm vào</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">yathā</span>
+        <span class="gloss">như</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">sikhī</span>
+        <span class="gloss">ngọn lửa [tắt ngay]</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <hr class="idiv">
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Sa<span class="r">cc</span><span class="bi">ena</span></span>
+        <span class="gloss">về chân lý</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">me</span>
+        <span class="gloss">của ta</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">samo</span>
+        <span class="gloss">kẻ bằng ngang</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">n'a<span class="r">tth</span>i</span>
+        <span class="gloss">không có</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="iline">
+      <span class="token b">
+        <span class="pali-w">Esā</span>
+        <span class="gloss">đây chính là</span>
+      </span>
+      <span class="token a">
+        <span class="pali-w">me</span>
+        <span class="gloss">của ta</span>
+      </span>
+      <span class="token b">
+        <span class="pali-w">sa<span class="r">cc</span>a·pāramīti</span>
+        <span class="gloss">Ba-la-mật chân thật</span>
+      </span>
+      <span class="breath">◎</span>
+    </div>
+    <div class="note">
+      Khi ta lập lời thề chân lý ấy, ngọn lửa đang cháy rực to lớn đã tránh khỏi mười sáu karīsa quanh ta, như ngọn lửa chạm vào nước [thì tắt ngay]. Chân lý của ta không gì sánh bằng — đây chính là sacca-pāramī của ta.
+      <div class="scholar-note"><em>Karīsa</em>: đơn vị đo đất cổ Ấn Độ. Lửa rút 16 karīsa tạo vùng an toàn đường kính 32 karīsa. · <em>Sacca-pāramī</em>: Ba-la-mật thứ bảy trong mười pāramī của Bồ-tát trên hành trình thành Phật.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       V. NGUỒN VĂN BẢN VÀ DỊ BẢN
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Nguồn Văn Bản và Dị Bản</div>
+
+  <p class="prose">
+    Bài paritta này không phải sutta độc lập mà tồn tại trong hai văn bản kinh điển song song, với những dị biệt từ ngữ có ý nghĩa học thuật.
+  </p>
+
+  <h2 class="sec-heading">Hai nguồn kinh điển chính</h2>
+  <table class="info-table">
+    <tr>
+      <td>Jātaka 35 (Ja)</td>
+      <td>Ekakanipāta, Kulāvakavagga — chỉ trích dẫn 1 kệ lời thề + văn xuôi Jātakaṭṭhakathā kể câu chuyện và giải từng từ (<em>padavaṇṇanā</em>). Chú giải quy cho Buddhaghosa, tk. V CN.</td>
+    </tr>
+    <tr>
+      <td>Cariyāpiṭaka Cp 29 (Cp)</td>
+      <td>Yudhañjayavagga, bài thứ 9 — toàn bộ 11 kệ tự sự ngôi thứ nhất, là nguồn đầy đủ nhất. Chú giải (CpA) do Dhammapāla, tk. VI CN.</td>
+    </tr>
+  </table>
+
+  <h2 class="sec-heading">Bảng dị bản quan trọng</h2>
+  <table class="var-table">
+    <tr>
+      <th>Vị trí</th>
+      <th>Cariyāpiṭaka (Cp)</th>
+      <th>Jātakaṭṭhakathā (Ja)</th>
+      <th>Bản tụng</th>
+    </tr>
+    <tr>
+      <td>Kệ 319 c.2</td>
+      <td><code>uttamaṃ</code> (tối thắng)</td>
+      <td><code>anuttaraṁ</code> (vô thượng)</td>
+      <td><code>anuttaraṁ</code> ← theo Ja</td>
+    </tr>
+    <tr>
+      <td>Kệ 320 c.1</td>
+      <td><code>Āvajjetvā</code></td>
+      <td><code>Āvajjetvā</code></td>
+      <td><code>Āvajjitvā</code> (dị bản tụng)</td>
+    </tr>
+    <tr>
+      <td>Kệ 320 c.2</td>
+      <td><code>pubbako jine</code> (số ít)</td>
+      <td><code>pubbake jine</code> (số nhiều)</td>
+      <td><code>pubbake jine</code> ← theo Ja</td>
+    </tr>
+  </table>
+  <p class="prose">
+    Bản tụng thông dụng nhất quán đi theo Jātakaṭṭhakathā, không theo Cariyāpiṭaka — đây là lựa chọn có chủ đích của truyền thống tụng kinh. Điểm đáng chú ý nhất: <em>uttamaṃ</em> (tốt nhất, cao nhất) và <em>anuttaraṁ</em> (không gì sánh bằng, vô thượng) — <em>anuttara</em> mạnh hơn một bậc về mặt nghĩa học.
+  </p>
+
+  <!-- ══════════════════════════════════════════
+       VI. CÁC SACCA-KIRIYĀ KHÁC TRONG KINH ĐIỂN
+  ══════════════════════════════════════════ -->
+  <div class="sec-label">Các Câu Chuyện Sacca-kiriyā Khác</div>
+
+  <p class="prose">
+    Vaṭṭaka Paritta không phải trường hợp duy nhất. Sacca-kiriyā xuất hiện nhiều lần trong Tipiṭaka và Aṭṭhakathā, thực hiện bởi những người khác nhau — từ Bồ-tát đến A-la-hán đến người thường.
+  </p>
+
+  <h2 class="sec-heading">Ngài Aṅgulimāla — MN 86 + Aṅgulimāla Paritta</h2>
+  <p class="prose">
+    <strong>Đặc điểm:</strong> Người thực hiện là <em>đệ tử của Đức Phật</em> (không phải Bồ-tát), nền tảng là giữ giới <em>sau khi thọ giới</em>.
+  </p>
+  <div class="pali-quote">
+    Yato'haṁ bhagini, ariyāya jātiyā jāto,<br>
+    nā'bhijānāmi sañcicca pāṇaṃ jīvitā voropetā,<br>
+    tena saccena sotthi te hotu, sotthi gabbhassā'ti.
+    <cite>Majjhima Nikāya 86 (Aṅgulimāla Sutta)</cite>
+  </div>
+  <p class="prose">
+    <em>"Thưa chị, kể từ ngày tôi được sinh ra trong Dòng Dõi Thánh, tôi không hề biết rằng mình đã cố ý tước đoạt mạng sống của bất cứ chúng sinh nào. Bằng chân lý đó, nguyện chị được bình an! Nguyện đứa bé trong thai của chị được bình an!"</em>
+  </p>
+  <div class="callout">
+    <strong>Chi tiết đặc biệt:</strong> Đức Phật ban đầu dạy bài kệ theo nghĩa rộng hơn; Ngài Aṅgulimāla chỉ ra rằng nếu tụng nguyên văn sẽ là nói dối — vì trước khi xuất gia Ngài đã sát sinh. Đức Phật bèn điều chỉnh: dùng <em>"kể từ khi tôi được sinh ra trong Dòng Dõi Thánh"</em> — tức từ ngày thọ giới. <strong>Sacca-kiriyā chỉ hoạt động khi tuyệt đối chân thật — không được nói quá hay sai một ly.</strong> Bài paritta này được tụng đến ngày nay cho phụ nữ mang thai gần đến ngày sinh.
+  </div>
+
+  <h2 class="sec-heading">Giai thoại Ceylon — Người con và con thỏ</h2>
+  <p class="prose">
+    <strong>Nguồn:</strong> R. Spence Hardy, <em>Eastern Monachism</em> (1860), từ tư liệu Sinhalese.
+  </p>
+  <p class="prose">
+    Một tín đồ ở Ceylon mà mẹ bị bệnh. Thầy thuốc kê thịt thỏ nấu chín. Người con đi bẫy được một con thỏ — nhưng khi con vật kêu thét, anh nghĩ: <em>"Tại sao một mạng sống phải được cứu bằng cái chết của một mạng sống khác?"</em> Anh thả thỏ. Sau đó anh thực hiện sacca-kiriyā dựa trên hành động từ bi bất sát đó — nguyện rằng bằng chân lý của lòng từ bi không giết hại ấy, mẹ được khỏi bệnh. Và mẹ khỏi.
+  </p>
+  <p class="prose">
+    Đây <strong>không phải Jātaka</strong> mà là giai thoại dân gian Phật giáo Sri Lanka — minh họa sacca-kiriyā trong đời thường, không phải chỉ dành cho Bồ-tát hay A-la-hán.
+  </p>
+
+  <h2 class="sec-heading">Jātaka Sāma (No. 540) — Bà Pārikā cứu con</h2>
+  <p class="prose">
+    <strong>Đặc điểm:</strong> Sacca-kiriyā được thực hiện bởi <em>người mẹ trần thế</em>, không phải Bồ-tát — đây là minh chứng rõ nhất rằng oai lực này không giới hạn ở những bậc siêu phàm.
+  </p>
+  <p class="prose">
+    Sāma (Bồ-tát) sống trong rừng phụng dưỡng cha mẹ mù. Vua Piliyakkha đi săn, nhìn lầm Sāma là thú và bắn trúng bằng mũi tên tẩm độc. Sau khi được dẫn đến chỗ con nằm, bà Pārikā (mẹ Sāma) thực hiện sacca-kiriyā: <em>"Bằng chân lý rằng ta chưa bao giờ giết hại, chưa nói dối, đã sống thanh tịnh suốt đời..."</em> — chất độc rời khỏi thân Sāma, con lành bệnh. Đồng thời thiên nữ Bahusodarī cũng thực hiện tương tự tại Gandhamādana — cha mẹ Sāma phục hồi thị lực.
+  </p>
+
+  <h2 class="sec-heading">Jātaka Sivi (No. 499) — Vua Sivi và đôi mắt</h2>
+  <p class="prose">
+    <strong>Đặc điểm:</strong> Sacca-kiriyā được thực hiện bởi Bồ-tát, nền tảng là <em>bố thí</em> — cho thấy nhiều loại đức hạnh khác nhau đều có thể làm nền cho lời thề chân lý.
+  </p>
+  <p class="prose">
+    Vua Sivi hiến tặng đôi mắt cho Sakka (Đế Thích) giả làm bà-la-môn mù. Sau đó mắt không thể phục hồi bằng cách bình thường — ngay cả Sakka cũng không có khả năng đó. Sakka đề nghị sacca-kiriyā. Vua Sivi tuyên bố: <em>"Bằng chân lý rằng không có kẻ ăn xin nào rời đi tay không khỏi ta..."</em> — đôi mắt xuất hiện trở lại, không phải mắt người hay mắt trời, mà được gọi là <strong>"Mắt Chân Lý" (<em>saccacakkhu</em>)</strong> — hoàn hảo và tuyệt đối.
+  </p>
+  <p class="prose">
+    Câu chuyện này được Nāgasena trích dẫn trong <em>Milindapañhā</em> khi vua Milinda hỏi về cơ chế của sacca-kiriyā: <em>"Vua Sivi không được thần linh giúp đỡ, cũng không có nguyên nhân vật lý nào — ông được chữa lành bằng chân lý mà thôi"</em> (<em>saccena va</em>).
+  </p>
+
+  <h2 class="sec-heading">Bảng tổng hợp</h2>
+  <table class="sacca-table">
+    <tr>
+      <th>Câu chuyện</th>
+      <th>Người thực hiện</th>
+      <th>Nền tảng chân lý</th>
+      <th>Kết quả</th>
+      <th>Nguồn</th>
+    </tr>
+    <tr>
+      <td>Vaṭṭakajātaka</td>
+      <td>Bồ-tát (chim cút non)</td>
+      <td>Sīla + tưởng niệm chư Phật</td>
+      <td>Lửa rừng rút lui — kỳ tích kéo dài 1 đại kiếp</td>
+      <td class="src">Ja 35 / Cp 29</td>
+    </tr>
+    <tr>
+      <td>Aṅgulimāla Paritta</td>
+      <td>Tôn giả Aṅgulimāla</td>
+      <td>Không sát sinh kể từ khi thọ giới Thánh</td>
+      <td>Sản phụ sinh dễ dàng tức thì</td>
+      <td class="src">MN 86</td>
+    </tr>
+    <tr>
+      <td>Giai thoại Ceylon</td>
+      <td>Tín đồ thường</td>
+      <td>Từ bi bất sát — bắt được thỏ nhưng thả</td>
+      <td>Mẹ khỏi bệnh</td>
+      <td class="src">Hardy 1860</td>
+    </tr>
+    <tr>
+      <td>Sāmajātaka</td>
+      <td>Bà Pārikā (mẹ Sāma)</td>
+      <td>Giới hạnh thanh tịnh suốt đời</td>
+      <td>Con sống lại, mắt cha mẹ phục hồi</td>
+      <td class="src">Ja 540</td>
+    </tr>
+    <tr>
+      <td>Sivijātaka</td>
+      <td>Vua Sivi (Bồ-tát)</td>
+      <td>Bố thí không tiếc — không kẻ xin về tay không</td>
+      <td>Phục hồi "Mắt Chân Lý" (<em>saccacakkhu</em>)</td>
+      <td class="src">Ja 499</td>
+    </tr>
+    <tr>
+      <td>Ratanasuttaṁ</td>
+      <td>Ānanda / Tăng đoàn</td>
+      <td>Phẩm đức Tam Bảo</td>
+      <td>Dịch bệnh tan, phi nhân lui khỏi Vesālī</td>
+      <td class="src">Snp 2.1</td>
+    </tr>
+  </table>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Vaṭṭaka Paritta · Jātaka 35 · Cariyāpiṭaka Cp 29 · Khuddaka Nikāya<br>
+    Chú giải: Jātakaṭṭhakathā (Buddhaghosa) · Cariyāpiṭakaṭṭhakathā (Dhammapāla)<br>
+    Bản dịch tham chiếu: Ānandajoti Bhikkhu · Bhikkhu Indacanda
+  </div>
+
+</div><!-- .page -->
+
+<!-- ── Reader controls ── -->
+<div class="reader-controls" aria-label="Reader controls">
+  <button type="button" id="font-decrease" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" id="font-reset"    aria-label="Reset cỡ chữ">A</button>
+  <button type="button" id="font-increase" aria-label="Tăng cỡ chữ">A+</button>
+</div>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+    const fontKey = 'vattaka-reader-font-size';
+    const defaultSize = 18;
+    const clamp = v => Math.min(30, Math.max(13, v));
+
+    const applyFont = v => {
+      const s = clamp(v);
+      root.style.setProperty('--reader-font-size', `${s}px`);
+      localStorage.setItem(fontKey, String(s));
+    };
+
+    const saved = Number(localStorage.getItem(fontKey));
+    if (Number.isFinite(saved) && saved > 0) {
+      applyFont(saved);
+    }
+
+    document.getElementById('font-decrease').addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(cur - 1);
+    });
+    document.getElementById('font-reset').addEventListener('click', () => {
+      localStorage.removeItem(fontKey);
+      root.style.setProperty('--reader-font-size', `${defaultSize}px`);
+    });
+    document.getElementById('font-increase').addEventListener('click', () => {
+      const cur = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(cur + 1);
+    });
+  })();
+</script>
+</body>
+</html>
