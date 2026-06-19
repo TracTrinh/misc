@@ -25,6 +25,7 @@
   --note-c:    #5a4a30;
   --font-main: 'Noto Serif','Times New Roman',serif;
   --font-ttl:  'Cinzel','Times New Roman',serif;
+  --reader-font-size: 16px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
@@ -49,6 +50,17 @@ body{
 /* ── Legend ── */
 .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.3rem;background:var(--bg-inner);border:1px solid var(--sep);border-radius:4px;padding:.85rem 1.2rem;margin-bottom:2.2rem;font-size:.8rem;color:#7a4f28;line-height:1.6}
 .legend-item{display:flex;align-items:center;gap:.35rem}
+
+/* Toggle hien/an phan dich Viet */
+.view-options{display:flex;justify-content:center;margin:-.7rem 0 2rem}
+.translation-toggle{display:inline-flex;align-items:center;gap:.55rem;background:var(--bg-inner);border:1px solid var(--sep);border-radius:999px;padding:.48rem .85rem .48rem .55rem;color:#6b4c22;font-size:.82rem;line-height:1;box-shadow:1px 1px 5px var(--shadow);cursor:pointer;user-select:none}
+.translation-toggle input{position:absolute;inline-size:1px;block-size:1px;opacity:0;pointer-events:none}
+.translation-switch{position:relative;display:inline-block;width:2.35rem;height:1.25rem;border-radius:999px;background:#d7c098;transition:background .2s ease}
+.translation-switch::after{content:'';position:absolute;top:.17rem;left:.18rem;width:.91rem;height:.91rem;border-radius:50%;background:#fffdf7;box-shadow:0 1px 3px rgba(80,45,10,.25);transition:transform .2s ease}
+.translation-toggle input:checked + .translation-switch{background:var(--gold-l)}
+.translation-toggle input:checked + .translation-switch::after{transform:translateX(1.06rem)}
+.translation-toggle input:focus-visible + .translation-switch{outline:2px solid var(--gold);outline-offset:3px}
+.translation-text{white-space:nowrap}
 
 /* ── Section label ── */
 .section-label{font-family:var(--font-ttl);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);text-align:center;margin:2.8rem 0 1.2rem;display:flex;align-items:center;gap:.8rem}
@@ -82,12 +94,12 @@ body{
   align-items:flex-start;
 }
 .pali-w{
-  font-size:1.18rem;
+  font-size:calc(var(--reader-font-size) * 1.18);
   line-height:1.5;
   font-weight:600;
 }
 .gloss{
-  font-size:.75rem;
+  font-size:calc(var(--reader-font-size) * .75);
   font-style:italic;
   color:var(--gloss-c);
   line-height:1.4;
@@ -121,7 +133,7 @@ body{
 
 /* ── Dịch nghĩa cả câu ── */
 .note{
-  font-size:.85rem;
+  font-size:calc(var(--reader-font-size) * .85);
   color:var(--note-c);
   border-top:1px dashed var(--sep);
   margin-top:.85rem;
@@ -133,8 +145,59 @@ body{
 /* ── Dòng saccena ── */
 .sacca .pali-w{color:var(--crimson)}
 
+/* Che do hoc thuoc Pali: an tieng Viet va phong lon cum tu */
+html.translation-off .title-viet,
+html.translation-off .section-label,
+html.translation-off .gloss,
+html.translation-off .note,
+html.translation-off .footer{display:none}
+html.translation-off .header{margin-bottom:1.35rem}
+html.translation-off .view-options{margin-bottom:2.15rem}
+html.translation-off .stanza{padding:1.2rem 1.6rem;margin-bottom:1.15rem}
+html.translation-off .stanza-num{margin-bottom:.75rem}
+html.translation-off .iline{gap:.16rem 1.35rem;margin-bottom:.55rem;align-items:baseline}
+html.translation-off .token{display:inline-block}
+html.translation-off .pali-w{font-size:calc(var(--reader-font-size) * 1.42);line-height:1.55}
+html.translation-off .breath{font-size:1.18em}
+
 /* ── Footer ── */
 .footer{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--sep);font-size:.78rem;color:#7a4f28;line-height:1.8;letter-spacing:.05em}
+
+/* ── Reader controls ── */
+.reader-controls{
+  position:fixed;
+  left:18px;
+  bottom:22px;
+  z-index:999;
+  display:flex;
+  align-items:center;
+  gap:0;
+  padding:0;
+  background:rgba(254,249,240,.96);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--sep);
+  border-radius:50px;
+  box-shadow:0 3px 14px rgba(80,52,18,.18);
+  overflow:hidden;
+}
+.reader-controls button{
+  min-width:0;
+  height:auto;
+  border:none;
+  border-radius:0;
+  background:none;
+  color:var(--gold);
+  font-family:var(--font-main);
+  font-size:1rem;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+  padding:9px 13px;
+  transition:background .15s,color .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.reader-controls button:hover{background:rgba(212,168,67,.14)}
+.reader-controls button:active{background:rgba(201,169,110,.35)}
 
 @media print{
   @page{size:A4;margin:1.8cm 1.5cm 1.8cm 1.5cm}
@@ -144,33 +207,38 @@ body{
     -webkit-print-color-adjust:exact;
     print-color-adjust:exact;
   }
-  .legend{display:none}
+  .legend,.view-options,.reader-controls{display:none}
   .header{margin-bottom:1rem;padding:1rem 0 .8rem}
   .header::before{display:none}
   .section-label{
     margin:.8rem auto .4rem;
     font-size:.6rem;
     break-after:avoid;
+    page-break-after:avoid;
   }
   .section-label + .stanza,
   .section-label + .stanza-pair{
     break-before:avoid;
+    page-break-before:avoid;
   }
   .stanza{
     break-inside:avoid;
+    page-break-inside:avoid;
     box-shadow:none;
     border:1px solid #ccc;
     border-radius:8px;
     padding:.7rem 1rem;
     margin-bottom:.6rem;
+    orphans:3;
+    widows:3;
   }
-  .stanza-pair{break-inside:avoid;margin-bottom:.6rem}
+  .stanza-pair{break-inside:avoid;page-break-inside:avoid;margin-bottom:.6rem}
   .stanza-pair .stanza{margin-bottom:0}
   .stanza.refrain{padding:.5rem 1rem;margin-bottom:.5rem}
   .stanza-num{font-size:.58rem}
-  .pali-w{font-size:.95rem;line-height:1.4}
-  .gloss{font-size:.65rem}
-  .note{font-size:.65rem;line-height:1.6}
+  .pali-w{font-size:calc(var(--reader-font-size) * .95);line-height:1.4}
+  .gloss{font-size:calc(var(--reader-font-size) * .65)}
+  .note{font-size:calc(var(--reader-font-size) * .65);line-height:1.6}
   .iline{gap:.1rem .8rem;margin-bottom:.35rem}
   .token.a .pali-w{color:#8b4f00 !important}
   .token.b .pali-w{color:#0f6648 !important}
@@ -180,14 +248,40 @@ body{
   .note{color:#5a4a30 !important;border-top-color:#ccc !important}
   .idiv{border-top-color:#ccc !important}
   .footer{font-size:.65rem}
+  html.translation-off .header{margin-bottom:.7rem}
+  html.translation-off .title-pali{font-size:1.75rem}
+  html.translation-off .section-label{margin:.65rem auto .3rem}
+  html.translation-off .stanza{padding:.75rem 1rem;margin-bottom:.5rem}
+  html.translation-off .stanza.refrain{padding:.65rem 1rem;margin-bottom:.5rem}
+  html.translation-off .stanza-num{margin-bottom:.45rem}
+  html.translation-off .pali-w{font-size:calc(var(--reader-font-size) * 1.18);line-height:1.45}
+  html.translation-off .iline{gap:.08rem .95rem;margin-bottom:.25rem}
+  html.translation-off .footer{display:none}
 }
 @media(max-width:600px){
   .title-pali{font-size:1.6rem}
   .stanza{padding:1rem 1rem 1rem 1.2rem}
-  .pali-w{font-size:1rem}
+  .pali-w{font-size:var(--reader-font-size)}
   .iline{gap:.1rem .8rem}
+  .view-options{margin:-.5rem 0 1.5rem}
+  html.translation-off .pali-w{font-size:calc(var(--reader-font-size) * 1.18)}
+  html.translation-off .stanza{padding:1rem}
+  .reader-controls{left:10px;bottom:10px}
+  .reader-controls button{padding:8px 11px;font-size:.92rem}
 }
 </style>
+<script>
+try{
+  if(localStorage.getItem('rs2-show-vietnamese') === 'false'){
+    document.documentElement.classList.add('translation-off');
+  }
+  var savedFontSize = Number(localStorage.getItem('rs2-reader-font-size'));
+  if(Number.isFinite(savedFontSize) && savedFontSize > 0){
+    savedFontSize = Math.min(30, Math.max(13, savedFontSize));
+    document.documentElement.style.setProperty('--reader-font-size', savedFontSize + 'px');
+  }
+}catch(error){}
+</script>
 </head>
 <body>
 <div class="page">
@@ -198,12 +292,20 @@ body{
   <div class="title-viet">Kinh Châu Báu</div>
 </div>
 
+<div class="view-options" aria-label="Tùy chọn hiển thị">
+  <label class="translation-toggle" for="toggle-vietnamese">
+    <input id="toggle-vietnamese" type="checkbox" checked>
+    <span class="translation-switch" aria-hidden="true"></span>
+    <span class="translation-text">Dịch Việt</span>
+  </label>
+</div>
+
 <!-- LEGEND (ẩn) -->
 
 <!-- ═══════════════════════════════
      KỆ 01 — NIDĀNA
 ════════════════════════════════ -->
-<div class="section-label">Lời đầu — Nidāna</div>
+<div class="section-label">Dẫn nhập — Nidāna</div>
 <div class="stanza">
   <span class="stanza-num">01</span>
 
@@ -252,14 +354,14 @@ body{
   <div class="iline">
     <span class="token b"><span class="pali-w">Bodhi·pa<span class="r">ll</span>aṅke</span><span class="gloss">tại tòa Bồ-đề</span></span>
     <span class="token a"><span class="pali-w">Māra·vijayaṁ</span><span class="gloss">sự chiến thắng Ma-vương</span></span>
-    <span class="token b"><span class="pali-w">sa<span class="r">bb</span>a<span class="r">ññ</span>uta·<span class="r">ññ</span>āṇa·<span class="r">pp</span>aṭi·vedhaṁ</span><span class="gloss">sự thông đạt trí nhất thiết trí</span></span>
+    <span class="token b"><span class="pali-w">sa<span class="r">bb</span>a<span class="r">ññu</span>·tañ<span class="r">ñā</span>ṇap·<span class="r">p</span>aṭi·vedhaṁ</span><span class="gloss">sự thông đạt trí nhất thiết trí</span></span>
     <span class="breath">◎</span>
   </div>
 
   <div class="iline">
-    <span class="token a"><span class="pali-w">Dhamma·ca<span class="r">kk</span>a·<span class="r">pp</span>ava<span class="r">tt</span>anaṁ</span><span class="gloss">sự chuyển Pháp luân</span></span>
+    <span class="token a"><span class="pali-w">Dhamma·ca<span class="r">kk</span>ap·<span class="r">p</span>ava<span class="r">tt</span>anaṁ</span><span class="gloss">sự chuyển Pháp luân</span></span>
     <span class="token b"><span class="pali-w">nava</span><span class="gloss">chín</span></span>
-    <span class="token a"><span class="pali-w">loku<span class="r">tt</span>ara·dhamma·<span class="ai">eti</span></span><span class="gloss">pháp siêu thế</span></span>
+    <span class="token a"><span class="pali-w">loku<span class="r">tt</span>ara·dhamm<span class="ai">eti</span></span><span class="gloss">pháp siêu thế</span></span>
     <span class="breath">◎</span>
   </div>
 
@@ -269,7 +371,7 @@ body{
     <span class="token b"><span class="pali-w">āva<span class="r">jj</span>e<span class="bi">tvā</span></span><span class="gloss">sau khi hướng tâm đến</span></span>
     <span class="token a"><span class="pali-w">Vesāli<span class="ai">yā</span></span><span class="gloss">ở Vesāli</span></span>
     <span class="token b"><span class="pali-w">tīsu</span><span class="gloss">trong ba</span></span>
-    <span class="token a"><span class="pali-w">pākāra·ntare<span class="ai">su</span></span><span class="gloss">khoảng giữa các vòng thành</span></span>
+    <span class="token a"><span class="pali-w">pākāran·tare<span class="ai">su</span></span><span class="gloss">khoảng giữa các vòng thành</span></span>
     <span class="breath">◎</span>
   </div>
 
@@ -499,7 +601,7 @@ body{
   <div class="iline">
     <span class="token a"><span class="pali-w">Yaṁ</span><span class="gloss">điều mà</span></span>
     <span class="token b"><span class="pali-w">Buddha·se<span class="r">ṭṭh</span>o</span><span class="gloss">Phật tối thắng</span></span>
-    <span class="token a"><span class="pali-w">pariva<span class="r">ṇṇ</span>ayī</span><span class="gloss">đã tán thán</span></span>
+    <span class="token a"><span class="pali-w">pari·va<span class="r">ṇṇ</span>ayī</span><span class="gloss">đã tán thán</span></span>
     <span class="token b"><span class="pali-w">suciṁ,</span><span class="gloss">thanh tịnh</span></span>
   </div>
   <div class="iline">
@@ -742,7 +844,7 @@ body{
     <span class="stanza-num">13</span>
 
     <div class="iline">
-      <span class="token a"><span class="pali-w">Ca<span class="r">tūh</span>apāyehi</span><span class="gloss">khỏi bốn cõi khổ</span></span>
+      <span class="token a"><span class="pali-w">Ca<span class="r">tūh</span>a·pāyehi</span><span class="gloss">khỏi bốn cõi khổ</span></span>
       <span class="token b"><span class="pali-w">ca</span><span class="gloss">và</span></span>
       <span class="token a"><span class="pali-w">vi<span class="r">pp</span>amutto,</span><span class="gloss">được giải thoát hoàn toàn</span></span>
     </div>
@@ -1054,5 +1156,91 @@ body{
 </div>
 
 </div>
+
+<!-- Reader controls -->
+<div class="reader-controls" aria-label="Reader controls">
+  <button type="button" id="font-decrease" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" id="font-reset" aria-label="Reset cỡ chữ">A</button>
+  <button type="button" id="font-increase" aria-label="Tăng cỡ chữ">A+</button>
+</div>
+
+<script>
+(function(){
+  var translationKey = 'rs2-show-vietnamese';
+  var fontKey = 'rs2-reader-font-size';
+  var root = document.documentElement;
+  var toggle = document.getElementById('toggle-vietnamese');
+  var defaultSize = 16;
+  var clamp = function(value){
+    return Math.min(30, Math.max(13, value));
+  };
+
+  function applyFont(value, shouldSave){
+    var size = clamp(value);
+    root.style.setProperty('--reader-font-size', size + 'px');
+    if(shouldSave){
+      try{
+        localStorage.setItem(fontKey, String(size));
+      }catch(error){}
+    }
+  }
+
+  function setTranslationVisible(showVietnamese){
+    root.classList.toggle('translation-off', !showVietnamese);
+    if(toggle){
+      toggle.checked = showVietnamese;
+    }
+  }
+
+  var savedValue = null;
+  try{
+    savedValue = localStorage.getItem(translationKey);
+  }catch(error){}
+
+  setTranslationVisible(savedValue === null ? true : savedValue !== 'false');
+
+  var savedFont = Number.NaN;
+  try{
+    savedFont = Number(localStorage.getItem(fontKey));
+  }catch(error){}
+  if(Number.isFinite(savedFont) && savedFont > 0){
+    applyFont(savedFont, false);
+  }
+
+  if(toggle){
+    toggle.addEventListener('change', function(){
+      setTranslationVisible(toggle.checked);
+      try{
+        localStorage.setItem(translationKey, String(toggle.checked));
+      }catch(error){}
+    });
+  }
+
+  var decrease = document.getElementById('font-decrease');
+  var reset = document.getElementById('font-reset');
+  var increase = document.getElementById('font-increase');
+
+  if(decrease){
+    decrease.addEventListener('click', function(){
+      var current = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(current - 1, true);
+    });
+  }
+  if(reset){
+    reset.addEventListener('click', function(){
+      try{
+        localStorage.removeItem(fontKey);
+      }catch(error){}
+      applyFont(defaultSize, false);
+    });
+  }
+  if(increase){
+    increase.addEventListener('click', function(){
+      var current = parseFloat(getComputedStyle(root).getPropertyValue('--reader-font-size')) || defaultSize;
+      applyFont(current + 1, true);
+    });
+  }
+})();
+</script>
 </body>
 </html>
