@@ -93,18 +93,23 @@ body{
   display:inline-flex;
   flex-direction:column;
   align-items:flex-start;
+  flex:0 1 auto;
   max-width:100%;
   min-width:0;
 }
 .pali-w{
+  display:block;
   font-size:calc(var(--reader-font-size) * 1.18);
   line-height:1.5;
   font-weight:600;
   max-width:100%;
+  min-width:0;
   overflow-wrap:anywhere;
+  word-wrap:break-word;
   word-break:normal;
 }
 .gloss{
+  display:block;
   font-size:calc(var(--reader-font-size) * .75);
   font-style:italic;
   color:var(--gloss-c);
@@ -112,7 +117,9 @@ body{
   margin-top:.1rem;
   font-weight:400;
   max-width:100%;
+  min-width:0;
   overflow-wrap:anywhere;
+  word-wrap:break-word;
   word-break:normal;
 }
 
@@ -276,13 +283,17 @@ html.translation-off .breath{font-size:1.18em}
   .iline{gap:.1rem .8rem}
   .view-options{margin:-.5rem 0 1.5rem}
   html.translation-off .iline{
-    display:block;
-    line-height:1.55;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-start;
+    gap:.15rem .8rem;
+    line-height:normal;
   }
   html.translation-off .token{
-    display:inline;
-    margin-right:.65em;
-    max-width:none;
+    display:inline-flex;
+    flex:0 1 auto;
+    max-width:100%;
+    min-width:0;
   }
   html.translation-off .pali-w{font-size:calc(var(--reader-font-size) * 1.18)}
   html.translation-off .stanza{padding:1rem}
@@ -337,7 +348,7 @@ try{
 <!-- ═══════════════════════════════
      KỆ 01 — NIDĀNA
 ════════════════════════════════ -->
-<div class="section-label">Dẫn nhập v3 — Nidāna</div>
+<div class="section-label">Dẫn nhập v4 — Nidāna</div>
 <div class="stanza">
   <span class="stanza-num">01</span>
 
