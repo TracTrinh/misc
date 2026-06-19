@@ -269,12 +269,35 @@ html.translation-off .breath{font-size:1.18em}
 }
 @media(max-width:600px){
   .title-pali{font-size:1.6rem}
-  .stanza{padding:1rem 1rem 1rem 1.2rem}
+  body{overflow-x:hidden}
+  .page,.stanza,.stanza-pair,.iline{max-width:100%;min-width:0}
+  .stanza{padding:1rem 1rem 1rem 1.2rem;overflow:hidden}
   .pali-w{font-size:var(--reader-font-size)}
   .iline{gap:.1rem .8rem}
   .view-options{margin:-.5rem 0 1.5rem}
+  html.translation-off .iline{
+    display:block;
+    line-height:1.55;
+  }
+  html.translation-off .token{
+    display:inline;
+    margin-right:.65em;
+    max-width:none;
+  }
   html.translation-off .pali-w{font-size:calc(var(--reader-font-size) * 1.18)}
   html.translation-off .stanza{padding:1rem}
+  html.translation-off .pali-w,
+  html.translation-off .r,
+  html.translation-off .ai,
+  html.translation-off .bi{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  html.translation-off .breath{
+    display:inline-block;
+    margin-left:.15em;
+    margin-right:.65em;
+  }
   .reader-controls{left:10px;bottom:10px}
   .reader-controls button{padding:8px 11px;font-size:.92rem}
 }
@@ -314,7 +337,7 @@ try{
 <!-- ═══════════════════════════════
      KỆ 01 — NIDĀNA
 ════════════════════════════════ -->
-<div class="section-label">Dẫn nhập v2 — Nidāna</div>
+<div class="section-label">Dẫn nhập v3 — Nidāna</div>
 <div class="stanza">
   <span class="stanza-num">01</span>
 
