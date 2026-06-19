@@ -6,7 +6,7 @@
 <title>Ratanasuttaṁ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:        #fdf6e8;
@@ -24,7 +24,7 @@
   --gloss-c:   #6b5a3e;
   --note-c:    #5a4a30;
   --font-main: 'Noto Serif','Times New Roman',serif;
-  --font-ttl:  'Cinzel','Times New Roman',serif;
+  --font-ttl:  'Noto Serif','Times New Roman',serif;
   --reader-font-size: 16px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -315,7 +315,7 @@ html.translation-off .breath{font-size:1.18em}
 </style>
 <script>
 try{
-  if(localStorage.getItem('rs2-show-vietnamese') === 'false'){
+  if(localStorage.getItem('rs2-show-vietnamese') !== 'true'){
     document.documentElement.classList.add('translation-off');
   }
   var savedFontSize = Number(localStorage.getItem('rs2-reader-font-size'));
@@ -337,7 +337,7 @@ try{
 
 <div class="view-options" aria-label="Tùy chọn hiển thị">
   <label class="translation-toggle" for="toggle-vietnamese">
-    <input id="toggle-vietnamese" type="checkbox" checked>
+    <input id="toggle-vietnamese" type="checkbox">
     <span class="translation-switch" aria-hidden="true"></span>
     <span class="translation-text">Dịch Việt</span>
   </label>
@@ -1240,7 +1240,7 @@ try{
     savedValue = localStorage.getItem(translationKey);
   }catch(error){}
 
-  setTranslationVisible(savedValue === null ? true : savedValue !== 'false');
+  setTranslationVisible(savedValue === null ? false : savedValue === 'true');
 
   var savedFont = Number.NaN;
   try{
