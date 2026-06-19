@@ -84,6 +84,7 @@ body{
   align-items:flex-start;
   gap:.15rem 1.2rem;
   margin-bottom:.5rem;
+  min-width:0;
 }
 .iline:last-of-type{margin-bottom:0}
 
@@ -92,11 +93,16 @@ body{
   display:inline-flex;
   flex-direction:column;
   align-items:flex-start;
+  max-width:100%;
+  min-width:0;
 }
 .pali-w{
   font-size:calc(var(--reader-font-size) * 1.18);
   line-height:1.5;
   font-weight:600;
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:normal;
 }
 .gloss{
   font-size:calc(var(--reader-font-size) * .75);
@@ -105,6 +111,9 @@ body{
   line-height:1.4;
   margin-top:.1rem;
   font-weight:400;
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:normal;
 }
 
 /* ── Token colours ── */
@@ -305,7 +314,7 @@ try{
 <!-- ═══════════════════════════════
      KỆ 01 — NIDĀNA
 ════════════════════════════════ -->
-<div class="section-label">Dẫn nhập — Nidāna</div>
+<div class="section-label">Lời đầu — Nidāna</div>
 <div class="stanza">
   <span class="stanza-num">01</span>
 
