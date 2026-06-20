@@ -99,7 +99,8 @@ em{color:var(--amber)}
 
 /* Stories */
 .stories{padding:96px 0;background:var(--ink);color:var(--paper)}
-.stories h2{color:var(--paper)}
+.stories-page{padding-top:160px}
+.stories h1,.stories h2{color:var(--paper)}
 .stories .section-head>p{color:rgba(255,255,255,.58)}
 .feature-story{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);min-height:600px;margin-bottom:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
 .feature-story.reverse{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
@@ -137,6 +138,25 @@ em{color:var(--amber)}
 .work-caption{padding:22px 24px}
 .work-caption h3{margin-bottom:7px;font-size:1.45rem}
 .work-caption p{margin:0;color:var(--muted);font-size:.85rem}
+.works-more{display:flex;justify-content:center;margin-top:34px}
+
+/* Books gallery page */
+.books-hero{padding:172px 0 96px;background:var(--ink);color:var(--paper)}
+.books-hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(48px,8vw,110px);align-items:end}
+.books-hero h1{max-width:760px;color:var(--paper)}
+.books-hero .lede{margin:0;color:rgba(255,255,255,.68)}
+.books-gallery-section{padding:96px 0;background:var(--paper)}
+.books-gallery-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(42px,7vw,90px);margin-bottom:52px;align-items:start}
+.books-gallery-intro h2{max-width:520px}
+.books-gallery-intro p{max-width:650px;margin-left:auto;color:var(--muted)}
+.book-gallery{columns:2;column-gap:20px}
+.book-card{break-inside:avoid;margin:0 0 20px;background:var(--cream);box-shadow:0 14px 40px rgba(61,35,15,.07)}
+.book-card img{width:100%;height:auto}
+.book-card figcaption{padding:23px 25px 26px}
+.book-card h3{margin-bottom:8px;font-size:1.45rem}
+.book-card p{margin:0;color:var(--muted);font-size:.85rem}
+.books-note{max-width:760px;margin:44px auto 0;color:var(--muted);font-family:var(--serif);font-size:1.08rem;text-align:center}
+.books-next{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px}
 
 /* Commission */
 .commission{padding:96px 0;background:var(--paper)}
@@ -222,7 +242,7 @@ footer{padding:30px 24px;background:#0d0704;text-align:center;color:rgba(255,255
   .nav-links{display:none;position:fixed;top:76px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;padding:14px 18px 24px;background:var(--ink);border-top:1px solid rgba(255,255,255,.08)}
   .nav-links.open{display:flex}.nav-links li,.nav-links a{width:100%}.nav-links a{display:block;padding:13px 8px}
   .hero{display:block;min-height:0}.hero-copy{padding:88px max(28px,6vw) 58px}.hero-media{min-height:58svh}
-  .maker-grid,.tradition-grid,.commission-grid,.history-full-grid,.prep-intro,.stage-grid,.diagram-grid,.care-grid{grid-template-columns:1fr}
+  .maker-grid,.tradition-grid,.commission-grid,.history-full-grid,.prep-intro,.stage-grid,.diagram-grid,.care-grid,.books-hero .wrap,.books-gallery-intro{grid-template-columns:1fr}
   .portrait{max-width:390px}.tradition-photo{order:2}
   .craft-cards{grid-template-columns:1fr 1fr}
   .feature-story,.feature-story.reverse{grid-template-columns:1fr;min-height:0}.feature-story.reverse .story-media{order:0}.story-media{min-height:520px}
@@ -233,7 +253,7 @@ footer{padding:30px 24px;background:#0d0704;text-align:center;color:rgba(255,255
   :root{--wide:calc(100% - 30px)}
   body{font-size:15px}.site-nav{height:68px}.nav-inner{position:relative;width:calc(100% - 28px);gap:10px}.brand{max-width:calc(100% - 56px);overflow:hidden;font-size:.92rem}.brand span{display:none}.menu-button{position:absolute;right:0;top:0}.nav-links{top:68px;padding-inline:14px}
   .hero{padding-top:68px}.hero-copy{display:block;padding:62px 20px 42px}.hero h1{font-size:clamp(2.45rem,12vw,3.25rem)}.hero-actions{display:grid}.hero-facts{grid-template-columns:1fr;gap:12px}.hero-media{min-height:54svh}.hero-caption{left:16px;right:16px;bottom:15px;font-size:.61rem}
-  .maker,.tradition-brief,.craft-preview,.stories,.works,.commission,.history-full,.preparing,.craft-stage{padding-block:68px}.portrait::before{inset:10px -8px -10px 8px}.maker-points,.craft-cards,.prep-grid,.care-steps,.channels{grid-template-columns:1fr}.section-head{display:block}.section-head>p{margin-top:18px}.craft-card{min-height:270px}
+  .maker,.tradition-brief,.craft-preview,.stories,.works,.commission,.history-full,.preparing,.craft-stage,.books-gallery-section{padding-block:68px}.stories-page{padding-top:116px}.books-hero{padding:126px 0 66px}.book-gallery{columns:1}.portrait::before{inset:10px -8px -10px 8px}.maker-points,.craft-cards,.prep-grid,.care-steps,.channels{grid-template-columns:1fr}.section-head{display:block}.section-head>p{margin-top:18px}.craft-card{min-height:270px}
   .story-media{min-height:430px}.journey-media{padding:12px}.journey-main{min-height:0}.journey-main img{aspect-ratio:2/1}.journey-story .story-content,.story-content{padding:38px 24px 44px}.symbol-list{grid-template-columns:1fr}.work-stack{grid-template-columns:1fr}.order-list li{grid-template-columns:40px 1fr;gap:10px}
   .page-hero{min-height:72svh;padding:125px 0 56px}.page-hero h1{font-size:clamp(2.6rem,13vw,3.6rem)}.inking-gallery{grid-template-columns:1fr;min-height:720px}.inking-gallery div{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 }
