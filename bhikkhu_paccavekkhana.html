@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhikkhupaccavekkhaṇā — Quán Tưởng Tứ Vật Dụng (Tỳ Khưu)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Sans:wght@400;600&display=swap');
+
+    :root {
+      --bg: #faf8f4;
+      --surface: #fff;
+      --border: #e0d8cc;
+      --text: #2a2318;
+      --muted: #7a6e65;
+      --accent: #6b3d1e;
+      --accent2: #8a5030;
+      --accent-bg: #f5ede5;
+      --pali-c: #2d5a2c;
+      --pali-bg: #eef6ee;
+      --pali-border: #7ab87a;
+      --dhatu-c: #3a3a8a;
+      --dhatu-bg: #f0f0fa;
+      --dhatu-border: #9090cc;
+      --asubha-c: #6b3030;
+      --asubha-bg: #faf0f0;
+      --asubha-border: #cc8888;
+      --link: #6b3d1e;
+      --hdr-from: #5a2e0e;
+      --hdr-to: #8a5030;
+      --fn-main: 'Noto Serif', serif;
+      --fn-ui: 'Noto Sans', sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #181410;
+        --surface: #211d18;
+        --border: #3a3228;
+        --text: #ede5d8;
+        --muted: #a89880;
+        --accent: #c8906a;
+        --accent2: #e0a880;
+        --accent-bg: #281e14;
+        --pali-c: #90c090;
+        --pali-bg: #162016;
+        --pali-border: #4a8a4a;
+        --dhatu-c: #9090e0;
+        --dhatu-bg: #14142a;
+        --dhatu-border: #5050aa;
+        --asubha-c: #d08080;
+        --asubha-bg: #1e1010;
+        --asubha-border: #884444;
+        --link: #c8906a;
+        --hdr-from: #2a1408;
+        --hdr-to: #5a3018;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 17px; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fn-main);
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    .hdr {
+      background: linear-gradient(135deg, var(--hdr-from) 0%, var(--hdr-to) 100%);
+      color: #fff;
+      padding: clamp(28px,6vw,52px) clamp(18px,5vw,48px) clamp(24px,5vw,44px);
+      text-align: center;
+    }
+    .hdr-label {
+      font-family: var(--fn-ui);
+      font-size: clamp(.7rem,1.8vw,.82rem);
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      opacity: .75;
+      margin-bottom: .5rem;
+    }
+    .hdr h1 {
+      font-family: var(--fn-main);
+      font-size: clamp(1.5rem,4.5vw,2.3rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .hdr .subtitle {
+      margin-top: .55rem;
+      font-size: clamp(.88rem,2.5vw,1.05rem);
+      opacity: .82;
+      font-style: italic;
+    }
+    .hdr .author {
+      margin-top: .4rem;
+      font-size: clamp(.78rem,2vw,.9rem);
+      opacity: .65;
+      font-family: var(--fn-ui);
+    }
+
+    /* ── Wrapper ── */
+    .wrap {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: clamp(20px,5vw,40px) clamp(16px,4vw,32px) 110px;
+    }
+
+    /* ── Source note ── */
+    .src-note {
+      font-family: var(--fn-ui);
+      font-size: .8rem;
+      color: var(--muted);
+      border-left: 3px solid var(--border);
+      padding: .5rem .9rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .src-note a { color: var(--link); }
+
+    /* ── Legend chips ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 2rem;
+    }
+    .chip {
+      font-family: var(--fn-ui);
+      font-size: .72rem;
+      font-weight: 600;
+      padding: .25rem .7rem;
+      border-radius: 20px;
+      border: 1px solid;
+    }
+    .chip-purpose { background: var(--pali-bg); color: var(--pali-c); border-color: var(--pali-border); }
+    .chip-dhatu   { background: var(--dhatu-bg); color: var(--dhatu-c); border-color: var(--dhatu-border); }
+    .chip-asubha  { background: var(--asubha-bg); color: var(--asubha-c); border-color: var(--asubha-border); }
+
+    /* ── TOC ── */
+    #toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem 1.2rem;
+      margin-bottom: 2.4rem;
+      scroll-margin-top: 70px;
+    }
+    #toc h2 {
+      font-family: var(--fn-ui);
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .7rem;
+    }
+    .toc-list { list-style: none; padding: 0; }
+    .toc-list li { margin: .28rem 0; }
+    .toc-list a { color: var(--link); text-decoration: none; font-size: .95rem; }
+    .toc-list a:hover { text-decoration: underline; }
+    .toc-sub { padding-left: 1.2rem; }
+    .toc-sub a { font-size: .88rem; color: var(--muted); }
+
+    /* ── Period divider ── */
+    .period-hdr {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin: 2.8rem 0 1.6rem;
+      scroll-margin-top: 70px;
+    }
+    .period-hdr::before, .period-hdr::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .period-hdr span {
+      font-family: var(--fn-ui);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Requisite block ── */
+    .req-block {
+      margin-bottom: 2.6rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      scroll-margin-top: 70px;
+    }
+    .req-title {
+      background: var(--accent-bg);
+      padding: .7rem 1.2rem;
+      display: flex;
+      align-items: baseline;
+      gap: .7rem;
+    }
+    .req-num {
+      font-family: var(--fn-ui);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .req-pali {
+      font-family: var(--fn-main);
+      font-size: clamp(.95rem,2.6vw,1.08rem);
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .req-vi {
+      font-family: var(--fn-ui);
+      font-size: .82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .req-body { padding: 1rem 1.2rem 1.2rem; }
+
+    /* ── Contemplation layer labels ── */
+    .layer-label {
+      font-family: var(--fn-ui);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .3rem;
+      margin-top: 1.1rem;
+    }
+    .layer-label.purpose { color: var(--pali-c); }
+    .layer-label.dhatu   { color: var(--dhatu-c); }
+    .layer-label.asubha  { color: var(--asubha-c); }
+
+    /* ── Pāli verse blocks ── */
+    .pali-block {
+      border-left: 4px solid;
+      border-radius: 0 6px 6px 0;
+      padding: .85rem 1rem .85rem 1.1rem;
+      margin: .3rem 0 .6rem;
+      font-family: var(--fn-main);
+      font-size: clamp(.88rem,2.3vw,.98rem);
+      line-height: 1.95;
+    }
+    .pali-block .line { display: block; }
+    .pali-block.purpose {
+      background: var(--pali-bg);
+      border-color: var(--pali-border);
+      color: var(--pali-c);
+    }
+    .pali-block.dhatu {
+      background: var(--dhatu-bg);
+      border-color: var(--dhatu-border);
+      color: var(--dhatu-c);
+    }
+    .pali-block.asubha {
+      background: var(--asubha-bg);
+      border-color: var(--asubha-border);
+      color: var(--asubha-c);
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-block;
+      font-family: var(--fn-ui);
+      font-size: .74rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 1rem;
+      opacity: .65;
+    }
+    .back-link:hover { opacity: 1; color: var(--accent); }
+
+    /* ── Floating TOC button ── */
+    #ftoc {
+      position: fixed; bottom: 22px; right: 18px;
+      background: var(--accent); color: #fff;
+      font-family: var(--fn-ui); font-size: .82rem; font-weight: 600;
+      padding: 9px 16px; border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 3px 14px rgba(0,0,0,.22);
+      z-index: 999; transition: background .15s;
+    }
+    #ftoc:hover { background: var(--accent2); }
+
+    /* ── Font size control ── */
+    #font-ctrl {
+      display: flex; align-items: center;
+      position: fixed; bottom: 22px; left: 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 50px; box-shadow: 0 3px 14px rgba(0,0,0,.18);
+      z-index: 999; overflow: hidden;
+    }
+    #font-ctrl button {
+      background: none; border: none; color: var(--accent);
+      font-family: var(--fn-ui); font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; padding: 9px 14px; line-height: 1;
+      transition: background .15s; -webkit-tap-highlight-color: transparent;
+    }
+    #font-ctrl button:hover { background: var(--accent-bg); }
+    #font-ctrl button:disabled { opacity: .3; cursor: default; }
+    #font-ctrl .size-label {
+      font-family: var(--fn-ui); font-size: .72rem; font-weight: 600;
+      color: var(--muted); padding: 0 4px; min-width: 28px;
+      text-align: center; user-select: none;
+    }
+
+    @media print { #font-ctrl, #ftoc { display: none; } }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-label">Bài Tụng Hàng Ngày — Tỳ Khưu</div>
+  <h1>Bhikkhupaccavekkhaṇā</h1>
+  <div class="subtitle">Quán Tưởng Tứ Vật Dụng</div>
+  <div class="author">Pāḷi &amp; Anh ngữ: Ānandajoti Bhikkhu · ancient-buddhist-texts.net</div>
+</header>
+
+<div class="wrap">
+
+  <p class="src-note">
+    Nguồn: <a href="https://ancient-buddhist-texts.net/Texts-and-Translations/Short-Pieces/Reflections.htm" target="_blank">ancient-buddhist-texts.net — The Reflections</a> (Ānandajoti Bhikkhu).
+    Bản Pāḷi theo truyền thống tu viện; có hai thời tụng: <strong>buổi sáng</strong> (quán trước khi thọ dụng) và <strong>buổi tối</strong> (kiểm điểm sau khi đã thọ dụng).
+  </p>
+
+  <div class="legend">
+    <span class="chip chip-purpose">🟢 Quán mục đích</span>
+    <span class="chip chip-dhatu">🔵 Quán dhātu / vô ngã</span>
+    <span class="chip chip-asubha">🔴 Quán asubha / bất tịnh</span>
+  </div>
+
+  <!-- TOC -->
+  <nav id="toc">
+    <h2>Mục Lục</h2>
+    <ul class="toc-list">
+      <li><a href="#sang">☀ Buổi Sáng</a></li>
+      <li class="toc-sub"><a href="#sang-civara">I. Cīvaraṁ — Y Phục</a></li>
+      <li class="toc-sub"><a href="#sang-pindapata">II. Piṇḍapātaṁ — Vật Thực</a></li>
+      <li class="toc-sub"><a href="#sang-senasana">III. Senāsanaṁ — Trú Xứ</a></li>
+      <li class="toc-sub"><a href="#sang-bhesajja">IV. Gilānapaccaya-bhesajja-parikkhāraṁ — Thuốc Men</a></li>
+      <li><a href="#toi">🌙 Buổi Tối</a></li>
+      <li class="toc-sub"><a href="#toi-civara">I. Cīvaraṁ — Y Phục</a></li>
+      <li class="toc-sub"><a href="#toi-pindapata">II. Piṇḍapātaṁ — Vật Thực</a></li>
+      <li class="toc-sub"><a href="#toi-senasana">III. Senāsanaṁ — Trú Xứ</a></li>
+      <li class="toc-sub"><a href="#toi-bhesajja">IV. Gilānapaccaya-bhesajja-parikkhāraṁ — Thuốc Men</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- BUỔI SÁNG                                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="period-hdr" id="sang"><span>☀ Buổi Sáng — Quán Trước Khi Thọ Dụng</span></div>
+  <a href="#toc" class="back-link">↑ Mục lục</a>
+
+  <!-- SÁNG I: Cīvara -->
+  <div class="req-block" id="sang-civara">
+    <div class="req-title">
+      <span class="req-num">I</span>
+      <span class="req-pali">Cīvaraṁ</span>
+      <span class="req-vi">— Y Phục</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích</div>
+      <div class="pali-block purpose">
+        <span class="line">Paṭisaṅkhā yoniso cīvaraṁ paṭisevāmi,</span>
+        <span class="line">yāvadeva sītassa paṭighātāya, uṇhassa paṭighātāya,</span>
+        <span class="line">ḍaṁsa-makasa-vāta-ātapa-siriṁsapa-samphassānaṁ paṭighātāya,</span>
+        <span class="line">yāvadeva hirikopīna-paṭicchādanatthaṁ.</span>
+      </div>
+      <p><em>Với sự quán xét đúng đắn, ta thọ dụng y phục, chỉ để ngăn lạnh, ngăn nóng, ngăn sự xúc chạm của ruồi muỗi, gió, nắng và các loài bò sát, chỉ để che phủ những phần thân đáng xấu hổ.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: cīvaraṁ tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — y phục này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbāni pana imāni cīvarāni ajigucchaṇīyāni</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyāni jāyanti.</span>
+      </div>
+      <p><em>Những y phục này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này chúng trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- SÁNG II: Piṇḍapāta -->
+  <div class="req-block" id="sang-pindapata">
+    <div class="req-title">
+      <span class="req-num">II</span>
+      <span class="req-pali">Piṇḍapātaṁ</span>
+      <span class="req-vi">— Vật Thực Khất Thực</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích</div>
+      <div class="pali-block purpose">
+        <span class="line">Paṭisaṅkhā yoniso piṇḍapātaṁ paṭisevāmi,</span>
+        <span class="line">neva davāya, na madāya, na maṇḍanāya, na vibhūsanāya,</span>
+        <span class="line">yāvadeva imassa kāyassa ṭhitiyā yāpanāya,</span>
+        <span class="line">vihiṁsūparatiyā brahmacariyānuggahāya,</span>
+        <span class="line">iti purāṇañca vedanaṁ paṭihaṅkhāmi,</span>
+        <span class="line">navañca vedanaṁ na uppādessāmi,</span>
+        <span class="line">yātrā ca me bhavissati, anavajjatā ca phāsuvihāro cā ti.</span>
+      </div>
+      <p><em>Với sự quán xét đúng đắn, ta thọ dụng vật thực khất thực, không phải để vui đùa, không phải để say đắm, không phải để trang điểm, không phải để làm đẹp — chỉ để duy trì thân này và tiếp tục sống, để chấm dứt sự bức não, để hỗ trợ đời sống phạm hạnh. Như vậy ta sẽ diệt trừ cảm thọ cũ, không làm sanh cảm thọ mới, và sẽ có sự nuôi dưỡng, không có lỗi lầm, và sống được an lạc.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: piṇḍapāto tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — vật thực này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbo panāyaṁ piṇḍapāto ajigucchaṇīyo</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyo jāyati.</span>
+      </div>
+      <p><em>Vật thực này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này nó trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- SÁNG III: Senāsana -->
+  <div class="req-block" id="sang-senasana">
+    <div class="req-title">
+      <span class="req-num">III</span>
+      <span class="req-pali">Senāsanaṁ</span>
+      <span class="req-vi">— Trú Xứ</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích</div>
+      <div class="pali-block purpose">
+        <span class="line">Paṭisaṅkhā yoniso senāsanaṁ paṭisevāmi,</span>
+        <span class="line">yāvadeva sītassa paṭighātāya, uṇhassa paṭighātāya,</span>
+        <span class="line">ḍaṁsa-makasa-vāta-ātapa-siriṁsapa-samphassānaṁ paṭighātāya,</span>
+        <span class="line">yāvadeva utu-parissaya-vinodanaṁ paṭisallāna-ārāmatthaṁ.</span>
+      </div>
+      <p><em>Với sự quán xét đúng đắn, ta thọ dụng trú xứ, chỉ để ngăn lạnh, ngăn nóng, ngăn sự xúc chạm của ruồi muỗi, gió, nắng và các loài rắn rết, chỉ để xua tan sự khó chịu của thời tiết và để vui thích trong độc cư.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: senāsanaṁ tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — trú xứ này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbāni pana imāni senāsanāni ajigucchaṇīyāni</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyāni jāyanti.</span>
+      </div>
+      <p><em>Những trú xứ này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này chúng trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- SÁNG IV: Bhesajja -->
+  <div class="req-block" id="sang-bhesajja">
+    <div class="req-title">
+      <span class="req-num">IV</span>
+      <span class="req-pali">Gilānapaccaya-bhesajja-parikkhāraṁ</span>
+      <span class="req-vi">— Thuốc Men</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích</div>
+      <div class="pali-block purpose">
+        <span class="line">Paṭisaṅkhā yoniso gilānapaccaya-bhesajja-parikkhāraṁ paṭisevāmi,</span>
+        <span class="line">yāvadeva uppannānaṁ veyyābādhikānaṁ vedanānaṁ paṭighātāya</span>
+        <span class="line">abyāpajjha-paramatāyā ti.</span>
+      </div>
+      <p><em>Với sự quán xét đúng đắn, ta thọ dụng thuốc men và vật dụng hỗ trợ người bệnh, chỉ để ngăn những cảm thọ bệnh khổ đã sanh và ít nhất được thoát khỏi sự bức bách.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: gilānapaccaya-bhesajja-parikkhāro tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — thuốc men này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbo panāyaṁ gilānapaccaya-bhesajja-parikkhāro ajigucchaṇīyo</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyo jāyati.</span>
+      </div>
+      <p><em>Thuốc men này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này nó trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- BUỔI TỐI                                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="period-hdr" id="toi"><span>🌙 Buổi Tối — Kiểm Điểm Sau Khi Thọ Dụng</span></div>
+  <a href="#toc" class="back-link">↑ Mục lục</a>
+
+  <!-- TỐI I: Cīvara -->
+  <div class="req-block" id="toi-civara">
+    <div class="req-title">
+      <span class="req-num">I</span>
+      <span class="req-pali">Cīvaraṁ</span>
+      <span class="req-vi">— Y Phục</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích (kiểm điểm)</div>
+      <div class="pali-block purpose">
+        <span class="line">Mayā apaccavekkhitvā ajja yaṁ cīvaraṁ paribhuttaṁ,</span>
+        <span class="line">taṁ yāvadeva sītassa paṭighātāya, uṇhassa paṭighātāya,</span>
+        <span class="line">ḍaṁsa-makasa-vāta-ātapa-siriṁsapa-samphassānaṁ paṭighātāya,</span>
+        <span class="line">yāvadeva hirikopīna-paṭicchādanatthaṁ.</span>
+      </div>
+      <p><em>Y phục mà hôm nay ta đã dùng mà không quán xét trước — điều đó chỉ nhằm ngăn lạnh, ngăn nóng, ngăn sự xúc chạm của ruồi muỗi, gió, nắng và các loài bò sát, chỉ để che phủ những phần thân đáng xấu hổ.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: cīvaraṁ tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — y phục này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbāni pana imāni cīvarāni ajigucchaṇīyāni</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyāni jāyanti.</span>
+      </div>
+      <p><em>Những y phục này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này chúng trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- TỐI II: Piṇḍapāta -->
+  <div class="req-block" id="toi-pindapata">
+    <div class="req-title">
+      <span class="req-num">II</span>
+      <span class="req-pali">Piṇḍapātaṁ</span>
+      <span class="req-vi">— Vật Thực Khất Thực</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích (kiểm điểm)</div>
+      <div class="pali-block purpose">
+        <span class="line">Mayā apaccavekkhitvā ajja yo piṇḍapāto paribhutto,</span>
+        <span class="line">so neva davāya, na madāya, na maṇḍanāya, na vibhūsanāya,</span>
+        <span class="line">yāvadeva imassa kāyassa ṭhitiyā yāpanāya,</span>
+        <span class="line">vihiṁsūparatiyā brahmacariyānuggahāya,</span>
+        <span class="line">iti purāṇañca vedanaṁ paṭihaṅkhāmi,</span>
+        <span class="line">navañca vedanaṁ na uppādessāmi,</span>
+        <span class="line">yātrā ca me bhavissati, anavajjatā ca phāsuvihāro cā ti.</span>
+      </div>
+      <p><em>Vật thực khất thực mà hôm nay ta đã dùng mà không quán xét trước — điều đó không phải để vui đùa, không phải để say đắm, không phải để trang điểm, không phải để làm đẹp — mà chỉ để duy trì thân này và tiếp tục sống, để chấm dứt sự bức não, để hỗ trợ đời sống phạm hạnh. Như vậy ta sẽ diệt trừ cảm thọ cũ, không làm sanh cảm thọ mới, và sẽ có sự nuôi dưỡng, không có lỗi lầm, và sống được an lạc.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: piṇḍapāto tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — vật thực này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbo panāyaṁ piṇḍapāto ajigucchaṇīyo</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyo jāyati.</span>
+      </div>
+      <p><em>Vật thực này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này nó trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- TỐI III: Senāsana -->
+  <div class="req-block" id="toi-senasana">
+    <div class="req-title">
+      <span class="req-num">III</span>
+      <span class="req-pali">Senāsanaṁ</span>
+      <span class="req-vi">— Trú Xứ</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích (kiểm điểm)</div>
+      <div class="pali-block purpose">
+        <span class="line">Mayā apaccavekkhitvā ajja yaṁ senāsanaṁ paribhuttaṁ,</span>
+        <span class="line">taṁ yāvadeva sītassa paṭighātāya, uṇhassa paṭighātāya,</span>
+        <span class="line">ḍaṁsa-makasa-vāta-ātapa-siriṁsapa-samphassānaṁ paṭighātāya,</span>
+        <span class="line">yāvadeva utu-parissaya-vinodanaṁ paṭisallāna-ārāmatthaṁ.</span>
+      </div>
+      <p><em>Trú xứ mà hôm nay ta đã dùng mà không quán xét trước — điều đó chỉ nhằm ngăn lạnh, ngăn nóng, ngăn sự xúc chạm của ruồi muỗi, gió, nắng và các loài rắn rết, chỉ để xua tan sự khó chịu của thời tiết và để vui thích trong độc cư.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: senāsanaṁ tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — trú xứ này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbāni pana imāni senāsanāni ajigucchaṇīyāni</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyāni jāyanti.</span>
+      </div>
+      <p><em>Những trú xứ này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này chúng trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+  <!-- TỐI IV: Bhesajja -->
+  <div class="req-block" id="toi-bhesajja">
+    <div class="req-title">
+      <span class="req-num">IV</span>
+      <span class="req-pali">Gilānapaccaya-bhesajja-parikkhāraṁ</span>
+      <span class="req-vi">— Thuốc Men</span>
+    </div>
+    <div class="req-body">
+
+      <div class="layer-label purpose">🟢 Quán mục đích (kiểm điểm)</div>
+      <div class="pali-block purpose">
+        <span class="line">Mayā apaccavekkhitvā ajja yo gilānapaccaya-bhesajja-parikkhāro paribhutto,</span>
+        <span class="line">so yāvadeva uppannānaṁ veyyābādhikānaṁ vedanānaṁ paṭighātāya</span>
+        <span class="line">abyāpajjha-paramatāyā ti.</span>
+      </div>
+      <p><em>Thuốc men mà hôm nay ta đã dùng mà không quán xét trước — điều đó chỉ nhằm ngăn những cảm thọ bệnh khổ đã sanh và ít nhất được thoát khỏi sự bức bách.</em></p>
+
+      <div class="layer-label dhatu">🔵 Quán dhātu / vô ngã</div>
+      <div class="pali-block dhatu">
+        <span class="line">Yathā paccayaṁ pavattamānaṁ dhātumattam-ev' etaṁ,</span>
+        <span class="line">yadidaṁ: gilānapaccaya-bhesajja-parikkhāro tadupabhuñjako ca puggalo,</span>
+        <span class="line">dhātumattako, nissatto, nijjīvo, suñño.</span>
+      </div>
+      <p><em>Đây chỉ là các giới tố vận hành theo duyên — thuốc men này và người thọ dụng nó — chỉ là giới tố, không có chúng sanh, không có sinh mệnh, trống không.</em></p>
+
+      <div class="layer-label asubha">🔴 Quán asubha / bất tịnh</div>
+      <div class="pali-block asubha">
+        <span class="line">Sabbo panāyaṁ gilānapaccaya-bhesajja-parikkhāro ajigucchaṇīyo</span>
+        <span class="line">imaṁ pūtikāyaṁ patvā ativiya jigucchaṇīyo jāyati.</span>
+      </div>
+      <p><em>Thuốc men này vốn không đáng ghê tởm, nhưng khi chạm vào thân ô uế này nó trở nên rất đáng ghê tởm.</em></p>
+
+    </div>
+  </div>
+
+</div><!-- /.wrap -->
+
+<!-- Font size control -->
+<div id="font-ctrl">
+  <button id="font-dn" onclick="adjFont(-1)" title="Chữ nhỏ hơn">A−</button>
+  <span class="size-label" id="font-lbl">17</span>
+  <button id="font-up" onclick="adjFont(1)" title="Chữ lớn hơn">A+</button>
+</div>
+
+<!-- TOC jump button -->
+<a href="#toc" id="ftoc">☰ Mục lục</a>
+
+<script>
+(function(){
+  var SIZES = [14,15,16,17,18,19,20,22,24,26,28];
+  var idx = SIZES.indexOf(17);
+  var lbl = document.getElementById('font-lbl');
+  var KEY = 'bhikkhu-paccavekkhana-font-idx';
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved !== null) {
+      var n = parseInt(saved, 10);
+      if (n >= 0 && n < SIZES.length) idx = n;
+    }
+  } catch(e) {}
+  applySize();
+  window.adjFont = function(dir) {
+    idx = Math.max(0, Math.min(SIZES.length - 1, idx + dir));
+    applySize();
+    try { localStorage.setItem(KEY, idx); } catch(e) {}
+  };
+  function applySize() {
+    document.documentElement.style.fontSize = SIZES[idx] + 'px';
+    if (lbl) lbl.textContent = SIZES[idx];
+    document.getElementById('font-dn').disabled = (idx === 0);
+    document.getElementById('font-up').disabled = (idx === SIZES.length - 1);
+  }
+})();
+</script>
+
+</body>
+</html>
