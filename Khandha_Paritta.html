@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khandha Paritta — Kinh Bảo Hộ Bốn Tộc Rắn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #fdf6e8;
+  --bg-inner:  #fef9f0;
+  --gold:      #8b6914;
+  --gold-l:    #c4982a;
+  --gold-bd:   #d4a843;
+  --sep:       #c9a96e;
+  --shadow:    rgba(100,60,10,0.10);
+  --ca:        #8b4f00;   /* màu cụm A — nâu */
+  --cb:        #1f5c3a;   /* màu cụm B — xanh lá */
+  --breath:    #b08030;   /* màu dấu ◎ */
+  --crimson:   #7b1c1d;   /* màu dòng saccena/hotu */
+  --gloss-c:   #6b5a3e;   /* màu nghĩa tiếng Việt */
+  --note-c:    #5a4a30;   /* màu dịch cả câu */
+  --font-main: 'Noto Serif','Times New Roman',serif;
+  --font-ttl:  'EB Garamond','Times New Roman',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 10%,rgba(212,168,67,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 90%,rgba(158,42,43,.05) 0%,transparent 50%);
+  font-family:var(--font-main);
+  color:var(--ca);
+  min-height:100vh;
+  padding:2rem 1rem 4rem;
+}
+.page{max-width:860px;margin:0 auto}
+.header{text-align:center;padding:2.8rem 2rem 2rem;margin-bottom:2rem;border-bottom:2px solid var(--gold-bd);position:relative}
+.header::before{content:'❖';position:absolute;bottom:-.75rem;left:50%;transform:translateX(-50%);font-size:1.1rem;color:var(--gold-bd);background:var(--bg);padding:0 .5rem}
+.title-pali{font-family:var(--font-ttl);font-size:2.6rem;font-weight:700;color:var(--gold);letter-spacing:.06em;font-variant:small-caps}
+.title-viet{font-family:var(--font-ttl);font-size:1.1rem;font-weight:500;color:#7a4f28;letter-spacing:.1em;margin-top:.4rem;font-style:italic}
+.section-label{font-family:var(--font-ttl);font-size:.82rem;letter-spacing:.2em;font-variant:small-caps;color:var(--gold);text-align:center;margin:2.8rem 0 1.2rem;display:flex;align-items:center;gap:.8rem}
+.section-label::before,.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--sep))}
+.section-label::after{background:linear-gradient(to left,transparent,var(--sep))}
+.stanza{margin-bottom:1.4rem;padding:1.1rem 1.5rem;background:var(--bg-inner);border:1px solid var(--sep);border-radius:10px;box-shadow:2px 2px 8px var(--shadow)}
+.stanza.refrain{border-color:var(--gold-l);background:linear-gradient(135deg,#fef9ee 0%,#fdf3e0 100%)}
+.stanza-num{font-family:var(--font-main);font-size:.68rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem;display:block}
+.stanza-pair{margin-bottom:1.4rem}
+.stanza-pair .stanza{margin-bottom:0;border-radius:0;border-bottom:none}
+.stanza-pair .stanza:first-child{border-bottom:1px dashed var(--sep);border-radius:10px 10px 0 0}
+.stanza-pair .stanza:last-child{border-radius:0 0 10px 10px;border-top:none}
+.iline{display:flex;flex-wrap:wrap;align-items:flex-start;gap:.15rem 1.2rem;margin-bottom:.5rem}
+.iline:last-of-type{margin-bottom:0}
+.token{display:inline-flex;flex-direction:column;align-items:flex-start}
+.pali-w{font-size:1.18rem;line-height:1.5;font-weight:600}
+.gloss{font-size:.75rem;font-style:italic;color:var(--gloss-c);line-height:1.4;margin-top:.1rem;font-weight:400}
+.token.a .pali-w{color:var(--ca)}
+.token.b .pali-w{color:var(--cb)}
+.r{font-weight:800}
+.token.a .ai{font-style:italic;color:var(--ca)}
+.token.b .bi{font-style:italic;color:var(--cb)}
+.breath{color:var(--breath);font-size:1.05em;margin-left:.2em;font-style:normal;font-weight:400}
+.idiv{border:none;border-top:1px dashed var(--sep);margin:.7rem 0;opacity:.5}
+.note{font-size:.85rem;color:var(--note-c);border-top:1px dashed var(--sep);margin-top:.85rem;padding-top:.7rem;line-height:1.75}
+.sacca .pali-w{color:var(--crimson)}
+.footer{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--sep);font-size:.78rem;color:#7a4f28;line-height:1.8;letter-spacing:.05em}
+
+.intro{margin-bottom:2rem;padding:1.4rem 1.6rem;background:var(--bg-inner);border:1px solid var(--sep);border-radius:10px;box-shadow:2px 2px 8px var(--shadow)}
+.intro p{font-size:.95rem;line-height:1.9;color:#4a3a20;margin-bottom:.9rem;text-align:left}
+.intro p:last-child{margin-bottom:0}
+.intro .intro-label{font-family:var(--font-ttl);font-size:.8rem;letter-spacing:.15em;color:var(--gold);font-variant:small-caps;margin-bottom:.9rem;display:block}
+
+@media print{
+  @page{size:A4;margin:1.8cm 1.5cm 1.8cm 1.5cm}
+  body{padding:0;background:white !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .legend{display:none}
+  .header{margin-bottom:1rem;padding:1rem 0 .8rem}
+  .header::before{display:none}
+  .section-label{margin:.8rem auto .4rem;font-size:.6rem;break-after:avoid}
+  .section-label + .stanza,.section-label + .stanza-pair{break-before:avoid}
+  .stanza{break-inside:avoid;box-shadow:none;border:1px solid #ccc;border-radius:8px;padding:.7rem 1rem;margin-bottom:.6rem}
+  .stanza-pair{break-inside:avoid;margin-bottom:.6rem}
+  .stanza-pair .stanza{margin-bottom:0}
+  .stanza.refrain{padding:.5rem 1rem;margin-bottom:.5rem}
+  .stanza-num{font-size:.58rem}
+  .pali-w{font-size:.95rem;line-height:1.4}
+  .gloss{font-size:.65rem}
+  .note{font-size:.65rem;line-height:1.6;color:#5a4a30 !important;border-top-color:#ccc !important}
+  .iline{gap:.1rem .8rem;margin-bottom:.35rem}
+  .token.a .pali-w{color:#8b4f00 !important}
+  .token.b .pali-w{color:#0f6648 !important}
+  .r{font-weight:800 !important}
+  .breath{color:#b08030 !important}
+  .sacca .pali-w{color:#7b1c1d !important}
+  .idiv{border-top-color:#ccc !important}
+  .footer{font-size:.65rem}
+  .intro{break-inside:avoid;box-shadow:none;border:1px solid #ccc;padding:.8rem 1rem}
+  .intro p{font-size:.78rem;line-height:1.6}
+}
+@media(max-width:600px){
+  .title-pali{font-size:1.6rem}
+  .stanza{padding:1rem}
+  .pali-w{font-size:1rem}
+  .iline{gap:.1rem .8rem}
+  .intro{padding:1.1rem 1.2rem}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="title-pali">Khandha Paritta</div>
+    <div class="title-viet">Kinh Bảo Hộ Bốn Tộc Rắn</div>
+  </div>
+
+  <!-- ===================== KHUNG TRUYỆN JĀTAKA ===================== -->
+  <div class="section-label">Nhân duyên — Khandhajātaka-aṭṭhakathā</div>
+
+  <div class="intro">
+    <span class="intro-label">Vị ẩn sĩ ở Himavanta</span>
+    <p>
+      Thuở quá khứ xa xưa, Bồ-tát sinh làm một vị Bà-la-môn ở xứ Kāsi.
+      Khi trưởng thành, Ngài từ bỏ đời sống thế tục, xuất gia làm ẩn sĩ,
+      tu tập cho đến khi chứng được các thắng trí và các tầng thiền định.
+      Ngài sống ẩn cư tại vùng Himavanta, bên một khúc quanh của sông Hằng,
+      giữa một nhóm đông đảo các vị ẩn sĩ cùng tu tập với mình.
+    </p>
+    <p>
+      Một ngày, các vị đồng tu đến báo với Ngài rằng nhiều bạn đồng tu
+      trong nhóm đã qua đời vì bị các loài rắn rết cắn chết. Nghe vậy,
+      Bồ-tát liền tập hợp toàn thể hội chúng ẩn sĩ lại, và dạy cho họ
+      bài kệ hộ trì này — rải tâm từ đến bốn tộc rắn hoàng tộc cùng tất cả
+      các loài chúng sinh, rồi nương vào uy lực của Tam Bảo để được an ổn.
+      Từ đó, các vị ẩn sĩ trì tụng bài kệ này mỗi ngày và không còn ai
+      bị các loài có nọc độc làm hại nữa.
+    </p>
+    <p>
+      Về sau, khi Đức Phật tại thế ở Jetavana, một vị tỳ-khưu bị rắn cắn
+      chết khi đang chẻ củi nơi cửa nhà tắm hơi. Đức Phật dạy chúng Tăng
+      rằng nếu vị tỳ-khưu ấy đã tu tập tâm từ hướng đến bốn tộc rắn hoàng
+      tộc, rắn đã không cắn vị ấy — rồi Ngài thuật lại bài kệ mà chính Ngài,
+      trong tiền kiếp làm vị ẩn sĩ ở Himavanta, đã từng dạy cho nhóm đồng tu
+      của mình. Nhóm ẩn sĩ thuở ấy nay chính là hội chúng đệ tử Phật hiện
+      tại; còn vị ẩn sĩ thầy chính là tiền thân của Đức Phật.
+    </p>
+  </div>
+
+  <!-- ===================== HAI STANZA DẪN NHẬP ===================== -->
+  <div class="section-label">Lời Thỉnh Cầu — Dẫn Nhập Bài Kệ</div>
+
+  <div class="stanza">
+    <span class="stanza-num">01</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Sa<span class="r">bb</span>āsī·visa·jātīn<span class="ai">aṁ</span>,</span><span class="gloss">của mọi loài rắn độc-nanh</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">di<span class="r">bb</span>a·mantā·gad<span class="bi">aṁ</span></span><span class="gloss">thần chú thiêng — thuốc giải độc</span></span>
+      <span class="token a"><span class="pali-w">viya,</span><span class="gloss">tựa như</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">yaṁ</span><span class="gloss">bài kệ nào</span></span>
+      <span class="token a"><span class="pali-w">nāseti</span><span class="gloss">tiêu trừ</span></span>
+      <span class="token b"><span class="pali-w">visaṁ</span><span class="gloss">nọc độc</span></span>
+      <span class="token a"><span class="pali-w">ghoraṁ,</span><span class="gloss">ghê sợ</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">sesañcāpi</span><span class="gloss">và cả những</span></span>
+      <span class="token a"><span class="pali-w">pari<span class="r">ss</span>ayaṁ.</span><span class="gloss">hiểm nguy còn lại</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Bài kệ tựa như thần chú thiêng, như thuốc giải độc của chư thiên — có thể tiêu trừ nọc độc ghê sợ của mọi loài rắn có nanh, cùng tất cả những hiểm nguy còn lại.</div>
+  </div>
+
+  <div class="stanza">
+    <span class="stanza-num">02</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Āṇā·<span class="r">kkh</span>e<span class="r">tt</span>am<span class="ai">hi</span></span><span class="gloss">trong cõi uy quyền</span></span>
+      <span class="token b"><span class="pali-w">sa<span class="r">bb</span>attha,</span><span class="gloss">khắp nơi</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">sa<span class="r">bb</span>adā</span><span class="gloss">luôn luôn</span></span>
+      <span class="token a"><span class="pali-w">sa<span class="r">bb</span>a·pāṇin<span class="ai">aṁ</span>,</span><span class="gloss">cho tất cả sinh linh</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">sa<span class="r">bb</span>aso pi</span><span class="gloss">mọi phương diện</span></span>
+      <span class="token a"><span class="pali-w">nivāreti,</span><span class="gloss">ngăn chặn lại</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token b"><span class="pali-w">pari<span class="r">tt</span>aṁ</span><span class="gloss">bài hộ trì này</span></span>
+      <span class="token a"><span class="pali-w">taṁ</span><span class="gloss">đó</span></span>
+      <span class="token b"><span class="pali-w">bhaṇāma</span><span class="gloss">chúng ta hãy tụng</span></span>
+      <span class="token a"><span class="pali-w">he.</span><span class="gloss">nào</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Khắp nơi trong cõi uy quyền [của Phật], luôn luôn, cho tất cả mọi sinh linh — bài hộ trì này ngăn chặn [mọi hiểm nguy] theo mọi phương diện. Nào, hãy cùng tụng đọc bài hộ trì đó!</div>
+  </div>
+
+  <!-- ===================== BÀI KỆ INTERLINEAR ===================== -->
+  <div class="section-label">Bài Kệ — Quy Thuận Bốn Tộc Rắn</div>
+
+  <div class="stanza">
+    <span class="stanza-num">03</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Virūpa<span class="r">kkh</span><span class="ai">ehi</span></span><span class="gloss">cùng tộc Virūpakkha</span></span>
+      <span class="token b"><span class="pali-w">me</span><span class="gloss">của tôi</span></span>
+      <span class="token a"><span class="pali-w">mettaṃ,</span><span class="gloss">có tâm từ</span></span>
+      <span class="token b"><span class="pali-w">mettaṃ</span><span class="gloss">tâm từ ấy</span></span>
+      <span class="token a"><span class="pali-w">erāpath<span class="ai">ehi</span></span><span class="gloss">cùng tộc Erāpatha</span></span>
+      <span class="token b"><span class="pali-w">me;</span><span class="gloss">của tôi</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Chabyāpu<span class="r">tt</span><span class="ai">ehi</span></span><span class="gloss">cùng tộc Chabyāputta</span></span>
+      <span class="token b"><span class="pali-w">me</span><span class="gloss">của tôi</span></span>
+      <span class="token a"><span class="pali-w">mettaṃ,</span><span class="gloss">có tâm từ</span></span>
+      <span class="token b"><span class="pali-w">mettaṃ</span><span class="gloss">tâm từ ấy</span></span>
+      <span class="token a"><span class="pali-w">kaṇhāgotamak<span class="ai">ehi</span></span><span class="gloss">cùng tộc Kaṇhāgotamaka</span></span>
+      <span class="token b"><span class="pali-w">ca.</span><span class="gloss">cũng vậy</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Tâm từ của tôi xin rải đến bốn tộc rắn hoàng tộc: Virūpakkha, Erāpatha, Chabyāputta, và Kaṇhāgotamaka.</div>
+  </div>
+
+  <div class="stanza">
+    <span class="stanza-num">04</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">a·pādak<span class="ai">ehi</span></span><span class="gloss">cùng loài không chân</span></span>
+      <span class="token b"><span class="pali-w">me</span><span class="gloss">của tôi</span></span>
+      <span class="token a"><span class="pali-w">mettaṃ,</span><span class="gloss">có tâm từ</span></span>
+      <span class="token b"><span class="pali-w">mettaṃ</span><span class="gloss">tâm từ ấy</span></span>
+      <span class="token a"><span class="pali-w">dvi·pādak<span class="ai">ehi</span></span><span class="gloss">cùng loài hai chân</span></span>
+      <span class="token b"><span class="pali-w">me;</span><span class="gloss">của tôi</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">catu·<span class="r">pp</span>ad<span class="ai">ehi</span></span><span class="gloss">cùng loài bốn chân</span></span>
+      <span class="token b"><span class="pali-w">me</span><span class="gloss">của tôi</span></span>
+      <span class="token a"><span class="pali-w">mettaṃ,</span><span class="gloss">có tâm từ</span></span>
+      <span class="token b"><span class="pali-w">mettaṃ</span><span class="gloss">tâm từ ấy</span></span>
+      <span class="token a"><span class="pali-w">bahu·<span class="r">pp</span>ad<span class="ai">ehi</span></span><span class="gloss">cùng loài nhiều chân</span></span>
+      <span class="token b"><span class="pali-w">me.</span><span class="gloss">của tôi</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Tâm từ của tôi xin rải đến loài không chân, loài hai chân, loài bốn chân, và loài nhiều chân.</div>
+  </div>
+
+  <div class="stanza">
+    <span class="stanza-num">05</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Mā</span><span class="gloss">chớ</span></span>
+      <span class="token b"><span class="pali-w">maṃ</span><span class="gloss">tôi</span></span>
+      <span class="token a"><span class="pali-w">a·pādako</span><span class="gloss">loài không chân</span></span>
+      <span class="token b"><span class="pali-w">hiṃsi,</span><span class="gloss">làm hại</span></span>
+      <span class="token a"><span class="pali-w">mā</span><span class="gloss">chớ</span></span>
+      <span class="token b"><span class="pali-w">maṃ</span><span class="gloss">tôi</span></span>
+      <span class="token a"><span class="pali-w">hiṃsi</span><span class="gloss">làm hại</span></span>
+      <span class="token b"><span class="pali-w">dvi·pādako;</span><span class="gloss">loài hai chân</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Mā</span><span class="gloss">chớ</span></span>
+      <span class="token b"><span class="pali-w">maṃ</span><span class="gloss">tôi</span></span>
+      <span class="token a"><span class="pali-w">catu·<span class="r">pp</span>ado</span><span class="gloss">loài bốn chân</span></span>
+      <span class="token b"><span class="pali-w">hiṃsi,</span><span class="gloss">làm hại</span></span>
+      <span class="token a"><span class="pali-w">mā</span><span class="gloss">chớ</span></span>
+      <span class="token b"><span class="pali-w">maṃ</span><span class="gloss">tôi</span></span>
+      <span class="token a"><span class="pali-w">hiṃsi</span><span class="gloss">làm hại</span></span>
+      <span class="token b"><span class="pali-w">bahu·<span class="r">pp</span>ado.</span><span class="gloss">loài nhiều chân</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Xin loài không chân chớ làm hại tôi, loài hai chân chớ làm hại tôi; xin loài bốn chân chớ làm hại tôi, loài nhiều chân chớ làm hại tôi.</div>
+  </div>
+
+  <div class="stanza">
+    <span class="stanza-num">06</span>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Sa<span class="r">bb</span>e</span><span class="gloss">tất cả</span></span>
+      <span class="token b"><span class="pali-w">sa<span class="r">tt</span>ā</span><span class="gloss">các loài hữu tình</span></span>
+      <span class="token a"><span class="pali-w">sa<span class="r">bb</span>e</span><span class="gloss">tất cả</span></span>
+      <span class="token b"><span class="pali-w">pāṇā,</span><span class="gloss">các sinh mạng</span></span>
+      <span class="token a"><span class="pali-w">sa<span class="r">bb</span>e</span><span class="gloss">tất cả</span></span>
+      <span class="token b"><span class="pali-w">bhūtā</span><span class="gloss">các chúng sinh</span></span>
+      <span class="token a"><span class="pali-w">ca</span><span class="gloss">và</span></span>
+      <span class="token b"><span class="pali-w">kevalā;</span><span class="gloss">không trừ một ai</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token a"><span class="pali-w">Sa<span class="r">bb</span>e</span><span class="gloss">tất cả</span></span>
+      <span class="token b"><span class="pali-w">bhadr<span class="bi">āni</span></span><span class="gloss">những điều tốt lành</span></span>
+      <span class="token a"><span class="pali-w">pa<span class="r">ss</span><span class="ai">antu</span>,</span><span class="gloss">xin được thấy</span></span>
+      <span class="token b"><span class="pali-w">mā</span><span class="gloss">chớ</span></span>
+      <span class="token a"><span class="pali-w">kañci</span><span class="gloss">bất cứ điều</span></span>
+      <span class="token b"><span class="pali-w">pāpamāgamā.</span><span class="gloss">xấu ác nào xảy đến</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Nguyện cho tất cả chúng sinh, tất cả sinh mạng, tất cả loài hữu tình, không trừ một ai, đều thấy được những điều tốt lành; nguyện không có điều xấu ác nào xảy đến với bất cứ ai.</div>
+  </div>
+
+  <!-- ===================== ĐOẠN NƯƠNG UY LỰC TAM BẢO (sacca) ===================== -->
+  <div class="stanza refrain">
+    <span class="stanza-num">07 — Appamāṇo Buddho</span>
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">a·<span class="r">pp</span>amāṇo</span><span class="gloss">vô lượng</span></span>
+      <span class="token sacca b"><span class="pali-w">bu<span class="r">dd</span>ho,</span><span class="gloss">là Đức Phật</span></span>
+      <span class="token sacca a"><span class="pali-w">a·<span class="r">pp</span>amāṇo</span><span class="gloss">vô lượng</span></span>
+      <span class="token sacca b"><span class="pali-w">dha<span class="r">mm</span>o;</span><span class="gloss">là Giáo Pháp</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">a·<span class="r">pp</span>amāṇo</span><span class="gloss">vô lượng</span></span>
+      <span class="token sacca b"><span class="pali-w">saṅgho,</span><span class="gloss">là Tăng Đoàn</span></span>
+      <span class="token sacca a"><span class="pali-w">pamāṇavant<span class="ai">āni</span></span><span class="gloss">có giới hạn</span></span>
+      <span class="token sacca b"><span class="pali-w">sarīsap<span class="bi">āni</span>.</span><span class="gloss">là loài bò sát</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <hr class="idiv">
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">Ahi·vicchikā</span><span class="gloss">rắn, bò cạp</span></span>
+      <span class="token sacca b"><span class="pali-w">sata·padī,</span><span class="gloss">rết</span></span>
+      <span class="token sacca a"><span class="pali-w">uṇṇa·nābhī</span><span class="gloss">nhện</span></span>
+      <span class="token sacca b"><span class="pali-w">sarabū</span><span class="gloss">thằn lằn</span></span>
+      <span class="token sacca a"><span class="pali-w">mūsikā;</span><span class="gloss">chuột</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <hr class="idiv">
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">Katā</span><span class="gloss">đã làm xong</span></span>
+      <span class="token sacca b"><span class="pali-w">me</span><span class="gloss">bởi tôi</span></span>
+      <span class="token sacca a"><span class="pali-w">ra<span class="r">kkh</span>ā</span><span class="gloss">sự hộ trì</span></span>
+      <span class="token sacca b"><span class="pali-w">katā</span><span class="gloss">đã làm xong</span></span>
+      <span class="token sacca a"><span class="pali-w">me</span><span class="gloss">bởi tôi</span></span>
+      <span class="token sacca b"><span class="pali-w">pari<span class="r">tt</span>ā,</span><span class="gloss">sự bảo hộ</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">paṭi·<span class="r">kk</span>am<span class="ai">antu</span></span><span class="gloss">xin hãy lui bước</span></span>
+      <span class="token sacca b"><span class="pali-w">bhūt<span class="bi">āni</span>;</span><span class="gloss">các loài hữu tình</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <hr class="idiv">
+
+    <div class="iline">
+      <span class="token sacca a"><span class="pali-w">Sohaṃ</span><span class="gloss">tôi đây</span></span>
+      <span class="token sacca b"><span class="pali-w">namo</span><span class="gloss">xin đảnh lễ</span></span>
+      <span class="token sacca a"><span class="pali-w">bhagava<span class="ai">to</span>,</span><span class="gloss">Đức Thế Tôn</span></span>
+      <span class="token sacca b"><span class="pali-w">namo</span><span class="gloss">xin đảnh lễ</span></span>
+      <span class="token sacca a"><span class="pali-w">sa<span class="r">tt</span>a<span class="r">nn</span>aṃ</span><span class="gloss">cả bảy vị</span></span>
+      <span class="token sacca b"><span class="pali-w">sammā·sambu<span class="r">dd</span>h<span class="bi">ānanti</span>.</span><span class="gloss">Chánh Đẳng Giác</span></span>
+      <span class="breath">◎</span>
+    </div>
+
+    <div class="note">Vô lượng là Đức Phật, vô lượng là Giáo Pháp, vô lượng là Tăng Đoàn; còn loài bò sát có nọc độc — rắn, bò cạp, rết, nhện, thằn lằn, chuột — đều là những loài có giới hạn. Nương vào oai lực vô lượng ấy của Tam Bảo, sự hộ trì và sự bảo hộ đã được tôi thực hiện xong; xin các loài hữu tình hãy lui bước. Tôi đây xin đảnh lễ Đức Thế Tôn, xin đảnh lễ cả bảy vị Chánh Đẳng Giác.</div>
+  </div>
+
+  <div class="footer">
+    Khandha Paritta · Aṅguttara Nikāya, Catukkanipāta, Ahirājasuttaṃ (AN 4.67)<br>
+    Dị bản: Cūḷavagga V.6 (Vinayapiṭaka) · Khandhajātaka-aṭṭhakathā (Ja 203)<br>
+    Nguồn Pāḷi: tipitaka.app (CST4) · PTS ed. Oldenberg vol. ii
+  </div>
+
+</div>
+</body>
+</html>
