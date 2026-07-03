@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học thuộc Kinh Pāli</title>
+<style>
+  :root{
+    --bg:#f6f1e7; --card:#fffdf8; --ink:#2c2418; --muted:#8a7f6b;
+    --accent:#a0522d; --accent2:#c9a227; --line:#e3d9c6; --good:#3f7d4f; --bad:#b4462f;
+    --shadow:0 4px 18px rgba(90,70,40,.10);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#1c1912;--card:#26221a;--ink:#ece3d2;--muted:#a99e88;
+      --accent:#d9a066;--accent2:#e6c766;--line:#3a3325;--shadow:0 4px 18px rgba(0,0,0,.35);}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+  header{padding:18px 16px 10px;text-align:center}
+  header h1{margin:0;font-size:1.25rem;letter-spacing:.3px}
+  header p{margin:4px 0 0;color:var(--muted);font-size:.85rem}
+  .wrap{max-width:720px;margin:0 auto;padding:0 14px 60px}
+  .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;margin:10px 0 16px}
+  select,button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:8px 12px;cursor:pointer}
+  button.primary{background:var(--accent);color:#fff;border-color:transparent}
+  button:active{transform:translateY(1px)}
+  .stat{font-size:.8rem;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+  .pali{font-size:1.35rem;line-height:2;letter-spacing:.2px;word-spacing:2px}
+  .vi{color:var(--muted);font-style:italic;margin-top:12px;font-size:1rem;
+    border-top:1px dashed var(--line);padding-top:12px}
+  .tok{cursor:pointer;border-radius:6px;padding:0 2px;transition:background .15s}
+  .tok.blank{background:var(--accent2);color:transparent;position:relative;user-select:none}
+  .tok.blank::after{content:attr(data-hint);color:var(--ink);opacity:.55;
+    position:absolute;left:0;right:0;text-align:center}
+  .tok.blank.revealed{background:transparent;color:var(--good)}
+  .tok.blank.revealed::after{content:""}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+  .grade{display:none;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .grade button{min-width:96px}
+  .g-again{border-color:var(--bad);color:var(--bad)}
+  .g-good{border-color:var(--good);color:var(--good)}
+  .g-easy{border-color:var(--accent2)}
+  .levelrow{display:flex;gap:6px;align-items:center;justify-content:center;
+    font-size:.8rem;color:var(--muted);margin-top:14px}
+  input[type=range]{accent-color:var(--accent)}
+  .settings{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;
+    margin-top:10px;font-size:.8rem;color:var(--muted)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{border:none;border-radius:0;padding:6px 12px;background:var(--card);color:var(--muted)}
+  .seg button.on{background:var(--accent);color:#fff}
+  .typebox{width:100%;min-height:70px;margin-top:12px;font:inherit;font-size:1.1rem;
+    padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+  .tw-ok{color:var(--good)} .tw-bad{color:var(--bad);text-decoration:line-through}
+  .tw-miss{color:var(--bad);border-bottom:2px dotted var(--bad)}
+  .diff{font-size:1.2rem;line-height:2;margin-top:12px;word-spacing:2px}
+  .score{font-size:.85rem;color:var(--muted);margin-top:6px}
+  .done{text-align:center;padding:40px 10px;color:var(--muted)}
+  .import summary{cursor:pointer;color:var(--accent);font-size:.85rem;text-align:center}
+  textarea{width:100%;min-height:120px;font:inherit;font-size:.9rem;padding:10px;
+    border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .hint{font-size:.78rem;color:var(--muted);margin:8px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>☸ Học thuộc Kinh Pāli</h1>
+  <p>Che dần chữ · Lặp lại ngắt quãng (SRS)</p>
+</header>
+
+<div class="wrap">
+  <div class="bar">
+    <select id="lessonSel"></select>
+    <span class="stat" id="progress"></span>
+    <button id="resetBtn" title="Xoá tiến độ bài này">↺ Reset</button>
+  </div>
+
+  <div id="stage"></div>
+
+  <div class="levelrow">
+    Độ khó ẩn chữ:
+    <input type="range" id="level" min="1" max="4" value="2" style="width:130px">
+    <span id="levelLbl"></span>
+  </div>
+
+  <div class="settings">
+    <span>Ẩn theo:
+      <span class="seg" id="maskSeg">
+        <button data-mask="word">Từ</button>
+        <button data-mask="line">Dòng/pada</button>
+      </span>
+    </span>
+    <span>Trả lời:
+      <span class="seg" id="ansSeg">
+        <button data-ans="click">Bấm hé</button>
+        <button data-ans="type">Gõ chữ</button>
+      </span>
+    </span>
+  </div>
+
+  <details class="import">
+    <summary>➕ Nhập bài kinh của bạn</summary>
+    <p class="hint">
+      <b>Cách 1 — Chọn file</b> <code>.txt</code> / <code>.md</code>: tự nhận diện kệ đánh số
+      (<code>01.</code> <code>02.</code>…) → mỗi câu thành một thẻ, giữ nguyên xuống dòng theo nhịp.<br>
+      <b>Cách 2 — Dán tay</b>: mỗi <b>câu học</b> cách nhau bằng một dòng trống; kèm bản dịch bằng
+      <code>|</code> sau phần Pāli.
+    </p>
+    <div class="controls" style="justify-content:flex-start;margin-bottom:8px">
+      <input type="file" id="fileInput" accept=".txt,.md,text/plain">
+    </div>
+    <textarea id="importBox" placeholder="01. Yānīdha bhūtāni samāgatāni,
+Bhummāni vā yāni va antalikkhe,
+sabbeva bhūtā sumanā bhavantu.
+
+02. Tasmā hi bhūtā nisāmetha sabbe... | (dịch tùy chọn)"></textarea>
+    <div class="controls" style="margin-top:8px">
+      <input id="importName" placeholder="Tên bài" style="flex:1;min-width:160px;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)">
+      <button class="primary" id="importBtn">Lưu bài</button>
+    </div>
+  </details>
+</div>
+
+<script>
+// ---------- Dữ liệu mẫu ----------
+const SAMPLE = [
+  {
+    id:"tam-quy",
+    name:"Tam Quy (Ba nương tựa)",
+    cards:[
+      {p:"Buddhaṁ saraṇaṁ gacchāmi", v:"Con về nương tựa nơi Phật"},
+      {p:"Dhammaṁ saraṇaṁ gacchāmi", v:"Con về nương tựa nơi Pháp"},
+      {p:"Saṅghaṁ saraṇaṁ gacchāmi", v:"Con về nương tựa nơi Tăng"},
+    ]
+  },
+  {
+    id:"metta",
+    name:"Mettā (đoạn ngắn)",
+    cards:[
+      {p:"Sabbe sattā averā hontu", v:"Nguyện tất cả chúng sinh không oán thù"},
+      {p:"Abyāpajjhā hontu", v:"Nguyện không sân hận"},
+      {p:"Anīghā hontu", v:"Nguyện không phiền não"},
+      {p:"Sukhī attānaṁ pariharantu", v:"Nguyện giữ mình an vui"},
+    ]
+  }
+];
+
+const LEVELS = {1:"1 từ ẩn",2:"chữ đầu",3:"nửa số từ",4:"ẩn hết"};
+const store = {
+  get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
+  set(k,v){localStorage.setItem(k,JSON.stringify(v))}
+};
+// Bài nạp từ thư mục kinh/ (theo manifest.json) — không lưu vào localStorage,
+// nạp mới mỗi lần mở nên sửa file là cập nhật ngay. Tiến độ SRS giữ nhờ id ổn định.
+const KINH_DIR = "kinh";
+let folderLessons = [];
+function userLessons(){ return store.get("pali_lessons", SAMPLE); }
+function saveUser(l){ store.set("pali_lessons", l); }
+function lessons(){ return folderLessons.concat(userLessons()); }
+
+function slugify(s){ return s.replace(/\.[^.]+$/,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+
+async function loadFolderLessons(){
+  folderLessons = [];
+  try{
+    const res = await fetch(KINH_DIR+"/manifest.json", {cache:"no-store"});
+    if(!res.ok) return;
+    const man = await res.json();
+    const list = Array.isArray(man) ? man : (man.lessons || []);
+    for(const entry of list){
+      const file = typeof entry==="string" ? entry : (entry && entry.file);
+      if(!file) continue;
+      try{
+        const r = await fetch(KINH_DIR+"/"+file, {cache:"no-store"});
+        if(!r.ok){ console.warn("Không tải được", file, r.status); continue; }
+        const text = await r.text();
+        const parsed = parsePali(text);
+        if(!parsed.cards.length) continue;
+        const name = (typeof entry==="object" && entry.name) || parsed.name || file;
+        folderLessons.push({ id:"f_"+slugify(file), name, cards:parsed.cards });
+      }catch(e){ console.warn("Lỗi nạp", file, e); }
+    }
+  }catch(e){ /* không có manifest (vd mở file://) -> dùng bài mẫu + import */ }
+}
+
+// SRS state per card: {due, interval, ease, reps}
+function srsKey(lid){ return "pali_srs_"+lid; }
+function getSrs(lid){ return store.get(srsKey(lid), {}); }
+function setSrs(lid,s){ store.set(srsKey(lid), s); }
+
+let curLesson, queue=[], idx=0, revealed=false, level=+ (store.get("pali_level",2));
+let maskMode = store.get("pali_maskmode","word");   // "word" | "line"
+let answerMode = store.get("pali_ansmode","click");  // "click" | "type"
+
+const el = id=>document.getElementById(id);
+const stage=el("stage"), lessonSel=el("lessonSel");
+
+function buildSelect(){
+  lessonSel.innerHTML="";
+  lessons().forEach(l=>{
+    const o=document.createElement("option");o.value=l.id;o.textContent=l.name;lessonSel.appendChild(o);
+  });
+}
+
+function now(){return Date.now();}
+const DAY=86400000;
+
+function loadLesson(lid){
+  curLesson = lessons().find(l=>l.id===lid) || lessons()[0];
+  const srs = getSrs(curLesson.id);
+  // build due queue
+  queue = curLesson.cards.map((c,i)=>{
+    const s = srs[i] || {due:0,interval:0,ease:2.4,reps:0};
+    return {i, card:c, s};
+  }).filter(x=> x.s.due <= now())
+    .sort((a,b)=> a.s.due - b.s.due);
+  if(queue.length===0){ // nothing due -> review all
+    queue = curLesson.cards.map((c,i)=>({i,card:c,s:(srs[i]||{due:0,interval:0,ease:2.4,reps:0})}));
+  }
+  idx=0; render();
+}
+
+function maskCard(card){
+  // giữ cấu trúc dòng (pada) để hiện xuống dòng đúng nhịp
+  const lineTexts = card.p.split("\n").map(l=>l.trim()).filter(Boolean);
+  const words=[]; const breakAfter=new Set();
+  const lineOf=[]; const firstInLine=new Set();
+  lineTexts.forEach((line,li)=>{
+    const ws=line.split(/\s+/).filter(Boolean);
+    ws.forEach((x,k)=>{ if(k===0) firstInLine.add(words.length); words.push(x); lineOf.push(li); });
+    breakAfter.add(words.length-1);
+  });
+  breakAfter.delete(words.length-1); // không xuống dòng ở cuối
+  const N=words.length, L=lineTexts.length;
+  let hideIdx=new Set(); const hintMap={};
+
+  if(maskMode==="line"){
+    // chọn tập dòng cần ẩn theo mức độ
+    let hideLines=new Set();
+    if(level===1){ hideLines.add(Math.floor(Math.random()*L)); }
+    else if(level===3){ while(hideLines.size<Math.ceil(L/2)) hideLines.add(Math.floor(Math.random()*L)); }
+    else { for(let i=0;i<L;i++) hideLines.add(i); } // level 2 & 4: ẩn hết
+    words.forEach((w,i)=>{
+      if(hideLines.has(lineOf[i])){
+        hideIdx.add(i);
+        // mức 2: gợi ý chữ đầu của mỗi DÒNG (pada cue); còn lại ẩn hẳn
+        hintMap[i] = (level===2 && firstInLine.has(i)) ? (w[0]+"…") : "";
+      }
+    });
+  } else {
+    // ẩn theo TỪ (như cũ)
+    if(level===1){ const i=Math.floor(Math.random()*N); hideIdx.add(i); hintMap[i]=""; }
+    else if(level===4){ words.forEach((_,i)=>{hideIdx.add(i);hintMap[i]="";}); }
+    else if(level===3){
+      while(hideIdx.size<Math.ceil(N/2)) hideIdx.add(Math.floor(Math.random()*N));
+      hideIdx.forEach(i=>hintMap[i]="▁");
+    } else { // level 2: ẩn hết, gợi ý chữ đầu mỗi từ
+      words.forEach((w,i)=>{hideIdx.add(i);hintMap[i]=w[0]+"…";});
+    }
+  }
+  return {words, hideIdx, breakAfter, hintMap};
+}
+
+// chuẩn hoá để so khớp khi gõ: thường + bỏ dấu câu + gộp khoảng trắng (GIỮ dấu Pāli)
+function normWords(s){
+  return s.toLowerCase().replace(/[.,;:!?'’‘"“”\-–—()]/g," ")
+          .split(/\s+/).filter(Boolean);
+}
+
+function render(){
+  el("progress").textContent = `${Math.min(idx+1,queue.length)}/${queue.length} · còn hạn`;
+  el("levelLbl").textContent = LEVELS[level];
+  el("level").value = level;
+  if(idx>=queue.length){ renderDone(); return; }
+  const item=queue[idx], card=item.card;
+  const {words,hideIdx,breakAfter,hintMap}=maskCard(card);
+  revealed=false;
+
+  const pali=document.createElement("div"); pali.className="pali";
+  words.forEach((w,i)=>{
+    const span=document.createElement("span"); span.className="tok"; span.textContent=w+" ";
+    if(hideIdx.has(i)){
+      span.classList.add("blank");
+      span.dataset.hint = hintMap[i]||"";
+      span.dataset.word=w;
+      if(answerMode==="click") span.onclick=()=>span.classList.add("revealed");
+    }
+    pali.appendChild(span);
+    if(breakAfter.has(i)) pali.appendChild(document.createElement("br"));
+  });
+
+  const vi=document.createElement("div"); vi.className="vi"; vi.textContent=card.v||"";
+
+  const grade=document.createElement("div"); grade.className="grade";
+  [["Quên","g-again",0],["Khó","g-again",1],["Được","g-good",2],["Dễ","g-easy",3]].forEach(([lbl,cls,q])=>{
+    const b=document.createElement("button"); b.className=cls; b.textContent=lbl;
+    b.onclick=()=>gradeCard(item,q); grade.appendChild(b);
+  });
+
+  const controls=document.createElement("div"); controls.className="controls";
+  const card_el=document.createElement("div"); card_el.className="card";
+  card_el.appendChild(pali);
+  if(card.v) card_el.appendChild(vi);
+
+  if(answerMode==="type"){
+    // ---- Chế độ GÕ CHỮ: gõ lại cả câu, app chấm từng từ ----
+    const ta=document.createElement("textarea"); ta.className="typebox";
+    ta.placeholder="Gõ lại câu kinh… (Ctrl/⌘+Enter để chấm)";
+    const diff=document.createElement("div"); diff.className="diff"; diff.style.display="none";
+    const score=document.createElement("div"); score.className="score"; score.style.display="none";
+    card_el.appendChild(ta); card_el.appendChild(diff); card_el.appendChild(score);
+
+    const checkBtn=document.createElement("button"); checkBtn.className="primary"; checkBtn.textContent="✓ Kiểm tra";
+    const check=()=>{
+      const exp=normWords(card.p), got=normWords(ta.value);
+      diff.innerHTML=""; let correct=0;
+      const n=Math.max(exp.length,got.length);
+      for(let i=0;i<n;i++){
+        const e=exp[i], g=got[i], sp=document.createElement("span"); sp.textContent=(e||g)+" ";
+        if(e && g===e){ sp.className="tw-ok"; correct++; }
+        else if(e && g && g!==e){ sp.className="tw-bad"; sp.title="Bạn gõ: "+g; }
+        else if(e && !g){ sp.className="tw-miss"; }        // thiếu từ
+        else { sp.className="tw-bad"; sp.textContent=g+" "; } // gõ dư
+        diff.appendChild(sp);
+      }
+      const pct=Math.round(correct/exp.length*100);
+      diff.style.display="block"; score.style.display="block";
+      score.textContent=`Đúng ${correct}/${exp.length} từ (${pct}%). Chọn mức để lên lịch ôn:`;
+      grade.style.display="flex"; checkBtn.style.display="none"; ta.disabled=true;
+    };
+    checkBtn.onclick=check;
+    ta.addEventListener("keydown",ev=>{ if((ev.ctrlKey||ev.metaKey)&&ev.key==="Enter") check(); });
+    controls.appendChild(checkBtn);
+    setTimeout(()=>ta.focus(),0);
+  } else {
+    // ---- Chế độ BẤM HÉ (cloze) ----
+    const revBtn=document.createElement("button"); revBtn.className="primary"; revBtn.textContent="👁 Hiện đáp án";
+    revBtn.onclick=()=>{
+      pali.querySelectorAll(".blank").forEach(s=>s.classList.add("revealed"));
+      revealed=true; grade.style.display="flex"; revBtn.style.display="none";
+    };
+    controls.appendChild(revBtn);
+  }
+
+  stage.innerHTML=""; stage.appendChild(card_el); stage.appendChild(controls); stage.appendChild(grade);
+}
+
+function gradeCard(item,q){
+  const s=item.s;
+  if(q<=1){ s.interval=0; s.reps=0; s.ease=Math.max(1.6,s.ease-0.2);
+    s.due = now() + (q===0?60000:5*60000); } // Quên: 1', Khó: 5'
+  else {
+    s.reps++;
+    if(s.reps===1) s.interval=1;
+    else if(s.reps===2) s.interval=3;
+    else s.interval=Math.round(s.interval*s.ease);
+    if(q===3) s.ease+=0.15;
+    s.due = now() + s.interval*DAY;
+  }
+  const srs=getSrs(curLesson.id); srs[item.i]=s; setSrs(curLesson.id,srs);
+  idx++; render();
+}
+
+function renderDone(){
+  stage.innerHTML=`<div class="done">
+     <div style="font-size:2rem">🌸</div>
+     <p>Xong phần đến hạn hôm nay.<br>Lành thay!</p>
+     <button class="primary" onclick="loadLesson(curLesson.id)">Ôn lại toàn bài</button>
+   </div>`;
+}
+
+// ---------- Events ----------
+lessonSel.onchange=e=>loadLesson(e.target.value);
+el("level").oninput=e=>{ level=+e.target.value; store.set("pali_level",level); render(); };
+
+function paintSeg(){
+  document.querySelectorAll("#maskSeg button").forEach(b=>b.classList.toggle("on",b.dataset.mask===maskMode));
+  document.querySelectorAll("#ansSeg button").forEach(b=>b.classList.toggle("on",b.dataset.ans===answerMode));
+}
+el("maskSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b)return;
+  maskMode=b.dataset.mask; store.set("pali_maskmode",maskMode); paintSeg(); render(); };
+el("ansSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b)return;
+  answerMode=b.dataset.ans; store.set("pali_ansmode",answerMode); paintSeg(); render(); };
+paintSeg();
+el("resetBtn").onclick=()=>{
+  if(confirm("Xoá tiến độ SRS của bài này?")){ setSrs(curLesson.id,{}); loadLesson(curLesson.id); }
+};
+// ---------- Parser: text/markdown -> {name, cards} ----------
+const VERSE_RE = /^\s*\d{1,3}\s*[.)]\s+/;   // "01. ", "2) ", ...
+function splitPV(text){ const [p,v]=text.split("|"); return {p:(p||"").trim(), v:(v||"").trim()}; }
+
+function parsePali(raw){
+  const rawLines = raw.replace(/\r/g,"").split("\n");
+  // bỏ tiêu đề markdown # và dòng đầu làm tên bài
+  let name="";
+  const lines=[];
+  rawLines.forEach((l,i)=>{
+    const t=l.replace(/^#+\s*/,"").trimEnd();
+    lines.push(t);
+  });
+  // tên bài = dòng chữ đầu tiên không phải kệ đánh số & không rỗng
+  const firstIdx = lines.findIndex(l=>l.trim() && !VERSE_RE.test(l));
+  const hasVerses = lines.some(l=>VERSE_RE.test(l));
+  let bodyStart=0;
+  if(hasVerses && firstIdx!==-1 && firstIdx < (lines.findIndex(l=>VERSE_RE.test(l)))){
+    name=lines[firstIdx].trim(); bodyStart=firstIdx+1;
+  }
+
+  const cards=[];
+  if(hasVerses){
+    let cur=null;
+    for(let i=bodyStart;i<lines.length;i++){
+      const l=lines[i];
+      if(VERSE_RE.test(l)){
+        if(cur) cards.push(cur);
+        cur={p:l.replace(VERSE_RE,"").trim(), v:""};
+      } else if(l.trim()){
+        if(!cur) cur={p:"",v:""};
+        // dòng nối tiếp trong cùng câu -> giữ xuống dòng
+        const {p,v}=splitPV(l);
+        cur.p = cur.p ? cur.p+"\n"+p : p;
+        if(v) cur.v = cur.v ? cur.v+" "+v : v;
+      }
+    }
+    if(cur) cards.push(cur);
+  } else {
+    // tách theo dòng trống thành từng câu; trong câu: nhiều dòng nối lại
+    raw.replace(/\r/g,"").split(/\n\s*\n/).forEach(block=>{
+      const bl=block.split("\n").map(s=>s.trim()).filter(Boolean);
+      if(!bl.length) return;
+      let p="",v="";
+      bl.forEach(l=>{const s=splitPV(l); p=p?p+"\n"+s.p:s.p; if(s.v)v=v?v+" "+s.v:s.v;});
+      cards.push({p,v});
+    });
+  }
+  return {name, cards:cards.filter(c=>c.p)};
+}
+
+function importText(raw, fallbackName){
+  const parsed=parsePali(raw);
+  if(!parsed.cards.length){ alert("Không tìm thấy nội dung Pāli để tách."); return; }
+  const name = (el("importName").value.trim()) || parsed.name || fallbackName || "Bài mới";
+  const id="u_"+Date.now();
+  const all=userLessons(); all.push({id,name,cards:parsed.cards}); saveUser(all);
+  buildSelect(); lessonSel.value=id; loadLesson(id);
+  el("importBox").value=""; el("importName").value=""; el("fileInput").value="";
+  alert(`Đã nhập “${name}” · ${parsed.cards.length} câu.`);
+}
+
+el("importBtn").onclick=()=>{
+  const raw=el("importBox").value.trim();
+  if(!raw){alert("Chưa có nội dung");return;}
+  importText(raw);
+};
+
+el("fileInput").onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const base=f.name.replace(/\.[^.]+$/,"");
+    el("importBox").value=ev.target.result;  // xem trước
+    importText(ev.target.result, base);
+  };
+  reader.readAsText(f,"utf-8");
+};
+
+async function init(){
+  el("progress").textContent = "Đang tải danh sách kinh…";
+  await loadFolderLessons();
+  buildSelect();
+  loadLesson(lessons()[0].id);
+}
+init();
+</script>
+</body>
+</html>
