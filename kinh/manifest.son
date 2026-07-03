@@ -1,0 +1,6 @@
+{
+  "lessons": [
+    { "file": "Ratanasuttam.txt", "name": "Ratana Sutta (Kinh Châu Báu)" },
+	{ "file": "Khandhasuttam.txt", "name": "Khandha Sutta (Hộ kinh Khandha)" }
+  ]
+}
