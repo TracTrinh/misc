@@ -37,6 +37,9 @@
   .vi{color:var(--muted);font-style:italic;margin-top:12px;font-size:1rem;
     border-top:1px dashed var(--line);padding-top:12px}
   .joinctx{color:var(--muted);font-size:.95rem;margin-bottom:8px}
+  .wholeinfo{color:var(--muted);font-style:italic;margin:0 0 10px}
+  .wholeverse{margin-bottom:22px}
+  .wholeverse:last-child{margin-bottom:0}
   .tok{cursor:pointer;border-radius:6px;padding:0 2px;transition:background .15s}
   .tok.blank{background:var(--accent2);color:transparent;position:relative;user-select:none}
   .tok.blank::after{content:attr(data-hint);color:var(--ink);opacity:.55;
@@ -49,9 +52,6 @@
   .g-again{border-color:var(--bad);color:var(--bad)}
   .g-good{border-color:var(--good);color:var(--good)}
   .g-easy{border-color:var(--accent2)}
-  .levelrow{display:flex;gap:6px;align-items:center;justify-content:center;
-    font-size:.8rem;color:var(--muted);margin-top:14px}
-  input[type=range]{accent-color:var(--accent)}
   .settings{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;
     margin-top:10px;font-size:.8rem;color:var(--muted)}
   .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -99,16 +99,13 @@
   <div class="bar">
     <select id="lessonSel"></select>
     <span class="stat" id="progress"></span>
+    <button id="backBtn" title="Xem lại câu/thẻ vừa xong">⏮ Câu trước</button>
+    <select id="jumpSel" title="Bắt đầu lại từ một câu trong bài"></select>
+    <button id="wholeBtn" title="Tự kiểm tra đọc thuộc cả bài liền mạch">📖 Đọc thuộc cả bài</button>
     <button id="resetBtn" title="Xoá tiến độ bài này">↺ Reset</button>
   </div>
 
   <div id="stage"></div>
-
-  <div class="levelrow" id="levelRow">
-    Độ khó ẩn chữ:
-    <input type="range" id="level" min="1" max="4" value="2" style="width:130px">
-    <span id="levelLbl"></span>
-  </div>
 
   <div class="settings">
     <span id="maskWrap">Ẩn theo:
@@ -179,7 +176,6 @@ const SAMPLE = [
   }
 ];
 
-const LEVELS = {1:"1 từ ẩn",2:"chữ đầu",3:"nửa số từ",4:"ẩn hết"};
 const store = {
   get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
   set(k,v){localStorage.setItem(k,JSON.stringify(v))}
@@ -231,6 +227,11 @@ function joinSrsKey(lid){ return "pali_srsjoin_"+lid; }
 function getJoinSrs(lid){ return store.get(joinSrsKey(lid), {}); }
 function setJoinSrs(lid,s){ store.set(joinSrsKey(lid), s); }
 
+// SRS cho bài kiểm tra "đọc thuộc cả bài" (1 bản ghi duy nhất mỗi bài, không theo từng câu)
+function wholeSrsKey(lid){ return "pali_srswhole_"+lid; }
+function getWholeSrs(lid){ return store.get(wholeSrsKey(lid), freshS()); }
+function setWholeSrs(lid,s){ store.set(wholeSrsKey(lid), s); }
+
 function lastLine(p){ const ls=p.split("\n").map(s=>s.trim()).filter(Boolean); return ls[ls.length-1]||""; }
 function firstLine(p){ const ls=p.split("\n").map(s=>s.trim()).filter(Boolean); return ls[0]||""; }
 // thẻ nối: hiện (làm ngữ cảnh) dòng cuối câu trước, ẩn dòng đầu câu sau
@@ -238,9 +239,18 @@ function buildJoinCard(cards,i){
   return { p:firstLine(cards[i+1].p), v:cards[i+1].v||"", context:lastLine(cards[i].p) };
 }
 
-let curLesson, queue=[], idx=0, revealed=false, level=+ (store.get("pali_level",2));
+let curLesson, queue=[], idx=0, revealed=false;
 let maskMode = store.get("pali_maskmode","word");   // "word" | "line"
 let answerMode = store.get("pali_ansmode","click");  // "click" | "type"
+
+// mức ẩn tự tăng theo số lần đã nhớ đúng của CHÍNH thẻ đó (expanding retrieval):
+// mới học/vừa quên (reps=0) -> ẩn ít nhất; càng nhớ đúng nhiều lần -> ẩn càng nhiều
+function repsToLevel(reps){
+  if(reps<=0) return 1;
+  if(reps===1) return 2;
+  if(reps===2) return 3;
+  return 4;
+}
 
 const el = id=>document.getElementById(id);
 const stage=el("stage"), lessonSel=el("lessonSel");
@@ -254,23 +264,30 @@ function buildSelect(){
 
 function now(){return Date.now();}
 const DAY=86400000;
+function freshS(){ return {due:0,interval:0,ease:2.4,reps:0}; }
+
+// xây danh sách thẻ xen kẽ câu + nối (câu i, nối i-1→i, câu i+1, ...) cho các câu
+// từ vị trí "from" tới hết bài — dùng chung cho cả loadLesson (từ đầu) và jumpToCard (từ giữa)
+function buildItems(cards, srs, jsrs, from){
+  let items = [];
+  for(let i=from;i<cards.length;i++){
+    items.push({kind:"card", i, card:cards[i], s: srs[i] || freshS()});
+    if(i>from){
+      const ji=i-1;
+      items.push({kind:"join", i:ji, card:buildJoinCard(cards,ji), s: jsrs[ji] || freshS()});
+    }
+  }
+  return items;
+}
 
 function loadLesson(lid){
   curLesson = lessons().find(l=>l.id===lid) || lessons()[0];
   const srs = getSrs(curLesson.id);
   const jsrs = getJoinSrs(curLesson.id);
   const cards = curLesson.cards;
-  // build due queue: xen kẽ câu và thẻ nối theo đúng thứ tự bài
-  // (câu1, câu2, nối1→2, câu3, nối2→3, ...) để luyện điểm nối ngay khi vừa học xong,
-  // lúc trí nhớ còn mới — thay vì dồn hết thẻ nối ra sau khi học xong toàn bài
-  let items = [];
-  cards.forEach((c,i)=>{
-    items.push({kind:"card", i, card:c, s: srs[i] || {due:0,interval:0,ease:2.4,reps:0}});
-    if(i>0){
-      const ji=i-1;
-      items.push({kind:"join", i:ji, card:buildJoinCard(cards,ji), s: jsrs[ji] || {due:0,interval:0,ease:2.4,reps:0}});
-    }
-  });
+  // xen kẽ câu và thẻ nối theo đúng thứ tự bài (câu1, câu2, nối1→2, câu3, nối2→3, ...)
+  // để luyện điểm nối ngay khi vừa học xong, lúc trí nhớ còn mới
+  const items = buildItems(cards, srs, jsrs, 0);
   queue = items.filter(x=> x.s.due <= now()).sort((a,b)=> a.s.due - b.s.due);
   if(queue.length===0){ queue = items; } // nothing due -> review all
   idx=0;
@@ -278,10 +295,33 @@ function loadLesson(lid){
   const savedCard = store.get("pali_last_card_"+curLesson.id, null);
   if(savedCard!=null){ const j=queue.findIndex(x=>x.kind+":"+x.i===savedCard); if(j>=0) idx=j; }
   store.set("pali_last_lesson", curLesson.id);
+  refreshWholeBtn();
+  buildJumpSelect();
   render();
 }
 
-function maskCard(card){
+// combo box "bắt đầu lại từ câu..." : liệt kê từng câu trong bài đang học
+function buildJumpSelect(){
+  const sel=el("jumpSel");
+  sel.innerHTML = '<option value="">↷ Bắt đầu lại từ câu…</option>';
+  curLesson.cards.forEach((c,i)=>{
+    const o=document.createElement("option"); o.value=i;
+    const snippet=firstLine(c.p);
+    o.textContent = `${i+1}. ${snippet.length>28 ? snippet.slice(0,28)+"…" : snippet}`;
+    sel.appendChild(o);
+  });
+}
+
+// bỏ qua lịch due, dựng lại hàng đợi bắt đầu từ câu "from" cho tới hết bài
+function jumpToCard(from){
+  const srs = getSrs(curLesson.id);
+  const jsrs = getJoinSrs(curLesson.id);
+  queue = buildItems(curLesson.cards, srs, jsrs, from);
+  idx = 0;
+  render();
+}
+
+function maskCard(card, level){
   // giữ cấu trúc dòng (pada) để hiện xuống dòng đúng nhịp
   const lineTexts = card.p.split("\n").map(l=>l.trim()).filter(Boolean);
   const words=[]; const breakAfter=new Set();
@@ -334,12 +374,11 @@ function stripDiacritics(w){
 
 function render(){
   el("progress").textContent = `${Math.min(idx+1,queue.length)}/${queue.length} · còn hạn`;
-  el("levelLbl").textContent = LEVELS[level];
-  el("level").value = level;
+  el("backBtn").disabled = idx<=0;
   if(idx>=queue.length){ renderDone(); return; }
   const item=queue[idx], card=item.card;
   store.set("pali_last_card_"+curLesson.id, item.kind+":"+item.i);   // nhớ đoạn đang mở
-  const {words,hideIdx,breakAfter,hintMap}=maskCard(card);
+  const {words,hideIdx,breakAfter,hintMap}=maskCard(card, repsToLevel(item.s.reps));
   revealed=false;
 
   const pali=document.createElement("div"); pali.className="pali";
@@ -499,7 +538,9 @@ function render(){
     checkBtn.onclick=()=>{
       let correct=0;
       placed.forEach((origIdx,i)=>{
-        const ok = origIdx===i; if(ok) correct++;
+        // so theo CHỮ chứ không theo index gốc: từ trùng nhau (vd "ca" xuất hiện 2 lần)
+        // đặt đúng vị trí vẫn tính đúng dù là "bản sao" nào của từ đó
+        const ok = words[origIdx]===words[i]; if(ok) correct++;
         slotEls[i].classList.add(ok?"ok":"bad");
       });
       const pct=Math.round(correct/N*100);
@@ -559,8 +600,8 @@ function render(){
   stage.innerHTML=""; stage.appendChild(card_el); stage.appendChild(controls); stage.appendChild(grade);
 }
 
-function gradeCard(item,q){
-  const s=item.s;
+// công thức SRS dùng chung cho thẻ câu, thẻ nối, và bài kiểm tra đọc thuộc cả bài
+function applyGrade(s,q){
   if(q<=1){ s.interval=0; s.reps=0; s.ease=Math.max(1.6,s.ease-0.2);
     s.due = now() + (q===0?60000:5*60000); } // Quên: 1', Khó: 5'
   else {
@@ -571,6 +612,11 @@ function gradeCard(item,q){
     if(q===3) s.ease+=0.15;
     s.due = now() + s.interval*DAY;
   }
+  return s;
+}
+
+function gradeCard(item,q){
+  const s=applyGrade(item.s,q);
   if(item.kind==="join"){ const js=getJoinSrs(curLesson.id); js[item.i]=s; setJoinSrs(curLesson.id,js); }
   else { const srs=getSrs(curLesson.id); srs[item.i]=s; setSrs(curLesson.id,srs); }
   idx++; render();
@@ -584,16 +630,73 @@ function renderDone(){
    </div>`;
 }
 
+// ---------- Đọc thuộc cả bài (free recall, không ẩn chữ) ----------
+function renderWholeLesson(step){
+  const card_el=document.createElement("div"); card_el.className="card";
+  if(step!==2){
+    const info=document.createElement("div"); info.className="wholeinfo";
+    info.textContent="Đọc/tụng thuộc lòng cả bài theo trí nhớ, không nhìn màn hình. Xong rồi bấm nút bên dưới để xem lại toàn bài và tự chấm.";
+    card_el.appendChild(info);
+  } else {
+    curLesson.cards.forEach(c=>{
+      const verse=document.createElement("div"); verse.className="wholeverse";
+      const p=document.createElement("div"); p.className="pali";
+      c.p.split("\n").forEach((line,li)=>{
+        if(li>0) p.appendChild(document.createElement("br"));
+        p.appendChild(document.createTextNode(line));
+      });
+      verse.appendChild(p);
+      if(c.v){ const v=document.createElement("div"); v.className="vi"; v.textContent=c.v; verse.appendChild(v); }
+      card_el.appendChild(verse);
+    });
+  }
+
+  const controls=document.createElement("div"); controls.className="controls";
+  const grade=document.createElement("div"); grade.className="grade";
+  if(step!==2){
+    const b=document.createElement("button"); b.className="primary"; b.textContent="✅ Đã đọc xong — Xem lại toàn bài";
+    b.onclick=()=>renderWholeLesson(2);
+    controls.appendChild(b);
+  } else {
+    [["Quên","g-again",0],["Khó","g-again",1],["Được","g-good",2],["Dễ","g-easy",3]].forEach(([lbl,cls,q])=>{
+      const b=document.createElement("button"); b.className=cls; b.textContent=lbl;
+      b.onclick=()=>gradeWhole(q); grade.appendChild(b);
+    });
+    grade.style.display="flex";
+  }
+  const returnBtn=document.createElement("button"); returnBtn.textContent="↩ Quay lại ôn từng câu";
+  returnBtn.onclick=()=>loadLesson(curLesson.id);
+  controls.appendChild(returnBtn);
+
+  stage.innerHTML=""; stage.appendChild(card_el); stage.appendChild(controls); stage.appendChild(grade);
+}
+
+function gradeWhole(q){
+  const s=applyGrade(getWholeSrs(curLesson.id),q);
+  setWholeSrs(curLesson.id,s);
+  loadLesson(curLesson.id);
+}
+
+function refreshWholeBtn(){
+  const s=getWholeSrs(curLesson.id);
+  el("wholeBtn").textContent = "📖 Đọc thuộc cả bài" + (s.due<=now() ? " · đến hạn" : "");
+}
+
 // ---------- Events ----------
 lessonSel.onchange=e=>loadLesson(e.target.value);
-el("level").oninput=e=>{ level=+e.target.value; store.set("pali_level",level); render(); };
+el("wholeBtn").onclick=()=>renderWholeLesson(1);
+el("backBtn").onclick=()=>{ if(idx>0){ idx--; render(); } };
+el("jumpSel").onchange=e=>{
+  const v=e.target.value;
+  e.target.value=""; // về placeholder để chọn lại cùng câu vẫn kích hoạt được
+  if(v!=="") jumpToCard(+v);
+};
 
 function paintSeg(){
   document.querySelectorAll("#maskSeg button").forEach(b=>b.classList.toggle("on",b.dataset.mask===maskMode));
   document.querySelectorAll("#ansSeg button").forEach(b=>b.classList.toggle("on",b.dataset.ans===answerMode));
-  const orderMode = answerMode==="order";  // Sắp từ không dùng ẩn theo Từ/Dòng hay mức độ ẩn
+  const orderMode = answerMode==="order";  // Sắp từ không dùng ẩn theo Từ/Dòng
   el("maskWrap").style.display = orderMode ? "none" : "";
-  el("levelRow").style.display = orderMode ? "none" : "";
 }
 el("maskSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b)return;
   maskMode=b.dataset.mask; store.set("pali_maskmode",maskMode); paintSeg(); render(); };
@@ -601,7 +704,7 @@ el("ansSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b)return;
   answerMode=b.dataset.ans; store.set("pali_ansmode",answerMode); paintSeg(); render(); };
 paintSeg();
 el("resetBtn").onclick=()=>{
-  if(confirm("Xoá tiến độ SRS của bài này?")){ setSrs(curLesson.id,{}); setJoinSrs(curLesson.id,{}); loadLesson(curLesson.id); }
+  if(confirm("Xoá tiến độ SRS của bài này?")){ setSrs(curLesson.id,{}); setJoinSrs(curLesson.id,{}); setWholeSrs(curLesson.id,freshS()); loadLesson(curLesson.id); }
 };
 // ---------- Parser: text/markdown -> {name, cards} ----------
 const VERSE_RE = /^\s*\d{1,3}\s*[.)]\s+/;   // "01. ", "2) ", ...
