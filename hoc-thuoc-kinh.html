@@ -36,6 +36,7 @@
   .tok.wa{color:var(--word1)} .tok.wb{color:var(--word2)}
   .vi{color:var(--muted);font-style:italic;margin-top:12px;font-size:1rem;
     border-top:1px dashed var(--line);padding-top:12px}
+  .joinctx{color:var(--muted);font-size:.95rem;margin-bottom:8px}
   .tok{cursor:pointer;border-radius:6px;padding:0 2px;transition:background .15s}
   .tok.blank{background:var(--accent2);color:transparent;position:relative;user-select:none}
   .tok.blank::after{content:attr(data-hint);color:var(--ink);opacity:.55;
@@ -225,6 +226,18 @@ function srsKey(lid){ return "pali_srs_"+lid; }
 function getSrs(lid){ return store.get(srsKey(lid), {}); }
 function setSrs(lid,s){ store.set(srsKey(lid), s); }
 
+// SRS riêng cho "thẻ nối câu" (join[i] = điểm nối giữa câu i và câu i+1)
+function joinSrsKey(lid){ return "pali_srsjoin_"+lid; }
+function getJoinSrs(lid){ return store.get(joinSrsKey(lid), {}); }
+function setJoinSrs(lid,s){ store.set(joinSrsKey(lid), s); }
+
+function lastLine(p){ const ls=p.split("\n").map(s=>s.trim()).filter(Boolean); return ls[ls.length-1]||""; }
+function firstLine(p){ const ls=p.split("\n").map(s=>s.trim()).filter(Boolean); return ls[0]||""; }
+// thẻ nối: hiện (làm ngữ cảnh) dòng cuối câu trước, ẩn dòng đầu câu sau
+function buildJoinCard(cards,i){
+  return { p:firstLine(cards[i+1].p), v:cards[i+1].v||"", context:lastLine(cards[i].p) };
+}
+
 let curLesson, queue=[], idx=0, revealed=false, level=+ (store.get("pali_level",2));
 let maskMode = store.get("pali_maskmode","word");   // "word" | "line"
 let answerMode = store.get("pali_ansmode","click");  // "click" | "type"
@@ -245,19 +258,25 @@ const DAY=86400000;
 function loadLesson(lid){
   curLesson = lessons().find(l=>l.id===lid) || lessons()[0];
   const srs = getSrs(curLesson.id);
-  // build due queue
-  queue = curLesson.cards.map((c,i)=>{
-    const s = srs[i] || {due:0,interval:0,ease:2.4,reps:0};
-    return {i, card:c, s};
-  }).filter(x=> x.s.due <= now())
-    .sort((a,b)=> a.s.due - b.s.due);
-  if(queue.length===0){ // nothing due -> review all
-    queue = curLesson.cards.map((c,i)=>({i,card:c,s:(srs[i]||{due:0,interval:0,ease:2.4,reps:0})}));
-  }
+  const jsrs = getJoinSrs(curLesson.id);
+  const cards = curLesson.cards;
+  // build due queue: xen kẽ câu và thẻ nối theo đúng thứ tự bài
+  // (câu1, câu2, nối1→2, câu3, nối2→3, ...) để luyện điểm nối ngay khi vừa học xong,
+  // lúc trí nhớ còn mới — thay vì dồn hết thẻ nối ra sau khi học xong toàn bài
+  let items = [];
+  cards.forEach((c,i)=>{
+    items.push({kind:"card", i, card:c, s: srs[i] || {due:0,interval:0,ease:2.4,reps:0}});
+    if(i>0){
+      const ji=i-1;
+      items.push({kind:"join", i:ji, card:buildJoinCard(cards,ji), s: jsrs[ji] || {due:0,interval:0,ease:2.4,reps:0}});
+    }
+  });
+  queue = items.filter(x=> x.s.due <= now()).sort((a,b)=> a.s.due - b.s.due);
+  if(queue.length===0){ queue = items; } // nothing due -> review all
   idx=0;
   // mở lại đúng đoạn đang xem lần trước (nếu còn trong hàng đợi)
   const savedCard = store.get("pali_last_card_"+curLesson.id, null);
-  if(savedCard!=null){ const j=queue.findIndex(x=>x.i===savedCard); if(j>=0) idx=j; }
+  if(savedCard!=null){ const j=queue.findIndex(x=>x.kind+":"+x.i===savedCard); if(j>=0) idx=j; }
   store.set("pali_last_lesson", curLesson.id);
   render();
 }
@@ -319,7 +338,7 @@ function render(){
   el("level").value = level;
   if(idx>=queue.length){ renderDone(); return; }
   const item=queue[idx], card=item.card;
-  store.set("pali_last_card_"+curLesson.id, item.i);   // nhớ đoạn đang mở
+  store.set("pali_last_card_"+curLesson.id, item.kind+":"+item.i);   // nhớ đoạn đang mở
   const {words,hideIdx,breakAfter,hintMap}=maskCard(card);
   revealed=false;
 
@@ -349,6 +368,13 @@ function render(){
 
   const controls=document.createElement("div"); controls.className="controls";
   const card_el=document.createElement("div"); card_el.className="card";
+  if(item.kind==="join"){
+    const ctx=document.createElement("div"); ctx.className="joinctx";
+    const tag=document.createElement("span"); tag.textContent="🔗 "; tag.style.color="var(--accent)"; tag.style.fontWeight="700";
+    ctx.appendChild(tag);
+    ctx.appendChild(document.createTextNode("…"+card.context));
+    card_el.appendChild(ctx);
+  }
   if(answerMode!=="order") card_el.appendChild(pali);
   if(card.v) card_el.appendChild(vi);
 
@@ -545,7 +571,8 @@ function gradeCard(item,q){
     if(q===3) s.ease+=0.15;
     s.due = now() + s.interval*DAY;
   }
-  const srs=getSrs(curLesson.id); srs[item.i]=s; setSrs(curLesson.id,srs);
+  if(item.kind==="join"){ const js=getJoinSrs(curLesson.id); js[item.i]=s; setJoinSrs(curLesson.id,js); }
+  else { const srs=getSrs(curLesson.id); srs[item.i]=s; setSrs(curLesson.id,srs); }
   idx++; render();
 }
 
@@ -574,7 +601,7 @@ el("ansSeg").onclick=e=>{ const b=e.target.closest("button"); if(!b)return;
   answerMode=b.dataset.ans; store.set("pali_ansmode",answerMode); paintSeg(); render(); };
 paintSeg();
 el("resetBtn").onclick=()=>{
-  if(confirm("Xoá tiến độ SRS của bài này?")){ setSrs(curLesson.id,{}); loadLesson(curLesson.id); }
+  if(confirm("Xoá tiến độ SRS của bài này?")){ setSrs(curLesson.id,{}); setJoinSrs(curLesson.id,{}); loadLesson(curLesson.id); }
 };
 // ---------- Parser: text/markdown -> {name, cards} ----------
 const VERSE_RE = /^\s*\d{1,3}\s*[.)]\s+/;   // "01. ", "2) ", ...
