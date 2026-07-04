@@ -32,7 +32,7 @@
   .stat{font-size:.8rem;color:var(--muted)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
     padding:20px 18px;box-shadow:var(--shadow);margin-bottom:14px}
-  .pali{font-size:var(--reader-font);line-height:2;letter-spacing:.2px;word-spacing:2px}
+  .pali{font-size:calc(var(--reader-font) * 1.15);font-weight:700;line-height:2;letter-spacing:.2px;word-spacing:2px}
   .tok.wa{color:var(--word1)} .tok.wb{color:var(--word2)}
   .vi{color:var(--muted);font-style:italic;margin-top:12px;font-size:1rem;
     border-top:1px dashed var(--line);padding-top:12px}
@@ -68,14 +68,17 @@
     border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .hint{font-size:.78rem;color:var(--muted);margin:8px 0}
   .slots{font-size:var(--reader-font);line-height:2;display:flex;flex-wrap:wrap;gap:.1rem 1rem}
-  .slot{min-width:2.4em;border-bottom:2px dashed var(--line);text-align:center;padding:0 4px}
-  .slot.filled{border-bottom-style:solid;border-color:var(--muted);cursor:pointer}
+  .slot{min-width:2.4em;border-bottom:2px dashed var(--line);text-align:center;padding:0 4px;touch-action:none}
+  .slot.filled{border-bottom-style:solid;border-color:var(--muted);cursor:grab}
   .slot.ok{color:var(--good);border-color:var(--good)}
   .slot.bad{color:var(--bad);border-color:var(--bad)}
+  .slot.dragover{background:rgba(160,82,45,.18);border-radius:6px}
   .wordbank{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
   .chip{padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);
-    color:var(--ink);font-size:1rem;cursor:pointer}
+    color:var(--ink);font-size:1rem;cursor:grab;touch-action:none}
   .chip.used{opacity:.22;pointer-events:none}
+  .drag-ghost{position:fixed;z-index:1000;pointer-events:none;opacity:.9;cursor:grabbing;
+    box-shadow:var(--shadow);transform:translate(-50%,-50%) rotate(-2deg)}
   .reader-controls{position:fixed;left:16px;bottom:18px;z-index:999;display:flex;align-items:center;
     background:var(--card);border:1px solid var(--line);border-radius:50px;overflow:hidden;
     box-shadow:var(--shadow)}
@@ -350,15 +353,15 @@ function render(){
   if(card.v) card_el.appendChild(vi);
 
   if(answerMode==="order"){
-    // ---- Chế độ SẮP TỪ: xáo từ, bấm chọn lại đúng thứ tự ----
+    // ---- Chế độ SẮP TỪ: kéo-thả (hoặc bấm) từ vào đúng ô ----
     const N=words.length;
-    let placed=[]; // danh sách origIdx đã đặt, theo đúng thứ tự đã bấm
+    let placed=new Array(N).fill(null); // placed[vị trí ô] = origIdx từ đó, đặt thẳng vào ô nên sửa 1 chữ không ảnh hưởng chữ khác
+    let locked=false;
 
     const slots=document.createElement("div"); slots.className="slots";
     const slotEls=[];
     words.forEach((w,i)=>{
       const s=document.createElement("span"); s.className="slot";
-      s.onclick=()=>{ if(placed[i]!=null) removeAt(i); }; // bấm ô đã điền để trả từ đó về rổ
       slotEls.push(s); slots.appendChild(s);
       if(breakAfter.has(i)) slots.appendChild(document.createElement("br"));
     });
@@ -376,28 +379,95 @@ function render(){
         if(origIdx!=null){ s.textContent=words[origIdx]; s.classList.add("filled"); s.classList.remove("ok","bad"); }
         else { s.textContent=""; s.classList.remove("filled","ok","bad"); }
       });
-      checkBtn.disabled = placed.length<N;
-      undoBtn.disabled = placed.length===0;
+      const filled = placed.filter(x=>x!=null).length;
+      checkBtn.disabled = filled<N;
+      undoBtn.disabled = filled===0;
     }
-    function removeAt(i){
-      const origIdx=placed[i]; if(origIdx==null) return;
-      placed.splice(i,1);            // xoá đúng ô này, các từ sau tự dồn lên
+    function firstEmptySlot(){ return placed.findIndex(x=>x==null); }
+    function placeInSlot(slotIdx, origIdx){
+      if(placed[slotIdx]!=null) chipEls[placed[slotIdx]].classList.remove("used"); // trả chữ cũ trong ô đó về rổ
+      const oldSlot = placed.indexOf(origIdx);
+      if(oldSlot!==-1) placed[oldSlot]=null; // chữ này đang ở ô khác -> gỡ khỏi ô cũ
+      placed[slotIdx]=origIdx;
+      chipEls[origIdx].classList.add("used");
+      redraw();
+    }
+    function removeSlot(slotIdx){
+      const origIdx=placed[slotIdx]; if(origIdx==null) return;
+      placed[slotIdx]=null;
       chipEls[origIdx].classList.remove("used");
       redraw();
     }
+    function swapSlots(a,b){
+      if(a===b) return;
+      const tmp=placed[a]; placed[a]=placed[b]; placed[b]=tmp;
+      redraw();
+    }
+
+    const DRAG_TH=6;
+    function makeDraggable(el, isSlot, slotIndex, chipOrigIdx){
+      el.addEventListener("pointerdown",ev=>{
+        if(locked) return;
+        let origIdx, fromSlot;
+        if(isSlot){ origIdx=placed[slotIndex]; if(origIdx==null) return; fromSlot=slotIndex; }
+        else { if(el.classList.contains("used")) return; origIdx=chipOrigIdx; fromSlot=null; }
+        const startX=ev.clientX, startY=ev.clientY;
+        let dragging=false, ghost=null;
+        try{ el.setPointerCapture(ev.pointerId); }catch(e){}
+        function onMove(mv){
+          const dx=mv.clientX-startX, dy=mv.clientY-startY;
+          if(!dragging && Math.hypot(dx,dy)>DRAG_TH){
+            dragging=true;
+            ghost=document.createElement("div"); ghost.className="chip drag-ghost"; ghost.textContent=words[origIdx];
+            document.body.appendChild(ghost);
+          }
+          if(dragging){
+            ghost.style.left=mv.clientX+"px"; ghost.style.top=mv.clientY+"px";
+            slotEls.forEach(s=>s.classList.remove("dragover"));
+            const under=document.elementFromPoint(mv.clientX,mv.clientY);
+            const slotUnder=under && under.closest(".slot");
+            if(slotUnder && slots.contains(slotUnder)) slotUnder.classList.add("dragover");
+          }
+        }
+        function onUp(up){
+          try{ el.releasePointerCapture(ev.pointerId); }catch(e){}
+          document.removeEventListener("pointermove",onMove);
+          document.removeEventListener("pointerup",onUp);
+          slotEls.forEach(s=>s.classList.remove("dragover"));
+          if(dragging){
+            ghost.remove();
+            const under=document.elementFromPoint(up.clientX,up.clientY);
+            const slotUnder=under && under.closest(".slot");
+            const bankUnder=under && under.closest(".wordbank");
+            if(slotUnder && slots.contains(slotUnder)){
+              const targetIdx=+slotEls.indexOf(slotUnder);
+              if(fromSlot!=null) swapSlots(fromSlot,targetIdx);
+              else placeInSlot(targetIdx,origIdx);
+            } else if(bankUnder && fromSlot!=null){
+              removeSlot(fromSlot);
+            }
+          } else {
+            // không kéo, chỉ bấm: bấm ô đã điền để trả về rổ; bấm chữ trong rổ để điền vào ô trống đầu tiên
+            if(isSlot) removeSlot(slotIndex);
+            else { const s=firstEmptySlot(); if(s!==-1) placeInSlot(s,origIdx); }
+          }
+        }
+        document.addEventListener("pointermove",onMove);
+        document.addEventListener("pointerup",onUp);
+      });
+    }
+
+    slotEls.forEach((s,i)=> makeDraggable(s, true, i));
 
     order.forEach(origIdx=>{
       const chip=document.createElement("button"); chip.type="button"; chip.className="chip";
       chip.textContent=words[origIdx];
-      chip.onclick=()=>{
-        if(placed.length>=N || chip.classList.contains("used")) return;
-        placed.push(origIdx); chip.classList.add("used"); redraw();
-      };
       chipEls[origIdx]=chip;
+      makeDraggable(chip, false, null, origIdx);
       bank.appendChild(chip);
     });
 
-    undoBtn.onclick=()=>{ if(placed.length) removeAt(placed.length-1); };
+    undoBtn.onclick=()=>{ for(let i=placed.length-1;i>=0;i--){ if(placed[i]!=null){ removeSlot(i); break; } } };
 
     const score=document.createElement("div"); score.className="score"; score.style.display="none";
     checkBtn.onclick=()=>{
@@ -411,7 +481,7 @@ function render(){
       score.textContent=`Đúng ${correct}/${N} vị trí (${pct}%). Chọn mức để lên lịch ôn:`;
       grade.style.display="flex"; checkBtn.style.display="none"; undoBtn.style.display="none";
       bank.querySelectorAll(".chip").forEach(c=>c.disabled=true);
-      slotEls.forEach(s=>s.onclick=null);
+      locked=true;
     };
 
     card_el.appendChild(slots);
