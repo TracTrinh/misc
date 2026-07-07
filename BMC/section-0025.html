@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BMC — Bộ Giới Luật Phật Giáo, bản dịch tiếng Việt của Ṭhānissaro Bhikkhu">
+<title>Pāṭidesanīya — BMC</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav id="toolbar" role="toolbar" aria-label="Điều hướng chương">
+  <div class="tb-row tb-row1">
+    <span class="tb-chapter-label">0025 — Pāṭidesanīya</span>
+  </div>
+  <div class="tb-row tb-row2">
+    <div class="tb-nav-group">
+      <button id="btn-toc" class="tb-nav-btn toc-btn" title="Mục lục" aria-label="Mở mục lục">☰</button>
+      <a class="tb-nav-btn" href="section-0024.html" title="Chương trước" aria-label="Chương trước">&#9664;</a>
+      <a class="tb-nav-btn" href="section-0026.html" title="Chương sau" aria-label="Chương sau">&#9654;</a>
+    </div>
+    <div class="tb-right-group">
+      <button id="btn-lang"  class="tb-right-btn" aria-label="Chuyển VI/EN">VI</button>
+      <button id="btn-fs-dec" class="tb-right-btn" title="Giảm cỡ chữ" aria-label="Giảm cỡ chữ">A−</button>
+      <button id="btn-fs-inc" class="tb-right-btn" title="Tăng cỡ chữ" aria-label="Tăng cỡ chữ">A+</button>
+      <button id="btn-theme"  class="tb-right-btn" title="Sáng / Tối"  aria-label="Chuyển sáng/tối">☾</button>
+    </div>
+  </div>
+</nav>
+<div id="drawer-overlay" role="presentation"></div>
+<aside id="drawer" role="navigation" aria-label="Mục lục sách">
+  <div id="drawer-header">
+    <span id="drawer-title">Mục lục BMC1</span>
+    <button id="drawer-close" aria-label="Đóng mục lục">✕</button>
+  </div>
+  <div id="drawer-body">
+  <a class="drawer-section-link" href="section-0006.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0006</span>Introduction</a>
+  <a class="drawer-section-link" href="section-0007.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0007</span>Pāṭimokkha</a>
+  <a class="drawer-section-link" href="section-0008.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0008</span>Nissaya (Y chỉ)</a>
+  <a class="drawer-section-link" href="section-0009.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0009</span>Hoàn Tục (Disrobing)</a>
+  <a class="drawer-section-link" href="section-0010.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0010</span>Pārājika</a>
+  <a class="drawer-section-link" href="section-0011.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0011</span>Saṅghādisesa</a>
+  <a class="drawer-section-link" href="section-0012.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0012</span>Aniyata</a>
+  <a class="drawer-section-link" href="section-0013.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0013</span>Nissaggiya Pācittiya</a>
+  <a class="drawer-section-link" href="section-0014.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0014</span>Pācittiya — Chương Hai (Tơ lụa)</a>
+  <a class="drawer-section-link" href="section-0015.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0015</span>Pācittiya — Chương Ba (Bát)</a>
+  <a class="drawer-section-link" href="section-0016.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0016</span>Pācittiya</a>
+  <a class="drawer-section-link" href="section-0017.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0017</span>Pācittiya — Chương Hai (Cây sống)</a>
+  <a class="drawer-section-link" href="section-0018.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0018</span>Pācittiya — Chương Ba (Khuyến giáo)</a>
+  <a class="drawer-section-link" href="section-0019.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0019</span>Pācittiya — Chương Bốn (Thức ăn)</a>
+  <a class="drawer-section-link" href="section-0020.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0020</span>Pācittiya — Chương Năm (Tu sĩ lõa thể)</a>
+  <a class="drawer-section-link" href="section-0021.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0021</span>Pācittiya — Chương Sáu (Rượu)</a>
+  <a class="drawer-section-link" href="section-0022.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0022</span>Pācittiya — Chương Bảy (Súc vật)</a>
+  <a class="drawer-section-link" href="section-0023.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0023</span>Pācittiya — Chương Tám (Đúng pháp)</a>
+  <a class="drawer-section-link" href="section-0024.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0024</span>Pācittiya — Chương Chín (Vật có giá trị)</a>
+  <a class="drawer-section-link current" href="#"><span style="color:var(--text3);font-size:10px;margin-right:6px">0025</span>Pāṭidesanīya</a>
+  <div class="drawer-sub-title">Nội dung</div>
+  <a class="drawer-rule-link" href="#rule-0025-1-1">1</a>
+  <a class="drawer-rule-link" href="#rule-0025-2-2">2</a>
+  <a class="drawer-rule-link" href="#rule-0025-3-3">3</a>
+  <a class="drawer-rule-link" href="#rule-0025-4-4">4</a>
+  <div class="drawer-divider"></div>
+  <a class="drawer-section-link" href="section-0026.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0026</span>Sekhiya</a>
+  <a class="drawer-section-link" href="section-0027.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0027</span>Adhikaraṇa-samatha</a>
+  <a class="drawer-section-link" href="section-0028.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0028</span>Phụ lục (Appendices)</a>
+  <a class="drawer-section-link" href="section-0030.html"><span style="color:var(--text3);font-size:10px;margin-right:6px">0030</span>Bảng tra cứu giới điều (Rule Index)</a>
+  </div>
+</aside>
+<main id="content" role="main" aria-label="Pāṭidesanīya">
+  <div class="lang-block" data-lang="vi">
+<p>
+Thuật ngữ này có nghĩa là &quot;phải được thừa nhận.&quot; Khi được dùng làm tên gọi cho các học giới, nó có nghĩa là &quot;kéo theo sự thừa nhận.&quot; Bốn học giới ở đây có nét đặc biệt là đề cập, ngay trong bản thân điều giới, các lời cần dùng để thừa nhận sự vi phạm; điều giới thứ hai đặc biệt hơn cả ở chỗ nó mô tả các vị vi phạm thừa nhận lỗi phạm theo nhóm.
+</p>
+<hr class="section-divider">
+<h3 id="rule-0025-1-1" class="rule-heading"><a class="anchor-link" href="#rule-0025-1-1">#</a>1</h3>
+<p>
+<em>Nếu bất kỳ tỳ-kheo (<abbr class="gl-term" title="bhikkhu (tỳ-kheo).">bhikkhu</abbr>) nào nhai hoặc ăn thức ăn chính hay thức ăn phụ, đã nhận bằng tay mình từ tay một tỳ-kheo-ni (<abbr class="gl-term" title="bhikkhunī (tỳ-kheo-ni).">bhikkhunī</abbr>) không có thân quyến trong khu vực có dân cư, vị ấy phải thừa nhận: &quot;Thưa chư đại đức, tôi đã thực hiện một hành vi đáng trách, không phù hợp, cần phải được thừa nhận. Tôi thừa nhận điều ấy.&quot;</em>
+</p>
+<p>
+Một chuỗi dài sự kiện đã dẫn đến việc chế định điều giới này.
+</p>
+<p>
+&quot;Vào lúc bấy giờ, một phụ nữ kia có chồng đi vắng đã bị người tình của bà làm cho có thai. Bà ta, sau khi phá thai, nói với một tỳ-kheo-ni đang nhờ vào gia đình bà để đi khất thực: &#x27;Thưa ni sư, xin ni sư mang bào thai này đi trong bình bát của ni sư.&#x27; Vị tỳ-kheo-ni, sau khi đặt bào thai vào bình bát và phủ y ngoài lên trên, rồi đi đi. Lúc bấy giờ, một tỳ-kheo đi khất thực đã phát nguyện: &#x27;Ta sẽ không ăn từ phần vật thực khất thực đầu tiên nhận được mà không cho một phần cho một tỳ-kheo hay tỳ-kheo-ni.&#x27; Thấy vị tỳ-kheo-ni, vị ấy nói: &#x27;Thưa ni sư, xin nhận vật thực này.&#x27;
+</p>
+<p>
+&quot;&#x27;Thưa tôn giả, xin từ chối.&#x27; — &#x27;Lần thứ hai… Lần thứ ba…&#x27; — &#x27;Thưa tôn giả, xin từ chối.&#x27;
+</p>
+<p>
+&quot;&#x27;Thưa ni sư, tôi đã phát nguyện: &quot;Ta sẽ không ăn từ phần vật thực khất thực đầu tiên nhận được mà không cho một phần cho một tỳ-kheo hay tỳ-kheo-ni.&quot; Vậy xin hãy nhận vật thực này.&#x27;
+</p>
+<p>
+&quot;Khi đó, vị tỳ-kheo-ni, bị tỳ-kheo thúc ép, lấy bình bát ra và chỉ cho vị ấy xem. &#x27;Thưa tôn giả, tôn giả thấy không: một bào thai trong bình bát. Nhưng xin đừng nói với ai&#x27;….
+</p>
+<p>
+&quot;(Dĩ nhiên vị tỳ-kheo không thể không kể lại với các tỳ-kheo đồng tu, và tin tức đến tai Đức Phật, Ngài chế định một điều giới kép:) &#x27;Một tỳ-kheo-ni không được đặt bào thai vào bình bát…. Tôi cho phép tỳ-kheo-ni, khi thấy một tỳ-kheo, lấy bình bát ra và chỉ cho vị ấy xem.&#x27;
+</p>
+<p>
+&quot;Vào lúc bấy giờ một số tỳ-kheo-ni thuộc nhóm sáu vị, khi thấy một tỳ-kheo, lại úp bình bát lại và chỉ cho vị ấy xem mặt đáy…. &#x27;Tôi cho phép tỳ-kheo-ni, khi thấy một tỳ-kheo, chỉ cho vị ấy xem bình bát của mình theo đúng chiều. Và ni sư phải dâng cho vị ấy bất kỳ thức ăn gì có trong bình bát.&#x27;&quot; — <abbr class="gl-term" title="Cv — Cullavagga; giữ mã.">Cv</abbr>.X.13
+</p>
+<p>
+Đây là nơi câu chuyện nguồn gốc của điều giới này bắt đầu:
+</p>
+<p>
+&quot;Vào lúc bấy giờ, một tỳ-kheo-ni, trên đường trở về sau khi đi khất thực ở Sāvatthī, thấy một tỳ-kheo, nói với vị ấy: &#x27;Thưa tôn giả, xin hãy nhận vật thực này.&#x27;
+</p>
+<p>
+&quot;&#x27;Được, thưa ni sư.&#x27; Và vị ấy lấy tất cả. Vì thời gian (đi khất thực) đã gần hết, ni sư không thể đi khất thực và do đó bị thiếu bữa ăn.
+</p>
+<p>
+&quot;Vào ngày thứ hai… ngày thứ ba… vị ấy lấy tất cả…. ni sư bị thiếu bữa ăn.
+</p>
+<p>
+&quot;Vào ngày thứ tư, ni sư đi loạng choạng trên đường. Một vị trưởng giả đang đi xe ngựa theo chiều ngược lại nói với ni sư: &#x27;Hãy tránh đường, thưa ni sư.&#x27;
+</p>
+<p>
+&quot;Bước xuống (khỏi đường), ni sư ngã ngay tại chỗ.
+</p>
+<p>
+&quot;Vị trưởng giả xin lỗi ni sư: &#x27;Xin ni sư tha thứ vì tôi đã làm ni sư ngã.&#x27;
+</p>
+<p>
+&quot;&#x27;Không phải ngài làm tôi ngã. Chỉ là bản thân tôi quá yếu.&#x27;
+</p>
+<p>
+&quot;&#x27;Nhưng tại sao ni sư lại yếu như vậy?&#x27;
+</p>
+<p>
+&quot;Và ni sư kể cho ông nghe những gì đã xảy ra. Vị trưởng giả, sau khi đưa ni sư về nhà và cho dùng bữa (<abbr class="gl-term" title="§ — giữ nguyên ký hiệu tham chiếu nội bộ.">§</abbr>), chỉ trích, phàn nàn và loan truyền rằng: &#x27;Làm sao các bậc tôn giả lại có thể nhận thức ăn từ tay tỳ-kheo-ni? Thật khó cho phụ nữ để có được những thứ đó.&#x27;&quot;
+</p>
+<p>
+Có hai yếu tố để phạm tội đầy đủ ở đây.
+</p>
+<p>
+1) <strong>Đối tượng:</strong> thức ăn chính hay thức ăn phụ mà một tỳ-kheo đã nhận từ tay một tỳ-kheo-ni — không có thân quyến với vị ấy — trong khi ni sư đang ở trong khu vực làng xóm.
+ 2) <strong>Nỗ lực:</strong> Vị ấy ăn thức ăn đó.
+</p>
+<h4 class="sub-heading">Đối tượng</h4>
+<p>
+Có hai yếu tố trong phần này: yếu tố phụ về thức ăn và yếu tố phụ về tỳ-kheo-ni. Về yếu tố phụ thức ăn: Thức ăn chính tuân theo định nghĩa chuẩn được đưa ra trong [Chương Thực Phẩm](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0019.html#Pc_ChFour) theo các điều giới <abbr class="gl-term" title="pācittiya — tội sám hối.">pācittiya</abbr>. Thức ăn phụ bao gồm tất cả các loại thực phẩm ăn được ngoại trừ nước trái cây, thuốc bổ và thuốc. Thức ăn chính và thức ăn phụ là căn cứ cho một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>; nước trái cây, thuốc bổ và thuốc uống như thức ăn là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr>.
+</p>
+<p>
+Về yếu tố phụ tỳ-kheo-ni: Tỳ-kheo-ni ở đây chỉ vị đã thọ giới đôi (thọ đại giới trong cả hai Tăng đoàn). Một tỳ-kheo-ni chỉ mới thọ giới đầu tiên — trong <abbr class="gl-term" title="bhikkhunī (tỳ-kheo-ni).">bhikkhunī</abbr> <abbr class="gl-term" title="Tăng-đoàn.">Saṅgha</abbr> — là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr>. Không có thân quyến có nghĩa là không có tổ tiên chung trong vòng bảy đời. Nhận thức về việc tỳ-kheo-ni có phải thân quyến hay không không phải là yếu tố giảm nhẹ ở đây. Các hoán vị liên quan đến vấn đề nhận thức ở đây tương tự như trong [Pc 4](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0016.html#Pc4), với sự khác biệt duy nhất là ba tội <abbr class="gl-term" title="pācittiya — tội sám hối.">pācittiya</abbr> trong mẫu đó được đổi thành ba tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> ở đây. Nói cách khác, nếu ni sư không có thân quyến, ni sư là căn cứ cho một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> dù vị tỳ-kheo nhận thức ni sư là không thân quyến, có thân quyến, hay còn nghi ngờ. Nếu ni sư có thân quyến, ni sư là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> nếu vị ấy nhận thức ni sư là không thân quyến hoặc còn nghi ngờ. Nếu ni sư có thân quyến và vị ấy nhận thức ni sư là có thân quyến, thì ni sư không phải là căn cứ cho một tội phạm. Mẫu nhận thức này được áp dụng trong cả bốn điều giới <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>.
+</p>
+<p>
+Khu vực làng xóm được định nghĩa là một ngôi nhà hay đường đi trong làng, thị trấn hoặc thành phố.
+</p>
+<h4 class="sub-heading">Nỗ lực</h4>
+<p>
+Có một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> khi nhận thức ăn chính hay thức ăn phụ với mục đích ăn, và khi nhận nước trái cây, thuốc bổ hay thuốc với mục đích dùng như thức ăn; trong khi đó có một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> cho mỗi miếng ăn thức ăn chính hay thức ăn phụ mà vị ấy ăn, và một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> cho mỗi miếng vị ấy dùng nước trái cây, thuốc bổ hay thuốc với mục đích ăn no.
+</p>
+<h4 class="sub-heading">Các trường hợp không phạm tội</h4>
+<p>
+Không có tội phạm nếu một tỳ-kheo nhận và ăn thức ăn từ một tỳ-kheo-ni có thân quyến, hoặc từ một nữ tu học nhân hay sa-di-ni, dù có thân quyến hay không. Cũng không có tội phạm trong các tình huống sau đây ngay cả khi tỳ-kheo-ni không có thân quyến:
+</p>
+<ul>
+<li>Ni sư nhờ người khác đưa thức ăn cho vị ấy.</li>
+<li>Ni sư trao thức ăn bằng cách đặt nó gần vị ấy (như trong [NP 18](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0014.html#NP18) và [Pc 41](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0020.html#Pc41)).</li>
+<li>Ni sư trao thức ăn cho vị ấy trong tu viện, ni viện, trú xứ của các thành viên thuộc các tông phái khác, hay trên đường trở về từ những nơi đó.</li>
+<li>Ni sư trao thức ăn cho vị ấy sau khi ni sư đã rời làng.</li>
+<li>Ni sư trao cho vị ấy nước trái cây, thuốc bổ hay thuốc, và vị ấy dùng chúng như vậy, chứ không phải như thức ăn.</li>
+</ul>
+<p>
+Chú Giải chứa đựng một lời giải thích khá đầy đủ về trường hợp miễn trừ thứ hai ở đây. Trước tiên, tỳ-kheo-ni không thể trao thức ăn chỉ bằng cách đặt nó xuống. Ni sư cũng phải tuyên bố rằng mình đang trao thức ăn, và vị tỳ-kheo phải tuyên bố sự chấp nhận của mình. Trong phần thảo luận về [<abbr class="gl-term" title="Cv — Cullavagga; giữ mã.">Cv</abbr>.X.15.1-2](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0065.html#<abbr class="gl-term" title="Cv — Cullavagga; giữ mã.">Cv</abbr>.X.15.1), Chú Giải lập luận rằng thức ăn được tỳ-kheo-ni chính thức thọ nhận không được tính là đã chính thức thọ nhận đối với một tỳ-kheo, và ngược lại. Vì vậy, trong trường hợp miễn trừ này, mặc dù thức ăn đã được trao, tỳ-kheo không thể lấy nó cho đến khi nó đã được chính thức dâng cúng. Chú Giải nêu rằng tỳ-kheo-ni khi đó có thể tự mình chính thức dâng cúng, nhưng điều này sẽ biến trường hợp miễn trừ thành một thủ tục hình thức thuần túy. Điều có khả năng hơn là thức ăn nên được chính thức dâng cúng bởi một người khác.
+</p>
+<p>
+Trong tất cả các trường hợp miễn trừ này, chính sách khôn ngoan là không lấy quá nhiều thức ăn của tỳ-kheo-ni đến mức ni sư bị thiếu một bữa ăn đầy đủ.
+</p>
+<p>
+<strong>Tóm tắt:</strong> Ăn thức ăn chính hay thức ăn phụ sau khi đã nhận từ tay một tỳ-kheo-ni không có thân quyến trong khu vực làng xóm là tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>.
+</p>
+<hr class="section-divider">
+<h3 id="rule-0025-2-2" class="rule-heading"><a class="anchor-link" href="#rule-0025-2-2">#</a>2</h3>
+<p>
+<em>Trong trường hợp các tỳ-kheo được mời thọ trai tại các nhà gia đình, và nếu một tỳ-kheo-ni đứng đó như thể đang ra chỉ thị, (nói rằng,) &quot;Hãy cho cà-ri ở đây, hãy cho cơm ở đây,&quot; thì các tỳ-kheo phải đuổi ni sư đi: &quot;Hãy đi đi, ni sư, trong khi các tỳ-kheo đang dùng bữa.&quot; Nếu không một tỳ-kheo nào nói để đuổi ni sư đi, &quot;Hãy đi đi, ni sư, trong khi các tỳ-kheo đang dùng bữa,&quot; thì các tỳ-kheo phải thừa nhận điều đó: &quot;Thưa chư đại đức, chúng tôi đã thực hiện một hành vi đáng trách, không phù hợp, cần phải được thừa nhận. Chúng tôi thừa nhận điều ấy.&quot;</em>
+</p>
+<p>
+Điều giới này đề cập đến các tình huống khi các thí chủ tại gia mời các tỳ-kheo dùng bữa, và một tỳ-kheo-ni đứng đó ra lệnh, dựa trên sự thiên vị, về việc tỳ-kheo nào nên nhận thức ăn gì. Nhiệm vụ của các tỳ-kheo trong những trường hợp như vậy là yêu cầu ni sư rời đi trước khi họ nhận bất kỳ thức ăn nào. Nếu dù chỉ một trong số họ làm vậy, tất cả đều được miễn trừ khỏi tội phạm ở đây. Nếu không ai làm vậy, và các yếu tố sau đây được thỏa mãn, tất cả đều phạm tội và phải thừa nhận lỗi phạm theo nhóm.
+</p>
+<p>
+Nếu, thay vì ra lệnh trước mặt các tỳ-kheo, tỳ-kheo-ni đến nơi của các thí chủ và ra lệnh trước khi họ đến, thì nếu các tỳ-kheo biết về hành động của ni sư, trường hợp đó sẽ nằm trong phạm vi [Pc 29](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0018.html#Pc29).
+</p>
+<h4 class="sub-heading">Đối tượng</h4>
+<p>
+Như điều giới trước, có hai đối tượng ở đây: thức ăn và tỳ-kheo-ni. Bất kỳ một trong năm loại thức ăn chính nào được nhận trong tình huống trên đây đều sẽ thỏa mãn yếu tố phụ về thức ăn. Một tỳ-kheo-ni đã thọ giới đôi sẽ thỏa mãn yếu tố phụ về tỳ-kheo-ni. Một tỳ-kheo-ni chỉ thọ giới trong <abbr class="gl-term" title="bhikkhunī (tỳ-kheo-ni).">bhikkhunī</abbr> <abbr class="gl-term" title="Tăng-đoàn.">Saṅgha</abbr> là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr>. Nếu ni sư chưa thọ giới, ni sư không phải là căn cứ cho một tội phạm.
+</p>
+<p>
+Nhận thức về việc ni sư đã thọ giới hay chưa không phải là yếu tố giảm nhẹ ở đây (xem [Pd 1](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0025.html#Pd1)).
+</p>
+<h4 class="sub-heading">Nỗ lực</h4>
+<p>
+Có một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> khi nhận thức ăn chính nhận được trong những hoàn cảnh như vậy, và một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> cho mỗi miếng ăn.
+</p>
+<h4 class="sub-heading">Các trường hợp không phạm tội</h4>
+<p>
+Không có tội phạm nếu —
+</p>
+<ul>
+<li>tỳ-kheo-ni nhờ người khác trao thức ăn của ni sư cho các tỳ-kheo nhưng bản thân ni sư không trao;</li>
+<li>bản thân ni sư trao thức ăn của người khác cho các tỳ-kheo;</li>
+<li>ni sư nhờ các thí chủ trao thức ăn mà họ quên chưa trao;</li>
+<li>ni sư nhờ họ trao cho một tỳ-kheo mà họ đã bỏ qua;</li>
+<li>ni sư nhờ họ trao thức ăn đều cho tất cả;</li>
+<li>ni sư nhờ họ trao bất cứ thứ gì ngoại trừ năm loại thức ăn chính; hay</li>
+<li>ni sư là một nữ tu học nhân hay sa-di-ni.</li>
+</ul>
+<p>
+Chú Giải giải thích trường hợp miễn trừ đầu tiên ở đây bằng cách lưu ý rằng nếu tỳ-kheo-ni trao thức ăn của chính mình cho các tỳ-kheo, họ sẽ phạm tội theo điều giới trước.
+</p>
+<p>
+<strong>Tóm tắt:</strong> Ăn thức ăn chính được nhận trong một bữa ăn mà mình được mời, nơi một tỳ-kheo-ni đã ra chỉ thị, dựa trên sự thiên vị, về việc tỳ-kheo nào nên nhận thức ăn gì, và không có tỳ-kheo nào đuổi ni sư đi, là tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>.
+</p>
+<hr class="section-divider">
+<h3 id="rule-0025-3-3" class="rule-heading"><a class="anchor-link" href="#rule-0025-3-3">#</a>3</h3>
+<p>
+<em>Có những gia đình được chỉ định là đang tu học. Nếu bất kỳ tỳ-kheo nào, không bị bệnh, không được mời trước, nhai hoặc ăn thức ăn chính hay thức ăn phụ, sau khi tự mình nhận tại nhà của những gia đình được chỉ định là đang tu học, vị ấy phải thừa nhận: &quot;Thưa chư đại đức, tôi đã thực hiện một hành vi đáng trách, không phù hợp, cần phải được thừa nhận. Tôi thừa nhận điều ấy.&quot;</em>
+</p>
+<p>
+Thuật ngữ đang tu học (sekha) thường được dùng để chỉ bất kỳ ai đã đắc được ít nhất đạo lộ cao quý đầu tiên nhưng chưa trở thành A-la-hán. Tuy nhiên ở đây, Vibhaṅga dùng nó để chỉ bất kỳ gia đình nào có lòng tín tâm ngày càng tăng trưởng nhưng của cải ngày càng suy giảm — tức là một gia đình có lòng tín tâm mạnh mẽ đến mức họ trở nên hào phóng đến điểm gặp khó khăn về tài chính. Trong những trường hợp như vậy, Tăng đoàn có thể, thông qua một yết-ma (kamma) chính thức, tuyên bố họ là những gia đình đang tu học nhằm bảo vệ họ bằng điều giới này khỏi các tỳ-kheo có thể lạm dụng lòng hào phóng của họ.
+</p>
+<p>
+Các yếu tố phạm tội ở đây là hai điểm.
+</p>
+<p>
+1) <strong>Đối tượng:</strong> thức ăn chính hay thức ăn phụ được nhận tại trú xứ của một gia đình được chỉ định là đang tu học khi không bị bệnh và không được gia đình đó mời trước.
+ 2) <strong>Nỗ lực:</strong> Vị ấy ăn thức ăn đó.
+</p>
+<h4 class="sub-heading">Đối tượng</h4>
+<p>
+Thức ăn chính tuân theo định nghĩa chuẩn được đưa ra trong [Chương Thực Phẩm](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0019.html#Pc_ChFour) theo các điều giới <abbr class="gl-term" title="pācittiya — tội sám hối.">pācittiya</abbr>. Thức ăn phụ bao gồm tất cả các loại thực phẩm ăn được ngoại trừ nước trái cây, thuốc bổ và thuốc. Thức ăn chính và thức ăn phụ là căn cứ cho một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>; nước trái cây, thuốc bổ và thuốc uống như thức ăn là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr>.
+</p>
+<p>
+Bệnh được định nghĩa là không thể đi khất thực.
+</p>
+<p>
+Được mời có nghĩa là đã được một thành viên của gia đình — hay người đưa tin — mời vào ngày hôm đó hay một ngày trước, đứng bên ngoài trú xứ hay sân/khuôn viên của trú xứ. Nếu họ mời khi đang ở trong trú xứ hay sân/khuôn viên, vị ấy không được miễn trừ khỏi tội phạm khi nhận và ăn thức ăn của họ.
+</p>
+<p>
+Nhận thức về việc gia đình đó có được chỉ định là &quot;đang tu học&quot; hay không không phải là yếu tố giảm nhẹ ở đây (xem [Pd 1](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0025.html#Pd1)).
+</p>
+<h4 class="sub-heading">Nỗ lực</h4>
+<p>
+Có một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> khi nhận thức ăn chính hay thức ăn phụ với mục đích ăn, hay khi nhận nước trái cây, thuốc bổ hay thuốc với mục đích dùng như thức ăn; một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> cho mỗi miếng ăn thức ăn chính hay thức ăn phụ mà vị ấy ăn; và một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> cho mỗi miếng vị ấy dùng nước trái cây, thuốc bổ hay thuốc với mục đích ăn no.
+</p>
+<h4 class="sub-heading">Các trường hợp không phạm tội</h4>
+<p>
+Không có tội phạm khi ăn thức ăn mà mình đã nhận tại nhà của một gia đình đang tu học nếu —
+</p>
+<ul>
+<li>vị ấy bị bệnh;</li>
+<li>vị ấy được mời;</li>
+<li>vật thực khất thực do những người không phải thành viên của gia đình đang tu học cung cấp được bày ra trong trú xứ hay sân của trú xứ (<abbr class="gl-term" title="§ — giữ nguyên ký hiệu tham chiếu nội bộ.">§</abbr>);</li>
+<li>gia đình đã thực hiện việc sắp xếp cung cấp bữa ăn bằng cách bốc thăm, hàng ngày, hoặc theo định kỳ hay luân phiên — chẳng hạn như vào một ngày cụ thể của tuần trăng lên hay tuần trăng xuống, các ngày bố-tát (<abbr class="gl-term" title="uposatha — ngày tụng giới (Pāli thuần, không gloss &quot;bố-tát&quot;).">uposatha</abbr>), hay ngày sau ngày bố-tát (xem [Phụ lục III](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0028.html#appendixIII)) — và vị ấy nhận thức ăn như một phần của sự sắp xếp đó;</li>
+<li>vị ấy ăn phần thức ăn thừa của người đã nhận thức ăn tại trú xứ của họ khi được mời hay khi bệnh (điều này gợi ý rằng nếu Tỳ-kheo X nhận thức ăn từ một gia đình như vậy theo cách sẽ vi phạm điều giới này và đưa cho Tỳ-kheo Y, Tỳ-kheo Y sẽ phạm tội khi nhận thức ăn với ý nghĩ ăn nó và khi tiêu thụ nó);</li>
+<li>vị ấy nhận nước trái cây, thuốc bổ hay thuốc và dùng chúng như vậy; hay</li>
+<li>các thành viên gia đình trao thức ăn bên ngoài trú xứ hay sân/khuôn viên của họ. Chú Giải trích dẫn Mahā Paccarī, một trong những Chú Giải cổ xưa, nói rằng trường hợp miễn trừ cuối cùng này có hiệu lực bất kể họ mang thức ăn ra khỏi trú xứ trước hay sau khi thấy vị ấy đang đến.</li>
+</ul>
+<p>
+<strong>Tóm tắt:</strong> Ăn thức ăn chính hay thức ăn phụ sau khi nhận nó — khi không bị bệnh cũng không được mời — tại trú xứ của một gia đình được chính thức chỉ định là &quot;đang tu học&quot; là tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>.
+</p>
+<hr class="section-divider">
+<h3 id="rule-0025-4-4" class="rule-heading"><a class="anchor-link" href="#rule-0025-4-4">#</a>4</h3>
+<p>
+<em>Có những trú xứ trong rừng vắng được xem là đáng ngờ và nguy hiểm. Nếu bất kỳ tỳ-kheo nào, không bị bệnh, đang trú tại những trú xứ như vậy, nhai hoặc ăn (một tặng phẩm) thức ăn chính hay thức ăn phụ chưa được thông báo trước, sau khi tự mình nhận trong trú xứ, vị ấy phải thừa nhận: &quot;Thưa chư đại đức, tôi đã thực hiện một hành vi đáng trách, không phù hợp, cần phải được thừa nhận. Tôi thừa nhận điều ấy.&quot;</em>
+</p>
+<p>
+&quot;Vào lúc bấy giờ những người nô lệ của dòng họ Sakyan đang nổi loạn. Các phụ nữ Sakyan muốn dâng cúng một bữa ăn (cho các tỳ-kheo) tại các trú xứ trong rừng vắng. Những người nô lệ Sakyan nghe tin: &#x27;Các phụ nữ Sakyan, họ nói, muốn dâng cúng một bữa ăn tại các trú xứ trong rừng vắng,&#x27; nên họ phục kích dọc đường. Các phụ nữ Sakyan, mang theo những thức ăn chính và phụ thượng hảo, đi đến các trú xứ trong rừng vắng. Những người nô lệ Sakyan, xông ra, cướp đoạt và hãm hiếp họ. Người Sakyan, sau khi ra ngoài và bắt những tên trộm cùng với tang vật, chỉ trích, phàn nàn và loan truyền rằng: &#x27;Làm sao các bậc tôn giả lại không thông báo cho chúng ta biết rằng có những tên trộm đang ở trong khu vực tu viện?&#x27;&quot;
+</p>
+<p>
+Ở đây cũng có hai yếu tố cho tội phạm đầy đủ.
+</p>
+<p>
+1) <strong>Đối tượng:</strong> một tặng phẩm thức ăn chính hay thức ăn phụ chưa được thông báo trước mà vị ấy đã nhận, khi không bị bệnh, tại một trú xứ trong rừng vắng đáng ngờ và nguy hiểm.
+ 2) <strong>Nỗ lực:</strong> Vị ấy ăn thức ăn đó.
+</p>
+<h4 class="sub-heading">Đối tượng</h4>
+<p>
+Vibhaṅga định nghĩa một trú xứ trong rừng vắng là một trú xứ cách ít nhất 500 cung tên, hay một kilômét, từ làng gần nhất, tính theo con đường đi bộ ngắn nhất giữa hai nơi, chứ không phải theo đường chim bay. Một trú xứ như vậy được xem là đáng ngờ nếu dấu hiệu của những tên trộm — như những nơi chúng ăn, nghỉ ngơi, ngồi hay đứng — đã được nhìn thấy trong hay gần khu vực đó; và được xem là nguy hiểm nếu người ta biết có người đã bị thương hay bị cướp bởi những tên trộm ở đó. Như trong điều giới khác liên quan đến các trú xứ trong rừng vắng đáng ngờ và nguy hiểm — NP 29 — không có văn bản nào ở đây đưa ra định nghĩa chính xác về mức độ rộng của &quot;vùng lân cận&quot; trú xứ cho mục đích của tình huống này. Như đã lưu ý trong phần giải thích của [NP 29](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0015.html#NP29), do những rủi ro vốn có trong những trú xứ như vậy, người ta có lẽ cảm thấy không khôn ngoan khi phân định khu vực đó quá chính xác. Vì vậy, trong bối cảnh điều giới này, &quot;vùng lân cận&quot; của trú xứ có thể được mở rộng để bao gồm bất kỳ khu vực nào mà sự hiện diện của những tên trộm dẫn đến nhận thức chung rằng trú xứ đó là nguy hiểm.
+</p>
+<p>
+Thức ăn chính tuân theo định nghĩa chuẩn được đưa ra trong [Chương Thực Phẩm](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0019.html#Pc_ChFour) theo các điều giới <abbr class="gl-term" title="pācittiya — tội sám hối.">pācittiya</abbr>. Thức ăn phụ bao gồm tất cả các loại thực phẩm ăn được ngoại trừ nước trái cây, thuốc bổ và thuốc.
+</p>
+<p>
+Thức ăn chính và thức ăn phụ là căn cứ cho một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>; nước trái cây, thuốc bổ và thuốc uống như thức ăn là căn cứ cho một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr>.
+</p>
+<p>
+Vibhaṅga đưa ra các hướng dẫn cụ thể về cách thức tặng phẩm thức ăn phải được thông báo. Người tặng hay người đưa tin phải vào trong khuôn viên trú xứ nếu có tường bao, hay vào vùng lân cận nếu không có, và thông báo cho một trong những cư dân biết rằng một tặng phẩm thức ăn sẽ được mang đến. Vị cư dân đó sau đó phải thông báo cho người đưa tin biết rằng khu vực đó là đáng ngờ và nguy hiểm. Nếu người đưa tin nói: &quot;Không sao, người tặng sẽ vẫn đến,&quot; thì một người trong trú xứ phải nói với những tên trộm: &quot;Hãy đi đi. Người ta đang đến để cúng thức ăn.&quot; Điều này khó có khả năng khiến những tên trộm rời đi nhưng, như Chú Giải giải thích, nó giải phóng các tỳ-kheo khỏi bất kỳ trách nhiệm nào nếu những tên trộm tấn công người tặng.
+</p>
+<p>
+Theo Vibhaṅga, ngay cả khi người đưa tin chỉ định rằng chỉ có một số loại thức ăn nhất định sẽ được mang đến, bất kỳ thứ gì đi kèm với những thức ăn đó đều được tính là đã thông báo (<abbr class="gl-term" title="§ — giữ nguyên ký hiệu tham chiếu nội bộ.">§</abbr>). Ở đây Chú Giải bổ sung rằng nếu những người khác biết về ý định tặng phẩm và mang thức ăn đến để thêm vào, thức ăn của họ cũng được tính là đã thông báo. Vibhaṅga cũng nêu rằng nếu người đưa tin nói một nhóm người đang đến mang thức ăn, lời thông báo bao gồm bất cứ thứ gì được mang đến bởi bất kỳ thành viên nào của nhóm.
+</p>
+<p>
+Vibhaṅga làm rõ rằng lời thông báo chỉ có hiệu lực nếu người đưa tin thực hiện nó trong trú xứ hay vùng lân cận/khuôn viên. Vì vậy, chẳng hạn, nếu người tặng thông báo ý định tặng phẩm cho tỳ-kheo khi vị ấy đang ở trong làng để khất thực, tặng phẩm vẫn được xem là chưa thông báo. Và, vì lý do tương tự, những thứ như điện thoại, thư từ hay fax cũng sẽ không được tính.
+</p>
+<p>
+Chú Giải bổ sung rằng nếu người tặng cử một tỳ-kheo hay sa-di đến trú xứ để thông báo tặng phẩm, điều đó không được tính là đã thông báo. Nói cách khác, người đưa tin phải là một cư sĩ.
+</p>
+<p>
+Nhận thức về việc thức ăn đã được thông báo đúng cách hay chưa không phải là yếu tố giảm nhẹ ở đây (xem [Pd 1](https://www.dhammatalks.org/<abbr class="gl-term" title="Vinaya — giữ Pāli; &quot;Luật&quot; khi dùng chung. KHÔNG dùng &quot;Tỳ-nại-da&quot;.">Vinaya</abbr>/bmc/Section0025.html#Pd1)).
+</p>
+<p>
+Một tỳ-kheo được tính là bệnh nếu vị ấy không thể đi khất thực.
+</p>
+<h4 class="sub-heading">Nỗ lực</h4>
+<p>
+Trong những hoàn cảnh này, có một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> khi nhận thức ăn chính hay thức ăn phụ chưa thông báo với mục đích ăn, hay khi nhận nước trái cây, thuốc bổ hay thuốc chưa thông báo với mục đích dùng như thức ăn; một tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr> cho mỗi miếng ăn thức ăn chính hay thức ăn phụ chưa thông báo mà vị ấy ăn; và một tội <abbr class="gl-term" title="dukkaṭa — tội làm điều xấu.">dukkaṭa</abbr> cho mỗi miếng vị ấy dùng nước trái cây, thuốc bổ hay thuốc chưa thông báo với mục đích ăn no. Những hình phạt này áp dụng không chỉ cho tỳ-kheo trực tiếp nhận những vật phẩm này từ người tặng, mà còn cho tất cả những tỳ-kheo khác lấy những vật phẩm này và ăn chúng.
+</p>
+<h4 class="sub-heading">Các trường hợp không phạm tội</h4>
+<p>
+Không có tội phạm khi ăn thức ăn được nhận trong trú xứ nếu vị ấy bị bệnh hoặc nếu tặng phẩm đã được thông báo. Cũng không có tội phạm —
+</p>
+<ul>
+<li>khi sử dụng hoa quả, củ, vỏ cây, lá hay hoa mọc trong trú xứ (hay, rõ ràng là trong vùng lân cận hay khuôn viên);</li>
+<li>khi ăn thức ăn đã thông báo còn thừa hay thức ăn được trao cho người bệnh;</li>
+<li>khi nhận thức ăn bên ngoài trú xứ và ăn bên trong; hay</li>
+<li>khi nhận và tiêu thụ nước trái cây, thuốc bổ và thuốc như vậy chứ không phải như thức ăn.</li>
+</ul>
+<p>
+Chú Giải, trong khi thảo luận về những trường hợp được phép này, đưa ra các điểm sau: 1) Nếu cư sĩ lấy bất kỳ loại quả, củ, v.v. nào mọc trong trú xứ và nấu ở nhà, họ phải thông báo tặng phẩm trước khi mang chúng trở lại trú xứ. 2) Nếu người tặng, sau khi thông báo tặng phẩm, mang đến lượng thức ăn lớn, một phần có thể để riêng — mà không dâng cho các tỳ-kheo — để dâng vào một ngày sau.
+</p>
+<p>
+Tất cả những điều này không gây ra bất kỳ khó khăn nào trong những cộng đồng nơi mọi người đều biết rằng họ phải thông báo một tặng phẩm thức ăn trước khi mang đến trú xứ nguy hiểm, nhưng chắc chắn sẽ có những trường hợp người tặng không biết rằng trú xứ đó nguy hiểm hay rằng họ cần thông báo tặng phẩm của mình trước khi mang đến, và họ có khả năng xuất hiện tại trú xứ với những tặng phẩm thức ăn chưa thông báo. Trong những trường hợp như vậy, Chú Giải khuyến nghị: 1) Hoặc nhờ người tặng mang thức ăn ra ngoài khu vực trú xứ, quay lại vào trong để thông báo, và sau đó đi ra để mang thức ăn trở vào để dâng; hay 2) nhờ người tặng mang thức ăn ra ngoài và để một tỳ-kheo đi theo vị đó ra ngoài để nhận thức ăn ở đó.
+</p>
+<p>
+Tuy nhiên, để giảm thiểu sự cần thiết phải làm điều này, một chính sách khôn ngoan cho một tỳ-kheo thấy mình đang sống trong một trú xứ như vậy là thông báo trước cho tất cả những người hộ trợ — và nhờ họ truyền đi — rằng nếu họ muốn mang tặng phẩm thức ăn cho vị ấy, họ phải đến thông báo tặng phẩm trước.
+</p>
+<p>
+<strong>Tóm tắt:</strong> Ăn một tặng phẩm thức ăn chính hay thức ăn phụ chưa thông báo sau khi nhận trong một trú xứ trong rừng vắng nguy hiểm khi không bị bệnh là tội <abbr class="gl-term" title="pāṭidesanīya — tội phải phát lồ/thú nhận.">pāṭidesanīya</abbr>.
+</p>
+</div>
+<div class="lang-block hidden" data-lang="en">
+<p>
+CHAPTER NINE
+</p>
+<h2 class="section-title">Pāṭidesanīya</h2>
+<p>
+This term means “to be acknowledged.” As a name for training rules, it means “entailing acknowledgement.” The four training rules here are unique in that they mention, as part of the rule, the words to be used in acknowledging the violation; the second rule is especially unique in that it depicts the violators as acknowledging their offense as a group.
+</p>
+<h3 id="rule-0025-1-1" class="rule-heading"><a class="anchor-link" href="#rule-0025-1-1">#</a>1</h3>
+<p>
+Should any bhikkhu chew or consume staple or non-staple food, having received it with his own hand from the hand of an unrelated bhikkhunī in an inhabited area, he is to acknowledge it: “Friends, I have committed a blameworthy, unsuitable act that ought to be acknowledged. I acknowledge it.”
+</p>
+<p>
+A long series of events led up to the formulation of this rule.
+</p>
+<p>
+“At that time a certain woman whose husband was away from home was made pregnant by her lover. She, having caused an abortion, said to a bhikkhunī who was dependent on her family for alms, ‘Come, lady, take this fetus away in your bowl.’ So the bhikkhunī, having placed the fetus in her bowl and covering it up with her outer robe, went away. Now at that time a certain alms-going bhikkhu had made this vow: ‘I won’t eat from the first almsfood I receive without having given some of it to a bhikkhu or bhikkhunī.’ Seeing the bhikkhunī, he said to her, ‘Come, sister, accept alms.’
+</p>
+<p>
+“‘No thank you, master.’—“A second time… A third time… —“‘No thank you, master.’
+</p>
+<p>
+“‘Look, sister, I have made this vow: “I won’t eat from the first almsfood I receive without having given some of it to a bhikkhu or bhikkhunī.” So come on, accept alms.’
+</p>
+<p>
+“Then the bhikkhunī, being pressured by the bhikkhu, took out her bowl and showed it to him. ‘You see, master: a fetus in the bowl. But don’t tell anyone’….
+</p>
+<p>
+“(Of course the bhikkhu couldn’t help but tell his fellow bhikkhus, and word reached the Buddha, who formulated a double rule:) ‘A bhikkhunī should not take a fetus in a bowl…. I allow a bhikkhunī, when seeing a bhikkhu, to take out her bowl and show it to him.’
+</p>
+<p>
+“Now at that time some group-of-six bhikkhunīs, on seeing a bhikkhu, would turn their bowls upside down and show him the bottom side…. ‘I allow a bhikkhunī, when seeing a bhikkhu, to show him her bowl rightside up. And she is to offer him whatever food there is in the bowl.’”—Cv.X.13
+</p>
+<p>
+Here is where the origin story for this rule begins:
+</p>
+<p>
+“Now at that time a certain bhikkhunī, on the way back from going for alms in Sāvatthī, seeing a certain bhikkhu, said to him, ‘Come, master, accept alms.’
+</p>
+<p>
+“‘Very well, sister.’ And he took everything. As the time (for alms-going) was almost up, she was unable to go for alms and so was deprived of her meal.
+</p>
+<p>
+“On the second day… the third day… he took everything…. she was deprived of her meal.
+</p>
+<p>
+“On the fourth day, she went staggering along the road. A financier, coming the opposite direction in a chariot, said to her, ‘Get out of the way, lady.’
+</p>
+<p>
+“Stepping down (from the road), she fell down right there.
+</p>
+<p>
+“The financier asked her forgiveness, ‘Forgive me, lady, for making you fall.’
+</p>
+<p>
+“‘It wasn’t that you made me fall, householder. It’s just that I myself am weak.’
+</p>
+<p>
+“‘But why are you weak?’
+</p>
+<p>
+“And she told him what had happened. The financier, having taken her to his house and having fed her (§), criticized and complained and spread it about, ‘How can their reverences take food from the hand of a bhikkhunī? It’s difficult for women to come by things.’”
+</p>
+<p>
+There are two factors for the full offense here.
+</p>
+<p>
+<em>1) Object:</em> staple or non-staple food that a bhikkhu has accepted from the hand of a bhikkhunī—unrelated to him—while she is in a village area.
+</p>
+<p>
+<em>2) Effort:</em> He eats the food.
+</p>
+<h4 class="sub-heading">Object</h4>
+<p>
+There are two elements to this factor: the food sub-factor and the bhikkhunī sub-factor. Under the food sub-factor: <em>Staple food</em> follows the standard definition given in the [Food Chapter](./Section0019.html#Pc_ChFour) under the pācittiya rules. <em>Non-staple food</em> includes all edibles except juice drinks, tonics, and medicines. Staple and non-staple food are grounds for a pāṭidesanīya; juice drinks, tonics, and medicines taken as food, grounds for a dukkaṭa.
+</p>
+<p>
+As for the bhikkhunī sub-factor: <em>Bhikkhunī</em> refers to one who has received the double ordination. A bhikkhunī who has received only her first ordination—in the Bhikkhunī Saṅgha—is grounds for a dukkaṭa. <em>Unrelated</em> means sharing no common ancestor back through seven generations. Perception as to whether the bhikkhunī is related is not a mitigating factor here. The permutations around the issue of perception here are similar to those under [Pc 4](./Section0016.html#Pc4), with the only difference that the three pācittiyas under that pattern are changed to three pāṭidesanīyas here. In other words, if she is unrelated, she is grounds for a pāṭidesanīya whether one perceives her as unrelated, related, or doubtful. If she is related, she is grounds for a dukkaṭa if one perceives her as unrelated or doubtful. If she is related and one perceives her as related, she is not grounds for an offense. This pattern with regard to perception is followed in all four pāṭidesanīya rules.
+</p>
+<p>
+A <em>village area</em> is defined as a house or roadway in a village, town, or city.
+</p>
+<h4 class="sub-heading">Effort</h4>
+<p>
+There is a dukkaṭa in accepting staple or non-staple food with the purpose of eating it, and in accepting juice drinks, tonics, or medicine with the purpose of taking them as food; while there is a pāṭidesanīya for every mouthful of the staple or non-staple food one eats, and a dukkaṭa for every mouthful one takes of the juice drinks, tonics, or medicine for the sake of food.
+</p>
+<h4 class="sub-heading">Non-offenses</h4>
+<p>
+There is no offense if a bhikkhu accepts and eats food from a related bhikkhunī or from a female trainee or female novice, related or not. There is also no offense in the following situations even if the bhikkhunī is unrelated:
+</p>
+<p>
+She gets someone else to give him the food.
+</p>
+<p>
+She gives it by placing it near him (as in [NP 18](./Section0014.html#NP18) and [Pc 41](./Section0020.html#Pc41)).
+</p>
+<p>
+She gives it to him in a monastery, nuns’ quarters, a dwelling of members of other sects, or on the way back from such places.
+</p>
+<p>
+She gives it to him after she has left the village.
+</p>
+<p>
+She gives him juice drinks, tonics, or medicine, and he uses them as such, rather than as food.
+</p>
+<p>
+The Commentary contains a fairly extensive explanation of the second exemption here. To begin with, the bhikkhunī cannot give the food simply by placing it down. She also has to state that she is giving the food, and the bhikkhu has to state his acceptance. In its discussion of [Cv.X.15.1-2](./Section0065.html#Cv.X.15.1), the Commentary argues that food formally accepted by a bhikkhunī does not count as formally accepted for a bhikkhu, and vice versa. Thus, in the case of this exemption, even though the food has been given, the bhikkhu cannot take it until it has been formally offered. The Commentary states that the bhikkhunī can then formally offer it herself, but this would turn the exemption into a mere formality. What is more likely is that the food should be formally offered by someone else.
+</p>
+<p>
+In all of these exemptions, the wise policy would be not to take so much of the bhikkhunī’s food that she is deprived of a full meal.
+</p>
+<p>
+Summary: Eating staple or non-staple food after having accepted it from the hand of an unrelated bhikkhunī in a village area is a pāṭidesanīya offense.
+</p>
+<p>
+\<em>    \</em>    \*
+</p>
+<h3 id="rule-0025-2-2" class="rule-heading"><a class="anchor-link" href="#rule-0025-2-2">#</a>2</h3>
+<p>
+In case bhikkhus, being invited, are eating in family residences, and if a bhikkhunī is standing there as though giving directions, (saying,) “Give curry here, give rice here,” then the bhikkhus are to dismiss her: “Go away, sister, while the bhikkhus are eating.” If not one of the bhikkhus should speak to dismiss her, “Go away, sister, while the bhikkhus are eating,” the bhikkhus are to acknowledge it: “Friends, we have committed a blameworthy, unsuitable act that ought to be acknowledged. We acknowledge it.”
+</p>
+<p>
+This rule refers to situations where lay donors invite bhikkhus to a meal, and a bhikkhunī stands giving orders, based on favoritism, as to which bhikkhus should get which food. The duty of the bhikkhus in such cases is to tell her to go away before they accept any of the food. If even just one of them does, they all are exempt from the offense here. If none of them does, and the following factors are fulfilled, they all incur the penalty and must acknowledge their offense as a group.
+</p>
+<p>
+If, instead of giving her orders in the bhikkhus’ presence, the bhikkhunī goes to the donors’ place and gives her orders prior to their arrival, then if the bhikkhus know of her actions, the case would come under [Pc 29](./Section0018.html#Pc29).
+</p>
+<h4 class="sub-heading">Object</h4>
+<p>
+As with the preceding rule, there are two objects here: the food and the bhikkhunī. Any one of the five staple foods received in the above situation would fulfill the food sub-factor. A bhikkhunī who has received double ordination would fulfill the bhikkhunī sub-factor. A bhikkhunī ordained only in the Bhikkhunī Saṅgha would be grounds for a dukkaṭa. If she has not been ordained, she is not grounds for an offense.
+</p>
+<p>
+Perception as to whether she has been ordained is not a mitigating factor here (see Pd 1).
+</p>
+<h4 class="sub-heading">Effort</h4>
+<p>
+There is a dukkaṭa in accepting the staple food received under such circumstances, and a pāṭidesanīya for every mouthful one eats.
+</p>
+<h4 class="sub-heading">Non-offenses</h4>
+<p>
+There is no offense if—
+</p>
+<p>
+the bhikkhunī gets others to give her food to the bhikkhus but does not give it herself;
+</p>
+<p>
+she herself gives the food of other people to the bhikkhus;
+</p>
+<p>
+she gets the donors to give food they have forgotten to give;
+</p>
+<p>
+she gets them to give to a bhikkhu they have passed over;
+</p>
+<p>
+she gets them to give the food equally to all;
+</p>
+<p>
+she gets them to give anything but the five staple foods; or
+</p>
+<p>
+she is a female trainee or novice.
+</p>
+<p>
+The Commentary explains the first exemption here by noting that if the bhikkhunī were to give her own food to the bhikkhus, they would incur an offense under the preceding rule.
+</p>
+<p>
+Summary: Eating staple food accepted at a meal to which one has been invited and where a bhikkhunī has given directions, based on favoritism, as to which bhikkhu should get which food, and none of the bhikkhus have dismissed her, is a pāṭidesanīya offense.
+</p>
+<p>
+\<em>    \</em>    \*
+</p>
+<h3 id="rule-0025-3-3" class="rule-heading"><a class="anchor-link" href="#rule-0025-3-3">#</a>3</h3>
+<p>
+There are families designated as in training. Should any bhikkhu, not being ill, uninvited beforehand, chew or consume staple or non-staple food, having received it himself at the homes of families designated as in training, he is to acknowledge it: “Friends, I have committed a blameworthy, unsuitable act that ought to be acknowledged. I acknowledge it.”
+</p>
+<p>
+The term <em>in training (sekha)</em> is usually used to refer to anyone who has attained at least the first noble path but has yet to become an arahant. Here, though, the Vibhaṅga uses it to refer to any family whose faith is increasing but whose wealth is decreasing—i.e., a family whose faith is so strong that they become generous to the point of suffering financially. In cases such as these, the Community may, as a formal transaction, declare them as families in training so as to protect them with this rule from bhikkhus who might abuse their generosity.
+</p>
+<p>
+The factors for the offense here are two.
+</p>
+<p>
+<em>1) Object:</em> staple or non-staple food accepted at the residence of a family designated as in training when one is not ill and has not been invited by them beforehand.
+</p>
+<p>
+<em>2) Effort:</em> One eats the food.
+</p>
+<h4 class="sub-heading">Object</h4>
+<p>
+<em>Staple food</em> follows the standard definition given in the [Food Chapter](./Section0019.html#Pc_ChFour) under the pācittiya rules. <em>Non-staple food</em> includes all edibles except juice drinks, tonics, and medicines. Staple and non-staple food are grounds for a pāṭidesanīya; juice drinks, tonics, and medicines taken as food, grounds for a dukkaṭa.
+</p>
+<p>
+<em>Ill</em> is defined as being unable to go for alms.
+</p>
+<p>
+<em>Invited</em> means that one has been invited on that day or a previous day by a member of the family—or a messenger—standing outside of the residence or its yard/compound. If they invite one while they are inside the residence or its yard/compound, one is not exempt from the offense in accepting and eating their food.
+</p>
+<p>
+Perception as to whether the family has been designated as “in training” is not a mitigating factor here (see Pd 1).
+</p>
+<h4 class="sub-heading">Effort</h4>
+<p>
+There is a dukkaṭa in accepting staple or non-staple food with the purpose of eating it, or in accepting juice drinks, tonics, or medicine with the purpose of taking them as food; a pāṭidesanīya for every mouthful of the staple or non-staple food one eats; and a dukkaṭa for every mouthful one takes of the juice drinks, tonics, or medicine for the sake of food.
+</p>
+<h4 class="sub-heading">Non-offenses</h4>
+<p>
+There is no offense in eating food that one has accepted from the house of a family in training if—
+</p>
+<p>
+one is ill;
+</p>
+<p>
+one was invited;
+</p>
+<p>
+almsfood supplied by people other than the members of the family in training is set out in the residence or its yard (§);
+</p>
+<p>
+the family has made an arrangement to provide meals by drawing lots, on a daily basis, or on a regular or rotating basis—such as on a particular day of the waxing or waning moon, the uposatha days, or day after the uposatha days (see [Appendix III](./Section0028.html#appendixIII))—and one accepts food as part of that arrangement;
+</p>
+<p>
+one eats the leftovers of one who received the food at their residence when he was invited or ill (which suggests that if Bhikkhu X receives food from such a family in a way that would violate this rule and gives it to Bhikkhu Y, Y would incur offenses in receiving it with the thought of eating it and in consuming it);
+</p>
+<p>
+one accepts juice drinks, tonics, or medicine and uses them as such; or
+</p>
+<p>
+the members of the family give the food outside of their residence or yard/compound. The Commentary quotes the Mahā Paccarī, one of the ancient commentaries, as saying that this last exemption holds regardless of whether they take the food out of the residence before or after seeing one approach.
+</p>
+<p>
+Summary: Eating staple or non-staple food after accepting it—when one is neither ill nor invited—at the residence of a family formally designated as “in training” is a pāṭidesanīya offense.
+</p>
+<p>
+\<em>    \</em>    \*
+</p>
+<h3 id="rule-0025-4-4" class="rule-heading"><a class="anchor-link" href="#rule-0025-4-4">#</a>4</h3>
+<p>
+There are wilderness lodgings that are considered dubious and risky. Should any bhikkhu, not being ill, living in such lodgings, chew or consume (a gift of) staple or non-staple food that was unannounced beforehand, having received it with his own hand in the lodging, he is to acknowledge it: “Friends, I have committed a blameworthy, unsuitable act that ought to be acknowledged. I acknowledge it.”
+</p>
+<p>
+“Now at that time the Sakyan slaves were rebelling. The Sakyan ladies wanted to present a meal (for the bhikkhus) in wilderness lodgings. The Sakyan slaves heard, ‘The Sakyan ladies, they say, want to present a meal in the wilderness lodgings,’ so they infested the way. The Sakyan ladies, carrying exquisite staple and non-staple foods, went to the wilderness lodgings. The Sakyan slaves, coming out, robbed them and raped them. The Sakyans, having come out and captured the thieves with the goods, criticized and complained and spread it about, ‘How can their reverences not inform us that there are thieves living in the monastery?’”
+</p>
+<p>
+Here again there are two factors for the full offense.
+</p>
+<p>
+<em>1) Object:</em> an unannounced gift of staple or non-staple food that one has received, when not ill, in a dubious and risky wilderness lodging.
+</p>
+<p>
+<em>2) Effort:</em> One eats the food.
+</p>
+<h4 class="sub-heading">Object</h4>
+<p>
+The Vibhaṅga defines a <em>wilderness lodging</em> as one at least 500 bow-lengths, or one kilometer, from the nearest village, measuring by the shortest walkable path between the two, and not as the crow flies. Such a lodging is considered dubious if signs of thieves—such as their eating, resting, sitting, or standing places—have been seen within it or its vicinity; it is considered risky if people are known to have been hurt or plundered by thieves there. As under the other rule dealing with dubious and risky wilderness lodgings—NP 29—none of the texts here give a precise definition of how far the vicinity of the lodging extends for the purpose of this situation. As noted in the explanation to [NP 29](./Section0015.html#NP29), given the risks inherent in such lodgings it was perhaps felt unwise to delimit the area too precisely. Thus, in the context of this rule, the “vicinity” of the lodging can be stretched to include any area where the presence of thieves leads to a common perception that the lodging is dangerous.
+</p>
+<p>
+<em>Staple food</em> follows the standard definition given in the [Food Chapter](./Section0019.html#Pc_ChFour) under the pācittiya rules. <em>Non-staple food</em> includes all edibles except juice drinks, tonics, and medicines.
+</p>
+<p>
+Staple and non-staple food are grounds for a pāṭidesanīya; juice drinks, tonics, and medicines taken as food, grounds for a dukkaṭa.
+</p>
+<p>
+The Vibhaṅga gives specific instructions for how the gift of food should be announced. The donor(s) or a messenger must come into the lodging compound if it is walled, or into its vicinity if it is not, and tell one of the inhabitants that a gift of food will be brought. The inhabitant must then tell the informant that the area is dubious and risky. If the informant says, “Never mind, the donor(s) will come anyway,” then someone in the lodging must tell the thieves, “Go away. People are coming to serve food.” This is unlikely to make the thieves go away but, as the Commentary explains, it absolves the bhikkhus from any responsibility if the thieves attack the donors.
+</p>
+<p>
+According to the Vibhaṅga, even if the informant specifies that only certain types of food will be brought, anything that comes along with those foods counts as announced (§). Here the Commentary adds that if other people learn of the intended donation and bring food to add to it, their food counts as announced as well. The Vibhaṅga also states that if the informant says a group of people is coming to bring food, the announcement covers anything brought by any member of the group.
+</p>
+<p>
+The Vibhaṅga makes clear that the announcement is valid only if the informant makes it in the lodging or its vicinity/compound. Thus, for example, if the donors announce their intended donation to the bhikkhu while he is in the village for alms, the donation is still considered unannounced. And, for the same reason, such things as telephone calls, letters, and faxes would also not count.
+</p>
+<p>
+The Commentary adds that if the donors send a bhikkhu or novice to the lodging to announce the donation, it does not count as announced. In other words, the messenger must be a lay person.
+</p>
+<p>
+Perception as to whether the food has been properly announced is not a mitigating factor here (see Pd 1).
+</p>
+<p>
+A bhikkhu counts as <em>ill</em> if he is unable to go for alms.
+</p>
+<h4 class="sub-heading">Effort</h4>
+<p>
+Under these circumstances, there is a dukkaṭa in accepting unannounced staple or non-staple food with the purpose of eating it, or in accepting unannounced juice drinks, tonics or medicine with the purpose of taking them as food; a pāṭidesanīya for every mouthful of the unannounced staple or non-staple food one eats; and a dukkaṭa for every mouthful one takes of the unannounced juice drinks, tonics, or medicine for the sake of food. These penalties apply not only to the bhikkhu who accepts these items directly from the donor(s), but also to all other bhikkhus who take these items and eat them.
+</p>
+<h4 class="sub-heading">Non-offenses</h4>
+<p>
+There is no offense in eating food accepted in the lodging if one is ill or if the gift was announced. There is also no offense—
+</p>
+<p>
+in using fruit, roots, bark, leaves, or flowers growing in the lodging (or, apparently, in its vicinity or compound);
+</p>
+<p>
+in eating left-over announced food or food given to one who is ill;
+</p>
+<p>
+in accepting food outside the lodging and eating it inside; or
+</p>
+<p>
+in accepting and consuming juice drinks, tonics, and medicines as such and not as food.
+</p>
+<p>
+The Commentary, in discussing these allowances, makes the following points: 1) If lay people take any of the fruits, roots, etc., growing in the lodging and cook them at home, they must announce the gift before bringing them back to the lodging. 2) If the donors, after announcing the gift, bring large amounts of food, some of it may be set aside—without presenting it to the bhikkhus—to be presented on a later day.
+</p>
+<p>
+All of this causes no hardships in communities where everyone knows that they have to announce a gift of food before bringing it to the dangerous lodging, but there are bound to be cases where donors do not know that the lodging is dangerous or that they should announce their gifts before bringing them, and they are likely to show up at the lodging with unannounced gifts of food. In such cases, the Commentary recommends: 1) Either have the donor take the food outside the area of the lodging, come back in to announce it, and then go out to bring the food back in to present it; or 2) have the donor take the food outside and have a bhikkhu follow him/her out to accept it there.
+</p>
+<p>
+In order to minimize the need for doing this, though, it would be a wise policy for a bhikkhu who finds himself living in such a lodging to announce to all his supporters beforehand—and ask them to spread the word—that if they want to bring him gifts of food, they have to come and announce the gifts in advance.
+</p>
+<p>
+Summary: Eating an unannounced gift of staple or non-staple food after accepting it in a dangerous wilderness lodging when one is not ill is a pāṭidesanīya offense.
+</p>
+</div>
+</main>
+<script>
+
+(function() {
+  'use strict';
+
+  /* ── THEME ── */
+  var THEME_KEY = 'bmc-theme';
+  var LANG_KEY  = 'bmc-lang';
+  var FS_KEY    = 'bmc-fontsize';
+  var FS_BASE   = 20;
+  var FS_MIN    = 13;
+  var FS_MAX    = 24;
+
+  function getTheme() { return localStorage.getItem(THEME_KEY) || 'light'; }
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem(THEME_KEY, t);
+    var btn = document.getElementById('btn-theme');
+    if (btn) btn.textContent = t === 'dark' ? '☀' : '☾';
+  }
+
+  /* ── FONT SIZE ── */
+  function getFs() { return parseInt(localStorage.getItem(FS_KEY) || FS_BASE, 10); }
+  function applyFs(fs) {
+    fs = Math.max(FS_MIN, Math.min(FS_MAX, fs));
+    document.documentElement.style.setProperty('--fs-base', fs + 'px');
+    localStorage.setItem(FS_KEY, fs);
+  }
+
+  /* ── LANG ── */
+  function getLang() { return localStorage.getItem(LANG_KEY) || 'vi'; }
+  function applyLang(lang, skipScroll) {
+    var anchor = skipScroll ? null : location.hash;
+    document.querySelectorAll('.lang-block').forEach(function(el) {
+      if (el.dataset.lang === lang) { el.classList.remove('hidden'); }
+      else { el.classList.add('hidden'); }
+    });
+    localStorage.setItem(LANG_KEY, lang);
+    var btn = document.getElementById('btn-lang');
+    if (btn) btn.textContent = lang === 'vi' ? 'VI' : 'EN';
+    // Restore anchor after DOM update
+    if (anchor && !skipScroll) {
+      setTimeout(function() { location.hash = ''; location.hash = anchor; }, 50);
+    }
+  }
+
+  /* ── DRAWER ── */
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ── SCROLL SPY ── */
+  function initScrollSpy() {
+    var headers = document.querySelectorAll('.rule-heading[id]');
+    if (!headers.length) return;
+    var links = document.querySelectorAll('.drawer-rule-link');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var id = entry.target.id;
+        var link = document.querySelector('.drawer-rule-link[href="#' + id + '"]');
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          if (link) {
+            link.classList.add('active');
+            link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+          headers.forEach(function(h) { h.classList.remove('spy-active'); });
+          entry.target.classList.add('spy-active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    headers.forEach(function(h) { observer.observe(h); });
+  }
+
+  /* ── INDEX SEARCH ── */
+  function initSearch() {
+    var input = document.getElementById('index-search');
+    if (!input) return;
+    input.addEventListener('input', function() {
+      var q = this.value.toLowerCase().trim();
+      document.querySelectorAll('.toc-item').forEach(function(item) {
+        var name = item.querySelector('.toc-name');
+        item.style.display = (!q || (name && name.textContent.toLowerCase().includes(q))) ? '' : 'none';
+      });
+    });
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    setTheme(getTheme());
+    applyFs(getFs());
+    applyLang(getLang(), true);
+    initSearch();
+    initScrollSpy();
+
+    var btnToc = document.getElementById('btn-toc');
+    if (btnToc) btnToc.addEventListener('click', openDrawer);
+
+    var btnClose = document.getElementById('drawer-close');
+    if (btnClose) btnClose.addEventListener('click', closeDrawer);
+
+    var overlay = document.getElementById('drawer-overlay');
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    var btnTheme = document.getElementById('btn-theme');
+    if (btnTheme) btnTheme.addEventListener('click', function() {
+      setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+    });
+
+    var btnDec = document.getElementById('btn-fs-dec');
+    if (btnDec) btnDec.addEventListener('click', function() {
+      applyFs(getFs() - 2);
+    });
+
+    var btnInc = document.getElementById('btn-fs-inc');
+    if (btnInc) btnInc.addEventListener('click', function() {
+      applyFs(getFs() + 2);
+    });
+
+    var btnLang = document.getElementById('btn-lang');
+    if (btnLang) btnLang.addEventListener('click', function() {
+      var cur = getLang();
+      applyLang(cur === 'vi' ? 'en' : 'vi');
+    });
+
+    // Drawer rule links: close drawer on click
+    document.querySelectorAll('.drawer-rule-link').forEach(function(link) {
+      link.addEventListener('click', closeDrawer);
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
