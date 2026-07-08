@@ -620,3 +620,53 @@ body {
   --bg-darker: rgba(0, 0, 0, 0.05);
   --heading-color: #0f172a;
 }
+
+/* Notebook Styles */
+.notebook-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.notebook-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notebook-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.notebook-question {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--heading-color);
+}
+
+.notebook-ai-answer {
+  background: var(--glass-bg-panel);
+  border-left: 3px solid var(--color-how);
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+}
+
+.notebook-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-delete {
+  background: transparent;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+}
+.btn-delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+}

@@ -8,6 +8,12 @@ export function clearAllTimers() {
   activeTimers = [];
 }
 
+window.saveToNotebook = function(entry) {
+  let notebook = JSON.parse(localStorage.getItem('vocab_notebook') || '[]');
+  notebook.unshift(entry); // Add to top
+  localStorage.setItem('vocab_notebook', JSON.stringify(notebook));
+};
+
 export function parseDrill(text) {
   const blocks = text.replace(/\r/g,'').split(/^\s*---\s*$/m);
   const parse = b => {
@@ -139,11 +145,17 @@ export function renderDrill(container, drillData) {
         const aiAnswer = block.querySelector('.ai-answer');
         
         aiBtn.addEventListener('click', async () => {
+          if (aiBtn.disabled) return;
           const apiKey = localStorage.getItem('gemini_api_key');
           if (!apiKey) {
             alert('Vui lòng vào Cài đặt (biểu tượng bánh răng) để nhập Gemini API Key trước nhé!');
             return;
           }
+          
+          aiBtn.disabled = true;
+          const originalText = aiBtn.innerHTML;
+          aiBtn.innerHTML = `${icons.sparkles} Đang xử lý...`;
+
           aiAnswer.style.display = 'block';
           aiAnswer.innerHTML = `<div class="ai-loading"><div class="ai-spinner"></div> AI đang suy nghĩ...</div>`;
           try {
@@ -155,8 +167,34 @@ export function renderDrill(container, drillData) {
               hint: item.hint
             });
             aiAnswer.innerHTML = '<strong>✨ AI Suggestion:</strong><br/>' + mdToHtml(result);
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'btn';
+            saveBtn.style.marginTop = '1rem';
+            saveBtn.style.fontSize = '0.85rem';
+            saveBtn.innerHTML = `${icons.bookmark} Lưu vào sổ tay`;
+            saveBtn.onclick = () => {
+              window.saveToNotebook({
+                type: 'expand',
+                title: meta.title,
+                question: item.prompt,
+                suggestion: result,
+                timestamp: Date.now()
+              });
+              saveBtn.innerHTML = `${icons.check} Đã lưu`;
+              saveBtn.disabled = true;
+              saveBtn.style.opacity = '0.6';
+            };
+            aiAnswer.appendChild(saveBtn);
           } catch (e) {
-            aiAnswer.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+            const msg = (e.message || '').toLowerCase();
+            if (msg.includes('quota') || msg.includes('429') || msg.includes('rate limit')) {
+               aiAnswer.innerHTML = `<div style="color:var(--color-error)">Lỗi giới hạn: Bạn đang gọi quá nhanh (15 lần/phút). Vui lòng đợi một lát rồi thử lại!</div>`;
+            } else {
+               aiAnswer.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+            }
+          } finally {
+            aiBtn.disabled = false;
+            aiBtn.innerHTML = originalText;
           }
         });
         
@@ -201,6 +239,7 @@ export function renderDrill(container, drillData) {
         
         block.querySelectorAll('.btn-ai-suggest-layer').forEach(btn => {
           btn.addEventListener('click', async () => {
+            if (btn.disabled) return;
             const layer = btn.dataset.layer;
             const aiAns = block.querySelector(`.ai-answer[data-ai-layer="${layer}"]`);
             const apiKey = localStorage.getItem('gemini_api_key');
@@ -208,6 +247,11 @@ export function renderDrill(container, drillData) {
               alert('Vui lòng vào Cài đặt (biểu tượng bánh răng) để nhập Gemini API Key trước nhé!');
               return;
             }
+
+            btn.disabled = true;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `${icons.sparkles} Đang xử lý...`;
+
             aiAns.style.display = 'block';
             aiAns.innerHTML = `<div class="ai-loading"><div class="ai-spinner"></div> AI đang suy nghĩ...</div>`;
             try {
@@ -219,8 +263,35 @@ export function renderDrill(container, drillData) {
                 layer 
               });
               aiAns.innerHTML = `<strong>✨ AI Suggestion cho ${layer}:</strong><br/>` + mdToHtml(result);
+              const saveBtn = document.createElement('button');
+              saveBtn.className = 'btn';
+              saveBtn.style.marginTop = '1rem';
+              saveBtn.style.fontSize = '0.85rem';
+              saveBtn.innerHTML = `${icons.bookmark} Lưu vào sổ tay`;
+              saveBtn.onclick = () => {
+                window.saveToNotebook({
+                  type: 'build',
+                  layer: layer,
+                  title: meta.title,
+                  question: item.question,
+                  suggestion: result,
+                  timestamp: Date.now()
+                });
+                saveBtn.innerHTML = `${icons.check} Đã lưu`;
+                saveBtn.disabled = true;
+                saveBtn.style.opacity = '0.6';
+              };
+              aiAns.appendChild(saveBtn);
             } catch (e) {
-              aiAns.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+              const msg = (e.message || '').toLowerCase();
+              if (msg.includes('quota') || msg.includes('429') || msg.includes('rate limit')) {
+                 aiAns.innerHTML = `<div style="color:var(--color-error)">Lỗi giới hạn: Bạn đang gọi quá nhanh (15 lần/phút). Vui lòng đợi một lát rồi thử lại!</div>`;
+              } else {
+                 aiAns.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+              }
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = originalText;
             }
           });
         });

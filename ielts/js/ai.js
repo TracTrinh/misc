@@ -1,5 +1,11 @@
-export async function generateSuggestion(apiKey, promptData) {
-  if (!apiKey) {
+let currentKeyIndex = 0;
+
+export async function generateSuggestion(apiKeysString, promptData) {
+  if (!apiKeysString) {
+    throw new Error('API Key is missing');
+  }
+  const keys = apiKeysString.split(',').map(k => k.trim()).filter(k => k);
+  if (keys.length === 0) {
     throw new Error('API Key is missing');
   }
 
@@ -33,32 +39,45 @@ Yêu cầu:
     prompt = `Bạn là chuyên gia IELTS. Trả lời ngắn gọn cho: ${question}`;
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+  let lastError = null;
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      contents: [{
-        parts: [{ text: prompt }]
-      }],
-      generationConfig: {
-        temperature: 0.7
+  for (let attempt = 0; attempt < keys.length; attempt++) {
+    const keyToUse = keys[currentKeyIndex % keys.length];
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${keyToUse}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{ text: prompt }]
+          }],
+          generationConfig: {
+            temperature: 0.7
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || 'Lỗi khi gọi API');
       }
-    })
-  });
 
-  if (!response.ok) {
-    const errData = await response.json().catch(() => ({}));
-    throw new Error(errData.error?.message || 'Lỗi khi gọi API');
+      const data = await response.json();
+      if (data.candidates && data.candidates.length > 0) {
+        return data.candidates[0].content.parts[0].text;
+      }
+      
+      throw new Error('Không nhận được phản hồi từ AI');
+    } catch (e) {
+      lastError = e;
+      currentKeyIndex++;
+      continue; // Thử key tiếp theo
+    }
   }
 
-  const data = await response.json();
-  if (data.candidates && data.candidates.length > 0) {
-    return data.candidates[0].content.parts[0].text;
-  }
-  
-  throw new Error('Không nhận được phản hồi từ AI');
+  throw lastError;
 }

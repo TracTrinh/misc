@@ -24,6 +24,9 @@ function buildSidebar() {
     <div class="nav-item">
       <a href="#/" class="nav-link">${icons.home} Home</a>
     </div>
+    <div class="nav-item">
+      <a href="#/notebook" class="nav-link">${icons.notebook} Sổ tay</a>
+    </div>
   `;
 
   MANIFEST.learningPath.forEach(partId => {
@@ -157,6 +160,11 @@ async function router() {
     return;
   }
 
+  if (hash === '/notebook') {
+    renderNotebook();
+    return;
+  }
+
   const parts = hash.split('/').filter(Boolean);
   const partId = parts[0];
   const action = parts[1]; // practice
@@ -246,6 +254,53 @@ async function router() {
       `;
     }
   }
+}
+
+window.deleteNotebookEntry = function(index) {
+  let notebook = JSON.parse(localStorage.getItem('vocab_notebook') || '[]');
+  notebook.splice(index, 1);
+  localStorage.setItem('vocab_notebook', JSON.stringify(notebook));
+  renderNotebook();
+};
+
+function renderNotebook() {
+  const contentArea = document.getElementById('content-area');
+  let notebook = JSON.parse(localStorage.getItem('vocab_notebook') || '[]');
+  
+  let html = `
+    <div class="header-card">
+      <h1 class="header-title">Sổ tay từ vựng</h1>
+      <p class="header-subtitle">Ôn tập lại những từ vựng và câu trả lời hay mà AI đã gợi ý cho bạn.</p>
+    </div>
+  `;
+
+  if (notebook.length === 0) {
+    html += `
+      <div style="text-align:center; padding: 3rem 1rem; color: var(--text-secondary);">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📓</div>
+        <h3>Sổ tay đang trống</h3>
+        <p>Hãy làm bài tập và bấm "Lưu vào sổ tay" khi thấy AI gợi ý hay nhé!</p>
+      </div>
+    `;
+  } else {
+    html += `<div class="notebook-grid">`;
+    notebook.forEach((item, index) => {
+      const date = new Date(item.timestamp).toLocaleString('vi-VN');
+      html += `
+        <div class="notebook-card">
+          <div style="display:flex; justify-content: space-between; align-items: flex-start;">
+            <div class="notebook-date">${date} &bull; ${item.title ? '<strong>' + item.title + '</strong>' : ''}${item.layer ? ' &bull; Layer: ' + item.layer : ''}</div>
+            <button class="btn btn-delete" onclick="window.deleteNotebookEntry(${index})">${icons.trash} Xóa</button>
+          </div>
+          <div class="notebook-question"><strong>Ngữ cảnh:</strong> ${item.question}</div>
+          <div class="notebook-ai-answer">${mdToHtml(item.suggestion)}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  contentArea.innerHTML = html;
 }
 
 init();
