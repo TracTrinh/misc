@@ -12,6 +12,7 @@
       <div class="sidebar-header">
         <h2>IELTS Trainer</h2>
         <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button class="nav-toggle" id="settings-toggle" aria-label="Cài đặt" style="display: inline-flex;"></button>
           <button class="nav-toggle" id="theme-toggle" aria-label="Đổi giao diện" style="display: inline-flex;"></button>
           <button class="nav-toggle" id="nav-toggle" aria-label="Mở/đóng menu" aria-expanded="false"></button>
         </div>
@@ -26,6 +27,27 @@
       </div>
     </main>
   </div>
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Cài đặt</h3>
+        <button class="modal-close" id="settings-close" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="api-key-input">Gemini API Key</label>
+          <input type="password" id="api-key-input" class="form-input" placeholder="Nhập API Key của bạn...">
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Key của bạn chỉ được lưu trên trình duyệt này (LocalStorage) để đảm bảo an toàn.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="settings-cancel">Hủy</button>
+          <button class="btn btn-primary" id="settings-save">Lưu lại</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

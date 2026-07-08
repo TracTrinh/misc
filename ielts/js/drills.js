@@ -1,5 +1,6 @@
 import { mdToHtml } from './md.js';
 import { icons } from './icons.js';
+import { generateSuggestion } from './ai.js';
 
 let activeTimers = [];
 export function clearAllTimers() {
@@ -123,15 +124,42 @@ export function renderDrill(container, drillData) {
           <p style="color:var(--text-secondary); margin-bottom:1rem; font-size: 0.95rem;">Gợi ý: ${item.hint}</p>
           <textarea class="textarea-expand" placeholder="Viết câu trả lời của bạn vào đây..."></textarea>
           <div class="options">
+             <button class="btn btn-ai-suggest">${icons.sparkles} Gợi ý AI</button>
              <button class="btn btn-toggle-model">Xem model answer</button>
              <button class="btn btn-mark" data-mark="pass">${icons.check} Đạt</button>
              <button class="btn btn-mark" data-mark="revise">${icons.refresh} Cần sửa</button>
              <button class="btn feature-locked" disabled>${icons.mic} Ghi âm & chấm (sắp có)</button>
           </div>
+          <div class="ai-answer model-answer" style="border-left: 3px solid var(--color-how);"></div>
           <div class="model-answer">${mdToHtml(item.model || '')}</div>
         `;
         const toggleBtn = block.querySelector('.btn-toggle-model');
-        const model = block.querySelector('.model-answer');
+        const aiBtn = block.querySelector('.btn-ai-suggest');
+        const model = block.querySelector('.model-answer:not(.ai-answer)');
+        const aiAnswer = block.querySelector('.ai-answer');
+        
+        aiBtn.addEventListener('click', async () => {
+          const apiKey = localStorage.getItem('gemini_api_key');
+          if (!apiKey) {
+            alert('Vui lòng vào Cài đặt (biểu tượng bánh răng) để nhập Gemini API Key trước nhé!');
+            return;
+          }
+          aiAnswer.style.display = 'block';
+          aiAnswer.innerHTML = `<div class="ai-loading"><div class="ai-spinner"></div> AI đang suy nghĩ...</div>`;
+          try {
+            const result = await generateSuggestion(apiKey, { 
+              type: 'expand', 
+              drillTitle: meta.title,
+              drillIntro: meta.intro,
+              question: item.prompt,
+              hint: item.hint
+            });
+            aiAnswer.innerHTML = '<strong>✨ AI Suggestion:</strong><br/>' + mdToHtml(result);
+          } catch (e) {
+            aiAnswer.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+          }
+        });
+        
         toggleBtn.addEventListener('click', () => {
           const shown = model.style.display === 'block';
           model.style.display = shown ? 'none' : 'block';
@@ -151,27 +179,58 @@ export function renderDrill(container, drillData) {
         layers.forEach(layer => {
           html += `
             <div class="build-layer" style="margin-bottom: 1rem;">
-              <div class="layer-label" style="font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem;">${layer}</div>
+              <div class="layer-label" style="font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                ${layer}
+                <button class="btn btn-ai-suggest-layer" data-layer="${layer}" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;">${icons.sparkles} AI Suggest</button>
+              </div>
               <textarea class="textarea-expand" placeholder="Viết ý ${layer}..."></textarea>
+              <div class="ai-answer model-answer" data-ai-layer="${layer}" style="border-left: 3px solid var(--color-how); margin-top: 0.5rem; margin-bottom: 1rem;"></div>
               <div class="model-answer" data-layer="${layer}">${mdToHtml(item['model_' + layer] || '')}</div>
             </div>
           `;
         });
         html += `</div>
           <div class="options">
-             <button class="btn btn-toggle-model">Xem gợi ý</button>
+             <button class="btn btn-toggle-model">Xem gợi ý mẫu</button>
              <button class="btn btn-mark" data-mark="pass">${icons.check} Đạt</button>
              <button class="btn btn-mark" data-mark="revise">${icons.refresh} Cần sửa</button>
              <button class="btn feature-locked" disabled>${icons.mic} Ghi âm & chấm (sắp có)</button>
           </div>
         `;
         block.innerHTML = html;
+        
+        block.querySelectorAll('.btn-ai-suggest-layer').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const layer = btn.dataset.layer;
+            const aiAns = block.querySelector(`.ai-answer[data-ai-layer="${layer}"]`);
+            const apiKey = localStorage.getItem('gemini_api_key');
+            if (!apiKey) {
+              alert('Vui lòng vào Cài đặt (biểu tượng bánh răng) để nhập Gemini API Key trước nhé!');
+              return;
+            }
+            aiAns.style.display = 'block';
+            aiAns.innerHTML = `<div class="ai-loading"><div class="ai-spinner"></div> AI đang suy nghĩ...</div>`;
+            try {
+              const result = await generateSuggestion(apiKey, { 
+                type: 'build', 
+                drillTitle: meta.title,
+                drillIntro: meta.intro,
+                question: item.question, 
+                layer 
+              });
+              aiAns.innerHTML = `<strong>✨ AI Suggestion cho ${layer}:</strong><br/>` + mdToHtml(result);
+            } catch (e) {
+              aiAns.innerHTML = `<div style="color:var(--color-error)">Lỗi: ${e.message}</div>`;
+            }
+          });
+        });
+        
         const toggleBtn = block.querySelector('.btn-toggle-model');
-        const models = block.querySelectorAll('.model-answer');
+        const models = block.querySelectorAll('.model-answer:not(.ai-answer)');
         toggleBtn.addEventListener('click', () => {
           const shown = models[0].style.display === 'block';
           models.forEach(m => m.style.display = shown ? 'none' : 'block');
-          toggleBtn.textContent = shown ? 'Xem gợi ý' : 'Ẩn gợi ý';
+          toggleBtn.textContent = shown ? 'Xem gợi ý mẫu' : 'Ẩn gợi ý mẫu';
         });
         block.querySelectorAll('.btn-mark').forEach(btn => {
           btn.addEventListener('click', () => {

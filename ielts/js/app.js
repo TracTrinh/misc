@@ -10,6 +10,7 @@ async function init() {
     MANIFEST = await res.json();
     buildSidebar();
     setupNavToggle();
+    setupSettings();
     window.addEventListener('hashchange', router);
     router();
   } catch (error) {
@@ -46,6 +47,7 @@ function setupNavToggle() {
   const sidebar = document.getElementById('sidebar');
   const toggle = document.getElementById('nav-toggle');
   const themeToggle = document.getElementById('theme-toggle');
+  const settingsToggle = document.getElementById('settings-toggle');
 
   if (toggle && sidebar) {
     toggle.innerHTML = icons.menu;
@@ -81,6 +83,48 @@ function setupNavToggle() {
       }
     });
   }
+
+  if (settingsToggle) {
+    settingsToggle.innerHTML = icons.settings;
+  }
+}
+
+function setupSettings() {
+  const modal = document.getElementById('settings-modal');
+  const toggleBtn = document.getElementById('settings-toggle');
+  const closeBtn = document.getElementById('settings-close');
+  const cancelBtn = document.getElementById('settings-cancel');
+  const saveBtn = document.getElementById('settings-save');
+  const input = document.getElementById('api-key-input');
+
+  const openModal = () => {
+    input.value = localStorage.getItem('gemini_api_key') || '';
+    modal.classList.add('show');
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('show');
+  };
+
+  const saveSettings = () => {
+    const key = input.value.trim();
+    if (key) {
+      localStorage.setItem('gemini_api_key', key);
+    } else {
+      localStorage.removeItem('gemini_api_key');
+    }
+    closeModal();
+  };
+
+  if (toggleBtn) toggleBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+  if (saveBtn) saveBtn.addEventListener('click', saveSettings);
+  
+  // Close on backdrop click
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
 }
 
 async function router() {
