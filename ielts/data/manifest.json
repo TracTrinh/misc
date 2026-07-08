@@ -1,0 +1,416 @@
+{
+  "learningPath": [
+    "part2",
+    "part1",
+    "part3",
+    "mixed"
+  ],
+  "parts": {
+    "part2": {
+      "id": "part2",
+      "title": "Part 2 · Story Engine",
+      "subtitle": "Kể chuyện 4 tầng T-H-W-V",
+      "theory": "data/part2/theory.md",
+      "drills": [
+        {
+          "id": "add_turn",
+          "title": "Nới bài — Add a Turn",
+          "file": "data/part2/drills/add_turn.md"
+        },
+        {
+          "id": "build_one_story",
+          "title": "One Story, Many Cue Cards",
+          "file": "data/part2/drills/build_one_story.md"
+        },
+        {
+          "id": "cuecard_classify",
+          "title": "Nhận diện dạng cue card Part 2",
+          "file": "data/part2/drills/cuecard_classify.md"
+        },
+        {
+          "id": "cuecard_classify_set2",
+          "title": "Nhận diện dạng cue card Part 2 Set 2",
+          "file": "data/part2/drills/cuecard_classify_set2.md"
+        },
+        {
+          "id": "expand_chunk_reduction",
+          "title": "Chunk Reduction",
+          "file": "data/part2/drills/expand_chunk_reduction.md"
+        },
+        {
+          "id": "expand_detail_ladder",
+          "title": "Detail Ladder (Thang chi tiết)",
+          "file": "data/part2/drills/expand_detail_ladder.md"
+        },
+        {
+          "id": "expand_soft_contrast",
+          "title": "Soft Contrast",
+          "file": "data/part2/drills/expand_soft_contrast.md"
+        },
+        {
+          "id": "expand_value_line",
+          "title": "Value Line (Câu đóng dư âm)",
+          "file": "data/part2/drills/expand_value_line.md"
+        },
+        {
+          "id": "mock_timer",
+          "title": "Mock Test Part 2",
+          "file": "data/part2/drills/mock_timer.md"
+        },
+        {
+          "id": "mock_timer_set2",
+          "title": "Mock Test Part 2 Set 2",
+          "file": "data/part2/drills/mock_timer_set2.md"
+        },
+        {
+          "id": "reflect",
+          "title": "Nới bài — Reflect Deeper",
+          "file": "data/part2/drills/reflect.md"
+        },
+        {
+          "id": "sort_thwv",
+          "title": "Xếp tầng Story Engine Part 2",
+          "file": "data/part2/drills/sort_thwv.md"
+        },
+        {
+          "id": "sort_thwv_set2",
+          "title": "Xếp tầng Story Engine Part 2 - Set 2",
+          "file": "data/part2/drills/sort_thwv_set2.md"
+        },
+        {
+          "id": "story_expand",
+          "title": "Mở rộng câu chuyện Part 2",
+          "file": "data/part2/drills/story_expand.md"
+        },
+        {
+          "id": "story_expand_set2",
+          "title": "Mở rộng câu chuyện Part 2 Set 2",
+          "file": "data/part2/drills/story_expand_set2.md"
+        },
+        {
+          "id": "story_identify",
+          "title": "Nhận diện câu trả lời Part 2",
+          "file": "data/part2/drills/story_identify.md"
+        },
+        {
+          "id": "story_identify_set2",
+          "title": "Nhận diện câu trả lời Part 2 Set 2",
+          "file": "data/part2/drills/story_identify_set2.md"
+        },
+        {
+          "id": "thwv_build",
+          "title": "4-Line Planning Part 2",
+          "file": "data/part2/drills/thwv_build.md"
+        },
+        {
+          "id": "thwv_build_set2",
+          "title": "4-Line Planning Part 2 Set 2",
+          "file": "data/part2/drills/thwv_build_set2.md"
+        },
+        {
+          "id": "thwv_sort",
+          "title": "Xếp tầng T-H-W-V Part 2",
+          "file": "data/part2/drills/thwv_sort.md"
+        },
+        {
+          "id": "thwv_sort_set2",
+          "title": "Xếp tầng T-H-W-V Part 2 Set 2",
+          "file": "data/part2/drills/thwv_sort_set2.md"
+        },
+        {
+          "id": "timer",
+          "title": "Mock Test (Part 2) - Describe a topic",
+          "file": "data/part2/drills/timer.md"
+        },
+        {
+          "id": "zoom_in",
+          "title": "Nới bài — Zoom In",
+          "file": "data/part2/drills/zoom_in.md"
+        }
+      ]
+    },
+    "part1": {
+      "id": "part1",
+      "title": "Part 1 · Speed Reaction",
+      "subtitle": "Small Truth, công thức A-R-D",
+      "theory": "data/part1/theory.md",
+      "drills": [
+        {
+          "id": "answer_expand",
+          "title": "Cứu câu cụt Part 1",
+          "file": "data/part1/drills/answer_expand.md"
+        },
+        {
+          "id": "answer_expand_set2",
+          "title": "Cứu câu cụt Part 1 Set 2",
+          "file": "data/part1/drills/answer_expand_set2.md"
+        },
+        {
+          "id": "ard_build",
+          "title": "3-Line Planning Part 1",
+          "file": "data/part1/drills/ard_build.md"
+        },
+        {
+          "id": "ard_build_set2",
+          "title": "3-Line Planning Part 1 Set 2",
+          "file": "data/part1/drills/ard_build_set2.md"
+        },
+        {
+          "id": "ard_sort",
+          "title": "Xếp tầng A-R-D Part 1",
+          "file": "data/part1/drills/ard_sort.md"
+        },
+        {
+          "id": "ard_sort_set2",
+          "title": "Xếp tầng A-R-D Part 1 Set 2",
+          "file": "data/part1/drills/ard_sort_set2.md"
+        },
+        {
+          "id": "classify_qtype_core",
+          "title": "Nhận diện dạng câu hỏi Part 1",
+          "file": "data/part1/drills/classify_qtype_core.md"
+        },
+        {
+          "id": "classify_qtype_set2",
+          "title": "Nhận diện dạng câu hỏi Part 1 - Set 2",
+          "file": "data/part1/drills/classify_qtype_set2.md"
+        },
+        {
+          "id": "expand_human_detail",
+          "title": "Thêm Human Detail",
+          "file": "data/part1/drills/expand_human_detail.md"
+        },
+        {
+          "id": "expand_rescue",
+          "title": "Cứu câu cụt Part 1",
+          "file": "data/part1/drills/expand_rescue.md"
+        },
+        {
+          "id": "expand_rescue_set2",
+          "title": "Cứu câu cụt Part 1 - Set 2",
+          "file": "data/part1/drills/expand_rescue_set2.md"
+        },
+        {
+          "id": "expand_unknown",
+          "title": "Topic lạ (A-C-D)",
+          "file": "data/part1/drills/expand_unknown.md"
+        },
+        {
+          "id": "identify",
+          "title": "Nhận diện câu trả lời",
+          "file": "data/part1/drills/identify.md"
+        },
+        {
+          "id": "identify_quality",
+          "title": "Đánh giá câu trả lời Part 1",
+          "file": "data/part1/drills/identify_quality.md"
+        },
+        {
+          "id": "identify_quality_set2",
+          "title": "Đánh giá câu trả lời Part 1 - Set 2",
+          "file": "data/part1/drills/identify_quality_set2.md"
+        },
+        {
+          "id": "mock_timer",
+          "title": "Mock Test Part 1",
+          "file": "data/part1/drills/mock_timer.md"
+        },
+        {
+          "id": "mock_timer_set2",
+          "title": "Mock Test Part 1 Set 2",
+          "file": "data/part1/drills/mock_timer_set2.md"
+        },
+        {
+          "id": "qtype_classify",
+          "title": "Nhận diện dạng câu hỏi Part 1",
+          "file": "data/part1/drills/qtype_classify.md"
+        },
+        {
+          "id": "qtype_classify_set2",
+          "title": "Nhận diện dạng câu hỏi Part 1 Set 2",
+          "file": "data/part1/drills/qtype_classify_set2.md"
+        },
+        {
+          "id": "qtypes",
+          "title": "Nhận diện dạng câu hỏi Part 1",
+          "file": "data/part1/drills/qtypes.md"
+        },
+        {
+          "id": "reaction_identify",
+          "title": "Nhận diện câu trả lời Part 1",
+          "file": "data/part1/drills/reaction_identify.md"
+        },
+        {
+          "id": "reaction_identify_set2",
+          "title": "Nhận diện câu trả lời Part 1 Set 2",
+          "file": "data/part1/drills/reaction_identify_set2.md"
+        },
+        {
+          "id": "rescue",
+          "title": "Cứu câu cụt",
+          "file": "data/part1/drills/rescue.md"
+        },
+        {
+          "id": "sort_ard",
+          "title": "Xếp tầng phản xạ A-R-D",
+          "file": "data/part1/drills/sort_ard.md"
+        },
+        {
+          "id": "sort_ard_set2",
+          "title": "Xếp tầng phản xạ A-R-D - Set 2",
+          "file": "data/part1/drills/sort_ard_set2.md"
+        },
+        {
+          "id": "survival",
+          "title": "Sinh tồn với topic lạ (A-C-D)",
+          "file": "data/part1/drills/survival.md"
+        },
+        {
+          "id": "timer",
+          "title": "Mock Test (Part 1) - Tốc độ phản xạ",
+          "file": "data/part1/drills/timer.md"
+        }
+      ]
+    },
+    "part3": {
+      "id": "part3",
+      "title": "Part 3 · Thinking Engine",
+      "subtitle": "Tư duy xã hội P-R-R-V",
+      "theory": "data/part3/theory.md",
+      "drills": [
+        {
+          "id": "build_45s",
+          "title": "45s Expansion Planning",
+          "file": "data/part3/drills/build_45s.md"
+        },
+        {
+          "id": "build_planning",
+          "title": "Lập dàn 4-Line P-R-R-V",
+          "file": "data/part3/drills/build_planning.md"
+        },
+        {
+          "id": "build_planning_set2",
+          "title": "Lập dàn 4-Line P-R-R-V - Set 2",
+          "file": "data/part3/drills/build_planning_set2.md"
+        },
+        {
+          "id": "expand_reality",
+          "title": "Nới tầng REALITY",
+          "file": "data/part3/drills/expand_reality.md"
+        },
+        {
+          "id": "expand_value",
+          "title": "Nới tầng VALUE (Balance)",
+          "file": "data/part3/drills/expand_value.md"
+        },
+        {
+          "id": "idea_expand",
+          "title": "Mở rộng ý Part 3",
+          "file": "data/part3/drills/idea_expand.md"
+        },
+        {
+          "id": "idea_expand_set2",
+          "title": "Mở rộng ý Part 3 Set 2",
+          "file": "data/part3/drills/idea_expand_set2.md"
+        },
+        {
+          "id": "mock_timer",
+          "title": "Mock Test Part 3",
+          "file": "data/part3/drills/mock_timer.md"
+        },
+        {
+          "id": "mock_timer_set2",
+          "title": "Mock Test Part 3 Set 2",
+          "file": "data/part3/drills/mock_timer_set2.md"
+        },
+        {
+          "id": "plan_4line",
+          "title": "4-Line Planning",
+          "file": "data/part3/drills/plan_4line.md"
+        },
+        {
+          "id": "prrv_build",
+          "title": "4-Line Planning Part 3",
+          "file": "data/part3/drills/prrv_build.md"
+        },
+        {
+          "id": "prrv_build_set2",
+          "title": "4-Line Planning Part 3 Set 2",
+          "file": "data/part3/drills/prrv_build_set2.md"
+        },
+        {
+          "id": "prrv_sort",
+          "title": "Xếp tầng P-R-R-V Part 3",
+          "file": "data/part3/drills/prrv_sort.md"
+        },
+        {
+          "id": "prrv_sort_set2",
+          "title": "Xếp tầng P-R-R-V Part 3 Set 2",
+          "file": "data/part3/drills/prrv_sort_set2.md"
+        },
+        {
+          "id": "qtype_classify",
+          "title": "Nhận diện dạng câu hỏi Part 3",
+          "file": "data/part3/drills/qtype_classify.md"
+        },
+        {
+          "id": "qtype_classify_set2",
+          "title": "Nhận diện dạng câu hỏi Part 3 Set 2",
+          "file": "data/part3/drills/qtype_classify_set2.md"
+        },
+        {
+          "id": "qtypes_p3",
+          "title": "Nhận diện dạng câu hỏi Part 3",
+          "file": "data/part3/drills/qtypes_p3.md"
+        },
+        {
+          "id": "sort_prrv",
+          "title": "Xếp tầng P-R-R-V",
+          "file": "data/part3/drills/sort_prrv.md"
+        },
+        {
+          "id": "thinking_identify",
+          "title": "Nhận diện câu trả lời Part 3",
+          "file": "data/part3/drills/thinking_identify.md"
+        },
+        {
+          "id": "thinking_identify_set2",
+          "title": "Nhận diện câu trả lời Part 3 Set 2",
+          "file": "data/part3/drills/thinking_identify_set2.md"
+        },
+        {
+          "id": "timer",
+          "title": "Mock Test (Part 3) - Phản biện & Mở rộng",
+          "file": "data/part3/drills/timer.md"
+        },
+        {
+          "id": "timer_45s",
+          "title": "Part 3 Timer (45s Extended)",
+          "file": "data/part3/drills/timer_45s.md"
+        },
+        {
+          "id": "timer_chain",
+          "title": "Part 3 Examiner Follow-up Chain",
+          "file": "data/part3/drills/timer_chain.md"
+        }
+      ]
+    },
+    "mixed": {
+      "id": "mixed",
+      "title": "Mixed",
+      "subtitle": "Additional Drills",
+      "drills": [
+        {
+          "id": "timer_mock",
+          "title": "Giả lập áp lực phòng thi",
+          "file": "data/mixed/drills/timer_mock.md"
+        },
+        {
+          "id": "timer_mock_set2",
+          "title": "Giả lập áp lực phòng thi - Set 2",
+          "file": "data/mixed/drills/timer_mock_set2.md"
+        }
+      ]
+    }
+  }
+}

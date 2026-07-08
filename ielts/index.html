@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Speaking Trainer</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>IELTS Trainer</h2>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button class="nav-toggle" id="theme-toggle" aria-label="Đổi giao diện" style="display: inline-flex;"></button>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Mở/đóng menu" aria-expanded="false"></button>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Injected via app.js -->
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div id="content-area">
+        <!-- Injected via router in app.js -->
+      </div>
+    </main>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
