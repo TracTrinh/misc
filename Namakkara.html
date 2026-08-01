@@ -63,6 +63,10 @@ body{
 .r{font-weight:800}
 .token.a .ai{font-style:italic;color:var(--ca)}
 .token.b .bi{font-style:italic;color:var(--cb)}
+/* .w2 = từ thứ hai dính bằng sandhi trong cùng một token → lấy màu bù để lộ chỗ giáp */
+.token.a .w2,.token.a .gloss .g2{color:var(--cb)}
+.token.b .w2,.token.b .gloss .g2{color:var(--ca)}
+.gloss .g2{font-style:italic}
 .breath{color:var(--breath);font-size:1.05em;margin-left:.2em;font-style:normal;font-weight:400}
 .idiv{border:none;border-top:1px dashed var(--sep);margin:.7rem 0;opacity:.5}
 .note{font-size:.85rem;color:var(--note-c);border-top:1px dashed var(--sep);margin-top:.85rem;padding-top:.7rem;line-height:1.75}
@@ -86,7 +90,15 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
 #font-ctrl button{background:none;border:none;color:var(--gold);font-family:var(--font-main);font-size:1.1rem;font-weight:700;cursor:pointer;padding:9px 14px;line-height:1;-webkit-tap-highlight-color:transparent}
 #font-ctrl button:disabled{opacity:.35;cursor:default}
 #font-ctrl .size-label{font-family:var(--font-main);font-size:.72rem;font-weight:600;color:var(--gold-l);padding:0 4px;min-width:26px;text-align:center;user-select:none}
-@media print{.toolbar,#font-ctrl{display:none}}
+/* ===== Cụm tự cuộn để tụng rảnh tay (góc dưới-phải) ===== */
+#scroll-ctrl{display:flex;align-items:center;position:fixed;bottom:22px;right:18px;background:var(--bg-inner);border:1px solid var(--gold-bd);border-radius:50px;box-shadow:0 3px 14px rgba(100,60,10,.22);z-index:999;overflow:hidden}
+#scroll-ctrl button{background:none;border:none;color:var(--gold);font-family:var(--font-main);font-size:1.1rem;font-weight:700;cursor:pointer;padding:9px 13px;line-height:1;-webkit-tap-highlight-color:transparent}
+#scroll-ctrl button:disabled{opacity:.35;cursor:default}
+#scroll-ctrl #scroll-play{font-size:1rem;border-right:1px solid var(--gold-bd);min-width:42px}
+#scroll-ctrl #scroll-play.on{color:var(--crimson)}
+#scroll-ctrl #scroll-top{border-left:1px solid var(--gold-bd);font-size:1.05rem}
+#scroll-ctrl .spd-label{font-family:var(--font-main);font-size:.72rem;font-weight:600;color:var(--gold-l);padding:0 4px;min-width:20px;text-align:center;user-select:none}
+@media print{.toolbar,#font-ctrl,#scroll-ctrl{display:none}}
 
 @media print{
   @page{size:A4;margin:1.8cm 1.5cm 1.8cm 1.5cm}
@@ -107,6 +119,8 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
   .iline{gap:.1rem .8rem;margin-bottom:.35rem}
   .token.a .pali-w{color:#8b4f00 !important}
   .token.b .pali-w{color:#0f6648 !important}
+  .token.a .w2,.token.a .gloss .g2{color:#0f6648 !important}
+  .token.b .w2,.token.b .gloss .g2{color:#8b4f00 !important}
   .r{font-weight:800 !important}
   .breath{color:#b08030 !important}
   .sacca .pali-w{color:#7b1c1d !important}
@@ -136,6 +150,10 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="switch-label">Nghĩa tiếng Việt</span>
     </label>
   </div>
+
+  <p style="text-align:center;font-size:.72rem;color:#8a7550;margin:-.9rem auto 1.7rem;max-width:640px;line-height:1.6">
+    Chữ <b>đổi màu giữa chừng</b> (vd <span style="color:#8b4f00">sabbaññu</span><span style="color:#1f5c3a">m-ahaṁ</span>) = hai/ba từ nối liền bằng <i>sandhi</i> — vẫn đọc liền một hơi, màu chỉ để thấy ranh giới từ.
+  </p>
 
   <!-- ============ TÁN DƯƠNG ÂN ĐỨC PHẬT (1–21) ============ -->
   <div class="section-label">Tán Dương Ân Đức Phật — Kệ 1–21</div>
@@ -214,7 +232,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Du<span class="r">kkh</span>aṁ</span><span class="gloss">nỗi khổ</span></span>
-      <span class="token a"><span class="pali-w">cetasikañ-ca</span><span class="gloss">và (khổ) thuộc tâm</span></span>
+      <span class="token a"><span class="pali-w">cetasikañ-<span class="w2">ca</span></span><span class="gloss">(khổ) thuộc tâm <span class="g2">· và</span></span></span>
       <span class="token b"><span class="pali-w">lokato:</span><span class="gloss">từ nơi thế gian</span></span>
     </div>
     <div class="iline">
@@ -264,7 +282,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Vandāmi</span><span class="gloss">con kính lễ</span></span>
-      <span class="token a"><span class="pali-w">sa<span class="r">bb</span>aññum-ahaṁ</span><span class="gloss">bậc Nhất Thiết Trí — con</span></span>
+      <span class="token a"><span class="pali-w">sa<span class="r">bb</span>aññu<span class="w2">m-ahaṁ</span></span><span class="gloss">bậc Nhất Thiết Trí <span class="g2">· con</span></span></span>
       <span class="token b"><span class="pali-w">Munindaṁ.</span><span class="gloss">đấng Mâu-ni Vương</span></span>
       <span class="breath">◎</span>
     </div>
@@ -303,7 +321,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">Rāgādi·chedāmala·ñāṇa·kha<span class="r">gg</span>aṁ,</span><span class="gloss">thanh gươm trí tuệ vô nhiễm chặt đứt tham v.v.</span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Satī·samaññā·phalakābhigāhaṁ,</span><span class="gloss">tay nắm chiếc khiên mang tên chánh niệm</span></span>
+      <span class="token b"><span class="pali-w">Satī·samaññā·phalakā·bhigāhaṁ,</span><span class="gloss">tay nắm chiếc khiên mang tên chánh niệm</span></span>
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Sīlogha·laṅkāra·vibhūsitaṁ:</span><span class="gloss">được trang nghiêm bằng biển giới đức</span></span>
@@ -326,7 +344,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">karaṁ,</span><span class="gloss">đã làm được</span></span>
     </div>
     <div class="iline">
-      <span class="token a"><span class="pali-w">Bhavaṇṇavātikkamam-aggataṁ</span><span class="gloss">địa vị tối thượng vượt biển hữu</span></span>
+      <span class="token a"><span class="pali-w">Bhavaṇṇa·vātikkamam-aggataṁ</span><span class="gloss">địa vị tối thượng vượt biển hữu</span></span>
       <span class="token b"><span class="pali-w">gataṁ,</span><span class="gloss">đã đạt đến</span></span>
     </div>
     <div class="iline">
@@ -364,7 +382,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">bhavaṁ,</span><span class="gloss">Ngài là</span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Namānamānaṁ</span><span class="gloss">bậc được (chúng) đảnh lễ</span></span>
+      <span class="token b"><span class="pali-w">Namā·namānaṁ</span><span class="gloss">bậc được (chúng) đảnh lễ</span></span>
       <span class="token a"><span class="pali-w">Jina·puṅgavaṁ</span><span class="gloss">đấng Ngưu Vương trong các Thắng giả</span></span>
       <span class="token b"><span class="pali-w">gavaṁ.</span><span class="gloss">bậc thủ lĩnh (như bò chúa)</span></span>
       <span class="breath">◎</span>
@@ -433,7 +451,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">dhiti·Meru·samaṁ,</span><span class="gloss">kiên định vững như núi Tu-di</span></span>
     </div>
     <div class="iline">
-      <span class="token a"><span class="pali-w">Jalajūpama·sītala·sīla·yutaṁ,</span><span class="gloss">giới hạnh mát mẻ như (nước) sen</span></span>
+      <span class="token a"><span class="pali-w">Jala·jūpama·sītala·sīla·yutaṁ,</span><span class="gloss">giới hạnh mát mẻ như (nước) sen</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Pathavī·sahanaṁ:</span><span class="gloss">nhẫn chịu như quả đất</span></span>
@@ -467,7 +485,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Devānaṁ:</span><span class="gloss">cho chư thiên</span></span>
-      <span class="token a"><span class="pali-w">Tam-Asadisaṁ</span><span class="gloss">Ngài, bậc vô tỷ</span></span>
+      <span class="token a"><span class="pali-w">Ta<span class="w2">m-Asadisaṁ</span></span><span class="gloss">Ngài <span class="g2">· bậc vô tỷ</span></span></span>
       <span class="token b"><span class="pali-w">namāmi</span><span class="gloss">con kính lễ</span></span>
       <span class="token a"><span class="pali-w">niccaṁ.</span><span class="gloss">mãi mãi</span></span>
       <span class="breath">◎</span>
@@ -485,11 +503,11 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">Lokehi</span><span class="gloss">giữa các cõi</span></span>
       <span class="token b"><span class="pali-w">tīhi</span><span class="gloss">ba (cõi)</span></span>
       <span class="token a"><span class="pali-w">’vikalehi</span><span class="gloss">không khiếm khuyết</span></span>
-      <span class="token b"><span class="pali-w">nirākulehi,</span><span class="gloss">không rối loạn</span></span>
+      <span class="token b"><span class="pali-w">nirā·kulehi,</span><span class="gloss">không rối loạn</span></span>
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Sampāpuṇe</span><span class="gloss">đã đạt đến</span></span>
-      <span class="token b"><span class="pali-w">nirupameyyatam-eva,</span><span class="gloss">chính sự vô tỷ (không gì sánh)</span></span>
+      <span class="token b"><span class="pali-w">niru·pameyyatam-eva,</span><span class="gloss">chính sự vô tỷ (không gì sánh)</span></span>
       <span class="token a"><span class="pali-w">Nātho</span><span class="gloss">đấng Hộ Trì</span></span>
     </div>
     <div class="iline">
@@ -506,12 +524,12 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     <span class="stanza-num">Kệ 15 — Vasantatilakā</span>
     <div class="iline">
       <span class="token a"><span class="pali-w">Bu<span class="r">ddh</span>aṁ</span><span class="gloss">Đức Phật</span></span>
-      <span class="token b"><span class="pali-w">narānara·samosaraṇaṁ</span><span class="gloss">nơi hội tụ của người và phi nhân</span></span>
+      <span class="token b"><span class="pali-w">narānara·samo·saraṇaṁ</span><span class="gloss">nơi hội tụ của người và phi nhân</span></span>
       <span class="token a"><span class="pali-w">dhitattaṁ,</span><span class="gloss">bậc kiên tâm</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Paññā·padīpa·jutiyā</span><span class="gloss">bằng ánh ngọn đèn trí tuệ</span></span>
-      <span class="token a"><span class="pali-w">vihatandhakāraṁ,</span><span class="gloss">đã phá tan bóng tối</span></span>
+      <span class="token a"><span class="pali-w">vihatan·dhakāraṁ,</span><span class="gloss">đã phá tan bóng tối</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">A<span class="r">tth</span>ābhikāma·nara·deva·hitāvahaṁ,</span><span class="gloss">mang lợi lạc cho trời người cầu điều thiện</span></span>
@@ -519,7 +537,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Vandāmi,</span><span class="gloss">con kính lễ</span></span>
-      <span class="token a"><span class="pali-w">kāruṇikam-a<span class="r">gg</span>am-anantañāṇaṁ.</span><span class="gloss">bậc đại bi tối thượng, trí tuệ vô biên</span></span>
+      <span class="token a"><span class="pali-w">kāruṇikam-a<span class="r">gg</span>am-ananta·ñāṇaṁ.</span><span class="gloss">bậc đại bi tối thượng, trí tuệ vô biên</span></span>
       <span class="breath">◎</span>
     </div>
     <div class="note">Con kính lễ Đức Phật, bậc đại bi tối thượng có trí tuệ vô biên: nơi quy tụ của loài người và phi nhân, bậc kiên tâm, đã dùng ánh đèn trí tuệ xua tan bóng tối, đem lợi lạc cho trời người mong cầu điều thiện.</div>
@@ -530,10 +548,10 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     <div class="iline">
       <span class="token a"><span class="pali-w">Akhila·guṇa·nidhāno</span><span class="gloss">kho tàng trọn vẹn mọi công đức</span></span>
       <span class="token b"><span class="pali-w">yo</span><span class="gloss">vị nào</span></span>
-      <span class="token a"><span class="pali-w">Munindopagantvā</span><span class="gloss">là Mâu-ni Vương, sau khi đến</span></span>
+      <span class="token a"><span class="pali-w">Munindo·pagantvā</span><span class="gloss">là Mâu-ni Vương, sau khi đến</span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Vanam-Isipatanavhaṁ,</span><span class="gloss">khu rừng tên Isipatana</span></span>
+      <span class="token b"><span class="pali-w">Vanam-Isipatana·vhaṁ,</span><span class="gloss">khu rừng tên Isipatana</span></span>
       <span class="token a"><span class="pali-w">saññatānaṁ</span><span class="gloss">của các bậc chế ngự (căn)</span></span>
       <span class="token b"><span class="pali-w">niketaṁ,</span><span class="gloss">nơi cư trú</span></span>
     </div>
@@ -543,7 +561,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">pavatto:</span><span class="gloss">đã chuyển vận</span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Tam-atulam-abhikantaṁ</span><span class="gloss">Ngài, bậc vô song, cực kỳ khả ái</span></span>
+      <span class="token b"><span class="pali-w">Ta<span class="w2">m-atula</span>m-abhikantaṁ</span><span class="gloss">Ngài <span class="g2">· vô song</span> · cực khả ái</span></span>
       <span class="token a"><span class="pali-w">vandaneyyaṁ</span><span class="gloss">đáng được kính lễ</span></span>
       <span class="token b"><span class="pali-w">namāmi.</span><span class="gloss">con kính lễ</span></span>
       <span class="breath">◎</span>
@@ -564,7 +582,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">upetaṁ,</span><span class="gloss">gồm đủ</span></span>
     </div>
     <div class="iline">
-      <span class="token a"><span class="pali-w">Ravi·sasi·maṇḍala<span class="r">pp</span>abhuti·la<span class="r">kkh</span>aṇopacittaṁ:</span><span class="gloss">điểm tô bởi các tướng như vầng nhật, nguyệt v.v.</span></span>
+      <span class="token a"><span class="pali-w">Ravi·sasi·maṇḍala<span class="r">p·p</span>abhuti·la<span class="r">kkh</span>aṇo·pacittaṁ:</span><span class="gloss">điểm tô bởi các tướng như vầng nhật, nguyệt v.v.</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Sura·nara·pūjitaṁ</span><span class="gloss">được trời người cúng dường</span></span>
@@ -579,12 +597,12 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     <span class="stanza-num">Kệ 18 — Mandakkantā</span>
     <div class="iline">
       <span class="token a"><span class="pali-w">Maggoḷumpena</span><span class="gloss">bằng chiếc bè là Đạo</span></span>
-      <span class="token b"><span class="pali-w">muha·paṭighāsādiul·lola·vīciṁ</span><span class="gloss">sóng cuộn si, sân, ái v.v.</span></span>
+      <span class="token b"><span class="pali-w">muha·paṭighā·sādiul·lola·vīciṁ</span><span class="gloss">sóng cuộn si, sân, ái v.v.</span></span>
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Saṁsāroghaṁ</span><span class="gloss">dòng lũ luân hồi</span></span>
       <span class="token b"><span class="pali-w">tari;</span><span class="gloss">đã vượt qua</span></span>
-      <span class="token a"><span class="pali-w">tam-abhayaṁ</span><span class="gloss">Ngài, bậc vô úy</span></span>
+      <span class="token a"><span class="pali-w">ta<span class="w2">m-abhayaṁ</span></span><span class="gloss">Ngài <span class="g2">· bậc vô úy</span></span></span>
       <span class="token b"><span class="pali-w">pāra·pattaṁ,</span><span class="gloss">đã đến bờ kia</span></span>
       <span class="token a"><span class="pali-w">pajānaṁ</span><span class="gloss">cho những ai liễu tri</span></span>
     </div>
@@ -645,19 +663,19 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     <div class="iline">
       <span class="token a"><span class="pali-w">Munindakko</span><span class="gloss">mặt trời là đấng Mâu-ni Vương</span></span>
       <span class="token b"><span class="pali-w">yeko</span><span class="gloss">độc nhất</span></span>
-      <span class="token a"><span class="pali-w">dayudayaruṇo</span><span class="gloss">bình minh bởi lòng bi dâng khởi</span></span>
+      <span class="token a"><span class="pali-w">dayuda·yaruṇo</span><span class="gloss">bình minh bởi lòng bi dâng khởi</span></span>
       <span class="token b"><span class="pali-w">ñāṇa·vi<span class="r">tth</span>iṇṇa·bimbo,</span><span class="gloss">vầng (nhật) rộng lớn bởi trí tuệ</span></span>
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Vineyya<span class="r">p</span>·<span class="r">p</span>āṇoghaṁ</span><span class="gloss">khối chúng sinh đáng hóa độ</span></span>
       <span class="token b"><span class="pali-w">kamala·kathitaṁ</span><span class="gloss">ví như những đóa sen</span></span>
-      <span class="token a"><span class="pali-w">Dhamma·raṁsīvarehi,</span><span class="gloss">bằng những tia sáng Pháp cao quý</span></span>
+      <span class="token a"><span class="pali-w">Dhamma·raṁsī·varehi,</span><span class="gloss">bằng những tia sáng Pháp cao quý</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Subodhesī</span><span class="gloss">đã khéo làm bừng tỉnh</span></span>
       <span class="token a"><span class="pali-w">su<span class="r">ddh</span>e</span><span class="gloss">nơi thanh tịnh</span></span>
       <span class="token b"><span class="pali-w">tibhava·kuhare</span><span class="gloss">trong hang động ba cõi hữu</span></span>
-      <span class="token a"><span class="pali-w">byāpitakkittinañ-ca,</span><span class="gloss">và danh tiếng lan khắp</span></span>
+      <span class="token a"><span class="pali-w">byāpitak·kittinañ-<span class="w2">ca</span>,</span><span class="gloss">danh tiếng lan khắp <span class="g2">· và</span></span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Tilokeka<span class="r">c</span>·<span class="r">c</span>akkhuṁ</span><span class="gloss">con mắt độc nhất của ba cõi</span></span>
@@ -676,11 +694,11 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">Yo</span><span class="gloss">vị nào</span></span>
       <span class="token b"><span class="pali-w">Jino</span><span class="gloss">đấng Thắng giả</span></span>
       <span class="token a"><span class="pali-w">aneka·jātiyaṁ,</span><span class="gloss">qua vô số kiếp</span></span>
-      <span class="token b"><span class="pali-w">saputtadāram-aṅgajīvitam-pi,</span><span class="gloss">cả con, vợ, thân thể lẫn mạng sống</span></span>
+      <span class="token b"><span class="pali-w">saputta·dāra<span class="w2">m-aṅga·jīvita</span>m-pi,</span><span class="gloss">con, vợ <span class="g2">· thân, mạng sống</span> · cả</span></span>
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Bodhi·pemato</span><span class="gloss">vì lòng yêu quý Bồ-đề</span></span>
-      <span class="token b"><span class="pali-w">ala<span class="r">gg</span>amānaso</span><span class="gloss">với tâm không dính mắc</span></span>
+      <span class="token b"><span class="pali-w">ala<span class="r">gg</span>a·mānaso</span><span class="gloss">với tâm không dính mắc</span></span>
       <span class="token a"><span class="pali-w">adāsi</span><span class="gloss">đã bố thí</span></span>
       <span class="token b"><span class="pali-w">yeva</span><span class="gloss">chính là</span></span>
       <span class="token a"><span class="pali-w">a<span class="r">tth</span>ikassa,</span><span class="gloss">cho người cầu xin</span></span>
@@ -689,11 +707,11 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">Dāna·pāramiṁ</span><span class="gloss">bố-thí ba-la-mật</span></span>
       <span class="token a"><span class="pali-w">tato paraṁ</span><span class="gloss">rồi sau đó</span></span>
       <span class="token b"><span class="pali-w">apūri</span><span class="gloss">đã viên mãn</span></span>
-      <span class="token a"><span class="pali-w">sīla·pāramādikam-pi,</span><span class="gloss">cả trì-giới ba-la-mật v.v.</span></span>
+      <span class="token a"><span class="pali-w">sīla·pāramā·dika<span class="w2">m-pi</span>,</span><span class="gloss">trì-giới ba-la-mật v.v. <span class="g2">· cả</span></span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Tāsam-i<span class="r">ddh</span>iyopayātam-A<span class="r">gg</span>ataṁ:</span><span class="gloss">nhờ năng lực ấy đạt địa vị tối thượng</span></span>
-      <span class="token a"><span class="pali-w">Tam-Ekadīpakaṁ</span><span class="gloss">Ngài, ngọn đèn (chỗ nương) độc nhất</span></span>
+      <span class="token b"><span class="pali-w">Tāsam-i<span class="r">ddh</span>iyo·payātam-A<span class="r">gg</span>ataṁ:</span><span class="gloss">nhờ năng lực ấy đạt địa vị tối thượng</span></span>
+      <span class="token a"><span class="pali-w">Ta<span class="w2">m-Ekadīpakaṁ</span></span><span class="gloss">Ngài <span class="g2">· ngọn đèn (chỗ nương) độc nhất</span></span></span>
       <span class="token b"><span class="pali-w">namāmi.</span><span class="gloss">con kính lễ</span></span>
       <span class="breath">◎</span>
     </div>
@@ -747,13 +765,13 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">brahma·ghoseṇi·jaṅgho,</span><span class="gloss">tiếng phạm-âm, bắp chân như nai</span></span>
     </div>
     <div class="iline">
-      <span class="token a"><span class="pali-w">Kosacchādaṅga·jāto,</span><span class="gloss">nam căn ẩn trong bao</span></span>
+      <span class="token a"><span class="pali-w">Kosac·chādaṅga·jāto,</span><span class="gloss">nam căn ẩn trong bao</span></span>
       <span class="token b"><span class="pali-w">punar-api</span><span class="gloss">lại nữa</span></span>
       <span class="token a"><span class="pali-w">Sugato</span><span class="gloss">bậc Thiện Thệ</span></span>
       <span class="token b"><span class="pali-w">su<span class="r">pp</span>atiṭṭhita·pādo,</span><span class="gloss">bàn chân đặt bằng phẳng</span></span>
     </div>
     <div class="iline">
-      <span class="token a"><span class="pali-w">Mūdodātuṇṇa·lomo,</span><span class="gloss">sợi lông trắng mềm (giữa chặng mày)</span></span>
+      <span class="token a"><span class="pali-w">Mūdodātuṇṇa·lomo,</span><span class="gloss">sợi lông trắng mềm (giữa chân mày)</span></span>
       <span class="token b"><span class="pali-w">atham-api</span><span class="gloss">và cũng</span></span>
       <span class="token a"><span class="pali-w">Sugato</span><span class="gloss">bậc Thiện Thệ</span></span>
       <span class="token b"><span class="pali-w">brahmuju<span class="r">g</span>·<span class="r">g</span>atta·bhāvo,</span><span class="gloss">thân thẳng như Phạm-thiên</span></span>
@@ -785,7 +803,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token b"><span class="pali-w">Tiṭṭhanto</span><span class="gloss">khi đứng</span></span>
       <span class="token a"><span class="pali-w">nonamanto</span><span class="gloss">không cần cúi xuống</span></span>
       <span class="token b"><span class="pali-w">’bhaya·kara·mudunā</span><span class="gloss">bằng bàn tay mềm ban vô úy</span></span>
-      <span class="token a"><span class="pali-w">jaṇṇukānāmasanto,</span><span class="gloss">chạm được tới hai đầu gối</span></span>
+      <span class="token a"><span class="pali-w">jaṇṇukānā·masanto,</span><span class="gloss">chạm được tới hai đầu gối</span></span>
     </div>
     <div class="iline">
       <span class="token b"><span class="pali-w">Vaṭṭa<span class="r">k</span>·<span class="r">kh</span>andho,</span><span class="gloss">thân mình (cổ vai) tròn đầy</span></span>
@@ -807,7 +825,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">loma·kūpekalomo,</span><span class="gloss">mỗi lỗ chân lông một sợi</span></span>
     </div>
     <div class="iline">
-      <span class="token b"><span class="pali-w">Sampannodāta·dāṭho</span><span class="gloss">răng nanh trắng đẹp toàn hảo</span></span>
+      <span class="token b"><span class="pali-w">Sampanno·dāta·dāṭho</span><span class="gloss">răng nanh trắng đẹp toàn hảo</span></span>
       <span class="token a"><span class="pali-w">kanaka·sama·taco</span><span class="gloss">da như sắc vàng ròng</span></span>
       <span class="token b"><span class="pali-w">nīla·mu<span class="r">ddh</span>a<span class="r">gg</span>a·lomo,</span><span class="gloss">lông xanh, xoáy ở đầu ngọn</span></span>
     </div>
@@ -956,7 +974,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     </div>
     <div class="iline">
       <span class="token a"><span class="pali-w">Gāthāsu</span><span class="gloss">trong các bài kệ</span></span>
-      <span class="token b"><span class="pali-w">sūcakāsvekagātham-pi</span><span class="gloss">chỉ dẫn — dù chỉ một kệ</span></span>
+      <span class="token b"><span class="pali-w">sūcakāsvekagātha<span class="w2">m-pi</span></span><span class="gloss">một kệ chỉ dẫn <span class="g2">· dù chỉ</span></span></span>
       <span class="token a"><span class="pali-w">sarate</span><span class="gloss">(nếu) ghi nhớ</span></span>
       <span class="token b"><span class="pali-w">budho</span><span class="gloss">bậc có trí</span></span>
       <span class="breath">◎</span>
@@ -995,7 +1013,7 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
       <span class="token a"><span class="pali-w">Bhaveyya</span><span class="gloss">sẽ trở thành</span></span>
       <span class="token b"><span class="pali-w">antime</span><span class="gloss">ở (kiếp) cuối cùng</span></span>
       <span class="token a"><span class="pali-w">dehe,</span><span class="gloss">nơi tấm thân</span></span>
-      <span class="token b"><span class="pali-w">tam-aññaṁ</span><span class="gloss">(buông) ngôi vị ấy và các thứ khác</span></span>
+      <span class="token b"><span class="pali-w">ta<span class="w2">m-aññaṁ</span></span><span class="gloss">cái ấy <span class="g2">· lẫn cái khác</span></span></span>
       <span class="token a"><span class="pali-w">seta·chattakaṁ,</span><span class="gloss">chiếc lọng trắng (vương quyền)</span></span>
       <span class="breath">◎</span>
     </div>
@@ -1102,6 +1120,14 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
   <button id="font-up" onclick="adjFont(1)">A+</button>
 </div>
 
+<div id="scroll-ctrl">
+  <button id="scroll-play" onclick="toggleScroll()" title="Tự cuộn (tụng rảnh tay)">▶</button>
+  <button id="spd-dn" onclick="adjSpeed(-1)" title="Cuộn chậm hơn">−</button>
+  <span class="spd-label" id="spd-lbl">4</span>
+  <button id="spd-up" onclick="adjSpeed(1)" title="Cuộn nhanh hơn">+</button>
+  <button id="scroll-top" onclick="jumpTop()" title="Về đầu bài">↑</button>
+</div>
+
 <script>
 (function(){
   var body=document.body;
@@ -1136,6 +1162,58 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     try{localStorage.setItem(KEY_F,idx);}catch(e){}
   };
   applySize();
+
+  // ---- Tự cuộn để tụng rảnh tay (nút ▶/⏸ + tốc độ −/+) ----
+  var KEY_S='namakkara-scroll-spd';
+  var SPEEDS=[6,10,15,22,32,45,62,85,120]; // px mỗi giây
+  var sidx=3;
+  var ss=localStorage.getItem(KEY_S);
+  if(ss!==null){var sm=parseInt(ss,10); if(sm>=0&&sm<SPEEDS.length) sidx=sm;}
+  var slbl=document.getElementById('spd-lbl');
+  var playBtn=document.getElementById('scroll-play');
+  var scrolling=false, rafId=null, lastT=0, posY=0;
+  function atBottom(){ return window.innerHeight+window.scrollY >= document.documentElement.scrollHeight-1; }
+  function step(t){
+    if(!scrolling) return;
+    if(!lastT){ lastT=t; posY=window.scrollY; rafId=requestAnimationFrame(step); return; }
+    // tích lũy vị trí dạng số thực rồi scrollTo → mượt kể cả tốc độ chậm
+    var dt=(t-lastT)/1000; lastT=t;
+    if(dt>0.05) dt=0.05;   // chặn nhảy vọt khi rAF bị gián đoạn (đổi tab / throttle)
+    posY += SPEEDS[sidx]*dt;
+    window.scrollTo(0,posY);
+    if(atBottom()){ stopScroll(); return; }
+    rafId=requestAnimationFrame(step);
+  }
+  function startScroll(){
+    if(scrolling) return;
+    if(atBottom()) window.scrollTo(0,0);
+    scrolling=true; lastT=0; posY=window.scrollY;
+    playBtn.textContent='⏸'; playBtn.classList.add('on');
+    rafId=requestAnimationFrame(step);
+  }
+  window.jumpTop=function(){
+    if(scrolling){ lastT=0; posY=0; window.scrollTo(0,0); }   // đang cuộn: về đầu tức thì, cuộn tiếp từ trên
+    else{ window.scrollTo({top:0,behavior:'smooth'}); }        // đang dừng: trượt mượt về đầu
+  };
+  function stopScroll(){
+    scrolling=false; if(rafId) cancelAnimationFrame(rafId); rafId=null;
+    playBtn.textContent='▶'; playBtn.classList.remove('on');
+  }
+  window.toggleScroll=function(){ scrolling?stopScroll():startScroll(); };
+  window.adjSpeed=function(d){
+    sidx=Math.max(0,Math.min(SPEEDS.length-1,sidx+d));
+    if(slbl) slbl.textContent=(sidx+1);
+    document.getElementById('spd-dn').disabled=(sidx===0);
+    document.getElementById('spd-up').disabled=(sidx===SPEEDS.length-1);
+    try{localStorage.setItem(KEY_S,sidx);}catch(e){}
+  };
+  adjSpeed(0);
+  // Chạm/lăn để giành lại điều khiển → tạm dừng tự cuộn
+  ['wheel','touchstart'].forEach(function(ev){
+    window.addEventListener(ev,function(e){
+      if(scrolling && !(e.target && e.target.closest && e.target.closest('#scroll-ctrl'))) stopScroll();
+    },{passive:true});
+  });
 })();
 </script>
 </body>
