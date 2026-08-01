@@ -1171,10 +1171,11 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
   if(ss!==null){var sm=parseInt(ss,10); if(sm>=0&&sm<SPEEDS.length) sidx=sm;}
   var slbl=document.getElementById('spd-lbl');
   var playBtn=document.getElementById('scroll-play');
-  var scrolling=false, rafId=null, lastT=0, posY=0;
+  var scrolling=false, rafId=null, lastT=0, posY=0, dragging=false;
   function atBottom(){ return window.innerHeight+window.scrollY >= document.documentElement.scrollHeight-1; }
   function step(t){
     if(!scrolling) return;
+    if(dragging){ posY=window.scrollY; lastT=t; rafId=requestAnimationFrame(step); return; } // đang kéo tay: theo tay, không tự đẩy
     if(!lastT){ lastT=t; posY=window.scrollY; rafId=requestAnimationFrame(step); return; }
     // tích lũy vị trí dạng số thực rồi scrollTo → mượt kể cả tốc độ chậm
     var dt=(t-lastT)/1000; lastT=t;
@@ -1208,11 +1209,15 @@ body.hide-viet .gloss,body.hide-viet .note{display:none}
     try{localStorage.setItem(KEY_S,sidx);}catch(e){}
   };
   adjSpeed(0);
-  // Chạm/lăn để giành lại điều khiển → tạm dừng tự cuộn
-  ['wheel','touchstart'].forEach(function(ev){
-    window.addEventListener(ev,function(e){
-      if(scrolling && !(e.target && e.target.closest && e.target.closest('#scroll-ctrl'))) stopScroll();
-    },{passive:true});
+  // Kéo tay khi đang tự cuộn → KHÔNG dừng; đồng bộ mốc rồi cuộn tiếp từ vị trí mới. Chỉ nút ⏸ mới dừng.
+  function inCtrl(e){ return e.target && e.target.closest && e.target.closest('#scroll-ctrl'); }
+  function resync(){ posY=window.scrollY; lastT=0; }
+  window.addEventListener('wheel',function(e){ if(scrolling && !inCtrl(e)) resync(); },{passive:true});
+  window.addEventListener('keydown',function(e){ if(scrolling && /Arrow|Page|Home|End| |Spacebar/.test(e.key)) resync(); });
+  window.addEventListener('touchstart',function(e){ if(scrolling && !inCtrl(e)) dragging=true; },{passive:true});
+  window.addEventListener('touchmove',function(){ if(scrolling && dragging) resync(); },{passive:true});
+  ['touchend','touchcancel'].forEach(function(ev){
+    window.addEventListener(ev,function(){ if(dragging){ dragging=false; resync(); } },{passive:true});
   });
 })();
 </script>
