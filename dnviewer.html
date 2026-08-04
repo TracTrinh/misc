@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viewer sơ đồ bài giảng</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --panel: rgba(255, 255, 255, 0.94);
+      --text: #17202a;
+      --muted: #667085;
+      --line: #d7dce2;
+      --primary: #176b87;
+      --primary-hover: #10566d;
+      --success: #2f7d54;
+      --success-hover: #256543;
+      --warn: #f3b23f;
+      --shadow: 0 12px 28px rgba(20, 31, 44, 0.14);
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    #mindmap {
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
+
+    #toolbar {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 1000;
+      width: min(360px, calc(100vw - 28px));
+      box-sizing: border-box;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .toolbar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toolbar-title {
+      min-width: 0;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toolbar-body {
+      padding: 10px 12px 12px;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    button {
+      min-height: 34px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(23, 107, 135, 0.24);
+      outline-offset: 2px;
+    }
+
+    .btn-success {
+      background: var(--success);
+    }
+
+    .btn-success:hover {
+      background: var(--success-hover);
+    }
+
+    .btn-subtle {
+      color: var(--text);
+      background: #eef2f5;
+      border-color: #d9e0e6;
+    }
+
+    .btn-subtle:hover {
+      background: #e2e8ee;
+    }
+
+    #collapse-toolbar {
+      width: 28px;
+      min-height: 28px;
+      padding: 0;
+      color: var(--text);
+      background: transparent;
+      border-color: transparent;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    #collapse-toolbar:hover {
+      background: #edf1f4;
+    }
+
+    #status-text {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #edit-hint {
+      margin: 7px 0 0;
+      color: var(--success);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    #toolbar.collapsed {
+      width: auto;
+    }
+
+    #toolbar.collapsed .toolbar-body,
+    #toolbar.collapsed .toolbar-title {
+      display: none;
+    }
+
+    #toolbar.collapsed .toolbar-head {
+      padding: 6px;
+      border-bottom: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #floating-edit-btn {
+      position: fixed;
+      z-index: 1500;
+      border: 1px solid #d19a26;
+      border-radius: 6px;
+      padding: 5px 10px;
+      background: var(--warn);
+      color: #202124;
+      box-shadow: 0 6px 14px rgba(20, 31, 44, 0.2);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    #floating-edit-btn:hover {
+      background: #e2a02d;
+    }
+
+    #edit-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      box-sizing: border-box;
+      background: rgba(17, 24, 39, 0.48);
+    }
+
+    #edit-modal-content {
+      width: min(720px, 100%);
+      max-height: min(760px, calc(100vh - 36px));
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 44px rgba(17, 24, 39, 0.28);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    #edit-textarea {
+      width: calc(100% - 32px);
+      min-height: 280px;
+      margin: 14px 16px 0;
+      box-sizing: border-box;
+      border: 1px solid #cfd6de;
+      border-radius: 6px;
+      padding: 10px;
+      resize: vertical;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 16px 16px;
+    }
+
+    #drop-shield {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #8aa4b0;
+      background: rgba(237, 244, 247, 0.74);
+      color: #244653;
+      font-size: 18px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    body.dragging #drop-shield {
+      display: flex;
+    }
+
+    @media (max-width: 560px) {
+      #toolbar {
+        top: 8px;
+        left: 8px;
+        width: calc(100vw - 16px);
+      }
+
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        white-space: normal;
+      }
+
+      #status-text {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar" aria-label="Điều khiển viewer">
+    <div class="toolbar-head">
+      <h1 class="toolbar-title">Sơ đồ bài giảng</h1>
+      <button id="collapse-toolbar" class="btn-subtle" type="button" title="Thu gọn/mở rộng">-</button>
+    </div>
+    <div class="toolbar-body">
+      <input type="file" id="file-input" accept=".md" class="hidden">
+      <div class="button-row">
+        <button id="btn-open-readonly" type="button">Mở</button>
+        <button id="btn-open-advanced" class="btn-success hidden" type="button">Mở sửa</button>
+        <button id="btn-fit" class="btn-subtle" type="button">Fit</button>
+      </div>
+      <p id="status-text">Chưa mở file Markdown.</p>
+      <p id="edit-hint" class="hidden">Chế độ sửa: hover hoặc click phải vào node.</p>
+    </div>
+  </div>
+
+  <div id="floating-edit-btn" class="hidden" title="Sửa nội dung node">Sửa</div>
+
+  <div id="edit-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <div id="edit-modal-content">
+      <div class="modal-header">
+        <h3 id="edit-modal-title">Chỉnh sửa node</h3>
+        <button class="btn-subtle" type="button" onclick="closeEditor()" title="Đóng">Đóng</button>
+      </div>
+      <textarea id="edit-textarea" spellcheck="false"></textarea>
+      <div class="modal-actions">
+        <button class="btn-subtle" type="button" onclick="closeEditor()">Hủy</button>
+        <button class="btn-success" type="button" onclick="saveEditor()">Lưu vào file</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="drop-shield">Thả file Markdown để mở</div>
+  <svg id="mindmap"></svg>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15.4/dist/browser/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15.4/dist/browser/index.js"></script>
+
+  <script>
+    const { Transformer } = window.markmap;
+    const { Markmap, loadCSS, loadJS } = window.markmap;
+
+    const mindmapSvg = document.getElementById('mindmap');
+    const statusText = document.getElementById('status-text');
+    const editHint = document.getElementById('edit-hint');
+    const floatBtn = document.getElementById('floating-edit-btn');
+
+    let markmapInstance = null;
+    let fileHandle = null;
+    let currentMarkdown = '';
+    let currentEditLines = null;
+    let hideBtnTimeout = null;
+    let activeHoverLines = null;
+
+    document.getElementById('btn-open-readonly').addEventListener('click', () => {
+      document.getElementById('file-input').click();
+    });
+
+    document.getElementById('btn-fit').addEventListener('click', () => fitMindmap());
+
+    document.getElementById('collapse-toolbar').addEventListener('click', () => {
+      const toolbar = document.getElementById('toolbar');
+      toolbar.classList.toggle('collapsed');
+      document.getElementById('collapse-toolbar').textContent = toolbar.classList.contains('collapsed') ? '+' : '-';
+    });
+
+    if (window.showOpenFilePicker) {
+      const btnAdvanced = document.getElementById('btn-open-advanced');
+      btnAdvanced.classList.remove('hidden');
+      btnAdvanced.addEventListener('click', openFileWithAccess);
+    }
+
+    function renderMindmap(markdownContent) {
+      const transformer = new Transformer();
+      const { root, features } = transformer.transform(markdownContent);
+      const { styles, scripts } = transformer.getUsedAssets(features);
+
+      if (styles) loadCSS(styles);
+      if (scripts) loadJS(scripts, { getMarkmap: () => window.markmap });
+
+      if (markmapInstance) {
+        markmapInstance.destroy();
+      }
+
+      mindmapSvg.innerHTML = '';
+      markmapInstance = Markmap.create('#mindmap', {
+        autoFit: false,
+        initialExpandLevel: 3,
+        duration: 220
+      }, root);
+
+      requestAnimationFrame(() => {
+        fitMindmap();
+      });
+    }
+
+    function fitMindmap() {
+      if (!markmapInstance || typeof markmapInstance.fit !== 'function') return;
+      markmapInstance.fit();
+    }
+
+    function getViewport() {
+      const transform = d3.zoomTransform(mindmapSvg);
+      return {
+        x: transform.x,
+        y: transform.y,
+        k: transform.k
+      };
+    }
+
+    function restoreViewport(viewport) {
+      if (!viewport || !markmapInstance || !markmapInstance.svg || !markmapInstance.zoom) return;
+      const transform = d3.zoomIdentity.translate(viewport.x, viewport.y).scale(viewport.k);
+      markmapInstance.svg.call(markmapInstance.zoom.transform, transform);
+    }
+
+    mindmapSvg.addEventListener('click', event => {
+      const nodeElement = event.target.closest('.markmap-node');
+      if (!nodeElement || !markmapInstance) return;
+
+      const before = getViewport();
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const after = getViewport();
+          if (Math.abs(after.k - before.k) > 0.001) {
+            restoreViewport(before);
+          }
+        }, 80);
+      });
+    }, true);
+
+    async function openFileWithAccess() {
+      try {
+        [fileHandle] = await window.showOpenFilePicker({
+          types: [{
+            description: 'Markdown',
+            accept: { 'text/markdown': ['.md'] }
+          }],
+          multiple: false
+        });
+
+        const file = await fileHandle.getFile();
+        currentMarkdown = await file.text();
+        renderMindmap(currentMarkdown);
+        statusText.textContent = 'Đang sửa: ' + file.name;
+        editHint.classList.remove('hidden');
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Lỗi mở file:', error);
+          alert('Không mở được file.');
+        }
+      }
+    }
+
+    mindmapSvg.addEventListener('contextmenu', event => {
+      if (!fileHandle) return;
+
+      const nodeElement = event.target.closest('.markmap-node');
+      if (!nodeElement) return;
+
+      event.preventDefault();
+      const lines = getNodeLines(nodeElement);
+      if (lines) openEditor(lines);
+    });
+
+    mindmapSvg.addEventListener('mouseover', event => {
+      if (!fileHandle) return;
+
+      const nodeElement = event.target.closest('.markmap-node');
+      if (!nodeElement) return;
+
+      const lines = getNodeLines(nodeElement);
+      if (!lines) return;
+
+      clearTimeout(hideBtnTimeout);
+      activeHoverLines = lines;
+
+      const rect = nodeElement.getBoundingClientRect();
+      floatBtn.style.left = Math.min(rect.right + 12, window.innerWidth - 72) + 'px';
+      floatBtn.style.top = Math.max(rect.top - 4, 8) + 'px';
+      floatBtn.classList.remove('hidden');
+    });
+
+    mindmapSvg.addEventListener('mouseout', event => {
+      if (!fileHandle) return;
+      if (event.relatedTarget === floatBtn || floatBtn.contains(event.relatedTarget)) return;
+
+      clearTimeout(hideBtnTimeout);
+      hideBtnTimeout = setTimeout(() => {
+        floatBtn.classList.add('hidden');
+      }, 220);
+    });
+
+    floatBtn.addEventListener('mouseenter', () => clearTimeout(hideBtnTimeout));
+    floatBtn.addEventListener('mouseleave', () => {
+      hideBtnTimeout = setTimeout(() => floatBtn.classList.add('hidden'), 220);
+    });
+
+    floatBtn.addEventListener('click', event => {
+      event.stopPropagation();
+      if (activeHoverLines) {
+        openEditor(activeHoverLines);
+        floatBtn.classList.add('hidden');
+      }
+    });
+
+    function getNodeLines(nodeElement) {
+      const d = nodeElement.__data__;
+      return d && d.data && d.data.payload && d.data.payload.lines;
+    }
+
+    function openEditor(lines) {
+      currentEditLines = lines;
+      const linesArray = currentMarkdown.split('\n');
+      const [start, end] = currentEditLines;
+      document.getElementById('edit-textarea').value = linesArray.slice(start, end).join('\n');
+      document.getElementById('edit-modal').classList.remove('hidden');
+      document.getElementById('edit-textarea').focus();
+      floatBtn.classList.add('hidden');
+    }
+
+    function closeEditor() {
+      document.getElementById('edit-modal').classList.add('hidden');
+      currentEditLines = null;
+    }
+
+    async function saveEditor() {
+      if (!fileHandle || !currentEditLines) return;
+
+      try {
+        const options = { mode: 'readwrite' };
+        if ((await fileHandle.queryPermission(options)) !== 'granted') {
+          const permission = await fileHandle.requestPermission(options);
+          if (permission !== 'granted') {
+            alert('Không được cấp quyền ghi file.');
+            return;
+          }
+        }
+
+        const linesArray = currentMarkdown.split('\n');
+        const [start, end] = currentEditLines;
+        const newLinesArray = document.getElementById('edit-textarea').value.split('\n');
+        linesArray.splice(start, end - start, ...newLinesArray);
+
+        currentMarkdown = linesArray.join('\n');
+
+        const writable = await fileHandle.createWritable();
+        await writable.write(currentMarkdown);
+        await writable.close();
+
+        closeEditor();
+        renderMindmap(currentMarkdown);
+      } catch (error) {
+        console.error('Lỗi lưu file:', error);
+        alert('Không lưu được file: ' + error.message);
+      }
+    }
+
+    document.getElementById('file-input').addEventListener('change', event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      openReadonlyFile(file);
+    });
+
+    function openReadonlyFile(file) {
+      fileHandle = null;
+      editHint.classList.add('hidden');
+
+      const reader = new FileReader();
+      reader.onload = event => {
+        currentMarkdown = event.target.result;
+        renderMindmap(currentMarkdown);
+        statusText.textContent = 'Đang xem: ' + file.name;
+      };
+      reader.readAsText(file);
+    }
+
+    document.body.addEventListener('dragover', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      document.body.classList.add('dragging');
+    });
+
+    document.body.addEventListener('dragleave', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (event.relatedTarget === null) {
+        document.body.classList.remove('dragging');
+      }
+    });
+
+    document.body.addEventListener('drop', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      document.body.classList.remove('dragging');
+
+      if (!event.dataTransfer.files || event.dataTransfer.files.length === 0) return;
+
+      const file = event.dataTransfer.files[0];
+      if (file.name.toLowerCase().endsWith('.md')) {
+        openReadonlyFile(file);
+      } else {
+        alert('Vui lòng thả file Markdown (.md).');
+      }
+    });
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeEditor();
+    });
+  </script>
+</body>
+</html>
